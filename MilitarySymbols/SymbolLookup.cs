@@ -511,7 +511,16 @@ namespace MilitarySymbols
                           select row;
 
             int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                // Try one more time without modifiers
+                results = from row in LegacyCodeMappingTable.AsEnumerable()
+                          where (row.Field<string>("2525DeltaSymbolSet") == symbolSetString)
+                                & (row.Field<string>("2525DeltaEntity") == entityString)
+                          select row;
+            }
 
+            resultCount = results.Count();
             if (resultCount < 1)
             {
                 System.Diagnostics.Trace.WriteLine("Delta Code not found: " + symbolSetString

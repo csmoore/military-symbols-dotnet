@@ -674,6 +674,15 @@ namespace MilSymbolPicker
                 tagBuilder.Append(";");
             }
 
+            // Add Charlie ID as tag if it maps
+            string code2525Charlie;
+            bool convertSuccess = Utilities.ConvertCodeDeltaToCharlie(currentSymbol.Id, out code2525Charlie);
+            if (convertSuccess)
+            {
+                tagBuilder.Append(code2525Charlie);
+                tagBuilder.Append(";");
+            }
+
             // Add the unformatted code to the end in case needed
             tagBuilder.Append(currentSymbol.Id.Code);
 
