@@ -553,17 +553,22 @@ namespace MilitarySymbols
                 || (charlieCode.Length < 10))
                 return false;
 
+            bool isWeather = (charlieCode[0] == 'W');
+
             char replaceChar = 'U';
             if (charlieCode[0] == 'G')
                 replaceChar = '*';
-            else if (charlieCode[0] == 'W')
+            else if (isWeather)
                 replaceChar = charlieCode[1];
 
             StringBuilder sbLookupCharlieCode = new StringBuilder();
             sbLookupCharlieCode.Append(charlieCode[0]);
             sbLookupCharlieCode.Append(replaceChar);
             sbLookupCharlieCode.Append(charlieCode[2]);
-            sbLookupCharlieCode.Append('P');
+            if (isWeather)
+                sbLookupCharlieCode.Append(charlieCode[3]);
+            else
+                sbLookupCharlieCode.Append('P');
             sbLookupCharlieCode.Append(charlieCode.Substring(4, 6));
 
             string lookupCharlieCode = sbLookupCharlieCode.ToString();

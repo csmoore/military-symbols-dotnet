@@ -492,7 +492,16 @@ namespace MilitarySymbols
 
             static public Enum getEnumFromHashCodeString(System.Type type, string hashCodeString)
             {
-                int hashCode = Convert.ToInt32(hashCodeString);
+                int hashCode = 0;
+                try
+                {
+                    hashCode = Convert.ToInt32(hashCodeString);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 int index = 0;
 
                 System.Array enumValues = Enum.GetValues(type);

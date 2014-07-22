@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,22 @@ namespace ExportBitmap
 {
     class Program
     {
+        /// <summary>
+        /// Takes either a Symbol ID Code (SIDC) or a CSV filename as a command line argument
+        /// 
+        /// Makes these assumptions:
+        /// For SIDC:
+        /// if Length == 20 | Length == 8 ->  Delta Code (full or shortened) Supplied - export
+        /// if Length == 15 | Length == 10 -> Charlie Code (full or shortened) Supplied - convert to Delta, then export
+        /// 
+        /// For CSV File:
+        /// First Column (Column 0) has the SIDC
+        /// 
+        /// </summary>
         static void Main(string[] args)
         {
-            // string sidc = "25131800"; // Waypoint
-            string sidc = "10031004131204000000"; // Anti Tank Task Force
+            // string arg = "25131800"; // Waypoint
+            string arg = "10031004131204000000"; // Anti Tank Task Force
 
             if (args.Length < 1)
             {
@@ -34,28 +47,26 @@ namespace ExportBitmap
             }
             else
             {
-                sidc = args[0];
+                arg = args[0];
             }
 
-            // Set SVG Images Home if set in App Settings
-            string appSettingsSvgHomeKey = "SVGImagesHome";
-            var svgHomeFolderSetting = ConfigurationManager.AppSettings[appSettingsSvgHomeKey];
-            if (!string.IsNullOrWhiteSpace(svgHomeFolderSetting))
-            {
-                if (!Utilities.SetImageFilesHome(svgHomeFolderSetting))
-                {
-                    Console.WriteLine("App.config setting for SVGImagesHome does not exist, export failed!");
-                    Console.WriteLine("Setting: " + svgHomeFolderSetting);
-                    return;
-                }
-            }
-
-            if (!Utilities.CheckImageFilesHomeExists())
-            {
-                Console.WriteLine("Image folder does not exist, export failed!");
+            if (!CheckImageFolder())
                 return;
-            }
 
+            if (arg.Contains("csv")) // csv file supplied
+                ProcessCsv(arg);
+            else
+                ProcessSidc(arg);
+
+        }
+
+        static void Usage()
+        {
+            Console.WriteLine("ExportBitmap [SymbolIDCode]");
+        }
+
+        static void ProcessSidc(string sidc)
+        {
             if (sidc.Length == 20)
                 ExportFullSymbolId(sidc);
             else if (sidc.Length == 8)
@@ -63,13 +74,7 @@ namespace ExportBitmap
             else if ((sidc.Length == 15) || (sidc.Length == 10))
                 ExportCharlieSymbol(sidc);
             else
-                Usage();
-
-        }
-
-        static void Usage()
-        {
-            Console.WriteLine("ExportBitmap [SymbolIDCode]");
+                Console.WriteLine("Failed to recognize SIDC: " + sidc + ", Length = " + sidc.Length);
         }
 
         static void ExportSymbolId(SymbolIdCode id)
@@ -167,6 +172,64 @@ namespace ExportBitmap
             filepath += (sidc + IMAGE_FILE_EXTENSION);
 
             return filepath;
+        }
+
+        static bool CheckImageFolder()
+        {
+            // Set SVG Images Home if set in App Settings
+            string appSettingsSvgHomeKey = "SVGImagesHome";
+            var svgHomeFolderSetting = ConfigurationManager.AppSettings[appSettingsSvgHomeKey];
+            if (!string.IsNullOrWhiteSpace(svgHomeFolderSetting))
+            {
+                if (!Utilities.SetImageFilesHome(svgHomeFolderSetting))
+                {
+                    Console.WriteLine("App.config setting for SVGImagesHome does not exist, export failed!");
+                    Console.WriteLine("Setting: " + svgHomeFolderSetting);
+                    return false;
+                }
+            }
+
+            if (!Utilities.CheckImageFilesHomeExists())
+            {
+                Console.WriteLine("Image folder does not exist, export failed!");
+                return false;
+            }
+
+            return true;
+        }
+
+        static void ProcessCsv(string csvFile)
+        {
+            if (!File.Exists(csvFile))
+            {
+                Console.WriteLine("Could not find file: " + csvFile);
+                return;
+            }
+
+            bool firstRow = true;
+
+            foreach (string line in File.ReadLines(csvFile))
+            {
+                if (line.StartsWith("#")) // allow "#" comment character
+                    continue;
+
+                if (firstRow)  // skip 1st/Header Row
+                {
+                    firstRow = false;
+                    continue;
+                }
+
+                string[] values = line.Split(',');
+
+                // Providing this as a setting in case your csv SIDCs are not at index 0 
+                // & you don't want to change the data, just set this index
+                const int SIDC_INDEX = 0;
+                if (values.Length < (SIDC_INDEX + 1))
+                    continue;
+
+                string sidc = values[SIDC_INDEX];
+                ProcessSidc(sidc);
+            }
         }
     }
 }
