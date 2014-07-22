@@ -366,6 +366,65 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.NotSet, 'U' }
         };
 
+        public static Dictionary<StatusType, char> StatusToCharlieChar
+            = new Dictionary<StatusType, char>()
+        {
+            { StatusType.Present, 'P' },
+            { StatusType.Planned_Anticipated_Suspect, 'A' },
+            { StatusType.Present_Fully_Capable, 'C' },
+            { StatusType.Present_Damaged, 'D' },
+            { StatusType.Present_Destroyed, 'X' },
+            { StatusType.Present_Full_To_Capacity, 'F' },
+            { StatusType.NotSet, 'P' }
+        };
+
+        public static Dictionary<HeadquartersTaskForceDummyType, char> HqTfFdToCharlieChar
+            = new Dictionary<HeadquartersTaskForceDummyType, char>()
+        {
+            { HeadquartersTaskForceDummyType.NoHQTFDummyModifier, '-' },
+            { HeadquartersTaskForceDummyType.Feint_Dummy, 'F' },
+            { HeadquartersTaskForceDummyType.Headquarters, 'A' },
+            { HeadquartersTaskForceDummyType.Feint_Dummy_Headquarters, 'C' },
+            { HeadquartersTaskForceDummyType.Task_Force, 'E' },
+            { HeadquartersTaskForceDummyType.Feint_Dummy_Task_Force, 'G' },
+            { HeadquartersTaskForceDummyType.Task_Force_Headquarters, 'B' },
+            { HeadquartersTaskForceDummyType.Feint_Dummy_Task_Force_Headquarters, 'D' }
+        };
+
+        public static Dictionary<EchelonMobilityType, char> EchelonMobilityToCharlieChar
+            = new Dictionary<EchelonMobilityType, char>()
+        {
+            { EchelonMobilityType.NoEchelonMobility, '-' },
+            { EchelonMobilityType.Team_Crew, 'A' },
+            { EchelonMobilityType.Squad, 'B' },
+            { EchelonMobilityType.Section, 'C' },
+            { EchelonMobilityType.Platoon_Detachment, 'D' },
+            { EchelonMobilityType.Company_Battery_Troop, 'E' },
+            { EchelonMobilityType.Battalion_Squadron, 'F' },
+            { EchelonMobilityType.Regiment_Group, 'G' },
+            { EchelonMobilityType.Brigade, 'H' },
+            { EchelonMobilityType.Division, 'I' },
+            { EchelonMobilityType.Corps_MEF, 'J' },
+            { EchelonMobilityType.Army, 'K' },
+            { EchelonMobilityType.Army_Group_Front, 'L' },
+            { EchelonMobilityType.Region_Theater, 'M' },
+            { EchelonMobilityType.Command, 'M' },
+
+            { EchelonMobilityType.Wheeled_Limited_Cross_Country, 'O' },
+            { EchelonMobilityType.Wheeled_Cross_Country, 'P' },
+            { EchelonMobilityType.Tracked, 'Q' },
+            { EchelonMobilityType.Wheeled_And_Tracked_Combination, 'R' },
+            { EchelonMobilityType.Towed, 'S' },
+            { EchelonMobilityType.Rail, 'T' },
+            { EchelonMobilityType.Pack_Animals, 'W' },
+            { EchelonMobilityType.Over_Snow_Prime_Mover, 'U' },
+            { EchelonMobilityType.Sled, 'V' },
+            { EchelonMobilityType.Barge, 'X' },
+            { EchelonMobilityType.Amphibious, 'Y' },
+            { EchelonMobilityType.Short_Towed_Array, '-' },
+            { EchelonMobilityType.Long_Towed_Array, '-' }
+        };
+
         /// <summary>
         /// A very general purpose enum, string, int converter class
         /// Not all of these methods are used by this library

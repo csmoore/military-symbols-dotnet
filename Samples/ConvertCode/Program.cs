@@ -24,9 +24,9 @@ namespace ConvertCode
         static void Main(string[] args)
         {
             // Sample Test Case/Mapping
-            // SFGPUCIL-------, 10011000001211000019, ( (10, 01, 10, 0, 0, 00), (121100, 00, 19) )
-            string sidc = "10031000001211000019";                      
-            // string sidc = "SFGPUCIL-------";
+            // SFGAUCIL--AA---, 10031012111211000019, ( (10, 03, 10, 1, 2, 11), (121100, 00, 19) )
+            string sidc = "10031012111211000019";       
+            // string sidc = "SFGPUCIL--AA---";
 
             if (args.Length < 1)
             {

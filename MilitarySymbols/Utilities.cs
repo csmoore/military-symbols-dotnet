@@ -78,11 +78,16 @@ namespace MilitarySymbols
         {
             code2525Delta = SymbolIdCode.DefaultSymbolIdCode;
 
+            if (code2525Charlie.Length < 10)
+                return false;
+
+            string code2525CharlieUpper = code2525Charlie.ToUpper();
+
             SymbolLookup codeLookup = getSymbolLookup();
 
             string symbolSetString, entityString, mod1String, mod2String;
 
-            bool success = codeLookup.GetDeltaCodeFromCharlie(code2525Charlie, out symbolSetString,
+            bool success = codeLookup.GetDeltaCodeFromCharlie(code2525CharlieUpper, out symbolSetString,
                 out entityString, out mod1String, out mod2String);
 
             if (!success || string.IsNullOrEmpty(symbolSetString) || string.IsNullOrEmpty(entityString))
@@ -95,6 +100,49 @@ namespace MilitarySymbols
                 code2525Delta.FirstModifier = mod1String;
             if (!string.IsNullOrEmpty(mod2String))
                 code2525Delta.SecondModifier = mod2String;
+
+            char affilChar = code2525CharlieUpper[1];
+            foreach (KeyValuePair<StandardIdentityAffiliationType, char> kvp in TypeUtilities.AffiliationToCharlieChar)
+            {
+                if (kvp.Value == affilChar)
+                {
+                    code2525Delta.Affiliation = kvp.Key;
+                    break;
+                }
+            }
+
+            char planningChar = code2525CharlieUpper[3];
+            foreach (KeyValuePair<StatusType, char> kvp in TypeUtilities.StatusToCharlieChar)
+            {
+                if (kvp.Value == planningChar)
+                {
+                    code2525Delta.Status = kvp.Key;
+                    break;
+                }
+            }
+
+            if (code2525Charlie.Length < 12) // allow codes to be 10 or 15, but don't go past here if not > 12
+                return true;
+
+            char hqFdTfChar = code2525CharlieUpper[10];
+            foreach (KeyValuePair<HeadquartersTaskForceDummyType, char> kvp in TypeUtilities.HqTfFdToCharlieChar)
+            {
+                if (kvp.Value == hqFdTfChar)
+                {
+                    code2525Delta.HeadquartersTaskForceDummy = kvp.Key;
+                    break;
+                }
+            }
+
+            char echelonChar = code2525CharlieUpper[11];
+            foreach (KeyValuePair<EchelonMobilityType, char> kvp in TypeUtilities.EchelonMobilityToCharlieChar)
+            {
+                if (kvp.Value == echelonChar)
+                {
+                    code2525Delta.EchelonMobility = kvp.Key;
+                    break;
+                }
+            }
 
             return true;
         }
@@ -122,6 +170,7 @@ namespace MilitarySymbols
                 return false;
 
             char charlieAffilationChar = TypeUtilities.AffiliationToCharlieChar[code2525Delta.Affiliation];
+
             // TODO: get/set planning, echelon, other
             
             char replaceChar1 = charlieAffilationChar;
@@ -132,9 +181,11 @@ namespace MilitarySymbols
             sbCharlieCode.Append(code2525CharlieFromLookup[0]);
             sbCharlieCode.Append(replaceChar1);
             sbCharlieCode.Append(code2525CharlieFromLookup[2]); 
-            sbCharlieCode.Append('P'); // TODO
+            sbCharlieCode.Append(TypeUtilities.StatusToCharlieChar[code2525Delta.Status]); 
             sbCharlieCode.Append(code2525CharlieFromLookup.Substring(4, 6));
-            sbCharlieCode.Append("-----"); // TODO:
+            sbCharlieCode.Append(TypeUtilities.HqTfFdToCharlieChar[code2525Delta.HeadquartersTaskForceDummy]);
+            sbCharlieCode.Append(TypeUtilities.EchelonMobilityToCharlieChar[code2525Delta.EchelonMobility]); 
+            sbCharlieCode.Append("---"); 
 
             code2525Charlie = sbCharlieCode.ToString();
 

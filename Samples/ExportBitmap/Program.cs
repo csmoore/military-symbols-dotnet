@@ -60,6 +60,8 @@ namespace ExportBitmap
                 ExportFullSymbolId(sidc);
             else if (sidc.Length == 8)
                 ExportSymbolSetEntityCode(sidc);
+            else if ((sidc.Length == 15) || (sidc.Length == 10))
+                ExportCharlieSymbol(sidc);
             else
                 Usage();
 
@@ -136,7 +138,22 @@ namespace ExportBitmap
 
             sidc.Affiliation = StandardIdentityAffiliationType.Unknown;
             ExportSymbolId(sidc);
+        }
 
+        static void ExportCharlieSymbol(string code2525Charlie)
+        {
+            SymbolIdCode sidc = new SymbolIdCode();
+
+            bool success = Utilities.ConvertCodeCharlieToDelta(code2525Charlie, out sidc);
+
+            if (!success)
+            {
+                Console.WriteLine("Could not convert to Delta SIDC: " + code2525Charlie);
+                return;
+            }
+
+            Console.Write("2525C: " + code2525Charlie + ", ");
+            ExportFullSymbolId(sidc.Code);
         }
 
         static string getFullFileName(string sidc)
