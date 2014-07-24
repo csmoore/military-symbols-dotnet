@@ -89,6 +89,9 @@ namespace MilitarySymbols
                 if (this.Shape != ShapeType.Unknown)
                     tags.Add(this.Shape.ToString());
 
+                if (!string.IsNullOrEmpty(this.Legacy2525Code))
+                    tags.Add(this.Legacy2525Code);
+
                 // TODO: Add Other Desired Tags
 
 
@@ -130,22 +133,27 @@ namespace MilitarySymbols
             sb.Append(":Geometry:");
             sb.Append(this.Shape);
 
-            if (Tags.Count > 0)
-            {
-                sb.Append(":Tags:");
-                foreach (string s in Tags)
-                {
-                    sb.Append(s);
-                    sb.Append(":");
-                }
-            }
-
             if (GraphicLayers.Count > 0)
             {
                 sb.Append(":GraphicLayers:");
                 foreach (string gl in GraphicLayers)
                 {
                     sb.Append(gl);
+                    sb.Append(":");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(Legacy2525Code))
+            {
+                sb.Append("2525C:");
+                sb.Append(Legacy2525Code);
+            }
+            if (Tags.Count > 0)
+            {
+                sb.Append(":Tags:");
+                foreach (string s in Tags)
+                {
+                    sb.Append(s);
                     sb.Append(":");
                 }
             }

@@ -25,12 +25,17 @@ namespace ExportBitmap
     class Program
     {
         /// <summary>
-        /// Takes either a Symbol ID Code (SIDC) or a CSV filename as a command line argument
+        /// As a command line argument, takes either:
+        /// {Symbol ID Code (SIDC)} 
+        /// {CSV filename} 
+        /// {"ALL"} 
+        /// {SymbolSet Code}, ex: "10"
         /// 
         /// Makes these assumptions:
         /// For SIDC:
         /// if Length == 20 | Length == 8 ->  Delta Code (full or shortened) Supplied - export
         /// if Length == 15 | Length == 10 -> Charlie Code (full or shortened) Supplied - convert to Delta, then export
+        /// if Length == 2 -> Export all  Delta Codes from that Symbol Set Code
         /// 
         /// For CSV File:
         /// First Column (Column 0) has the SIDC
@@ -53,16 +58,18 @@ namespace ExportBitmap
             if (!CheckImageFolder())
                 return;
 
-            if (arg.Contains("csv")) // csv file supplied
+            if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
+                ProcessAll(arg);
+            else if (arg.EndsWith("csv")) // csv file supplied
                 ProcessCsv(arg);
-            else
-                ProcessSidc(arg);
+            else                          // export a single code
+                ProcessSidc(arg); 
 
         }
 
         static void Usage()
         {
-            Console.WriteLine("ExportBitmap [SymbolIDCode]");
+            Console.WriteLine("ExportBitmap [SymbolIDCode | {Filename}.csv | ALL | {SymbolSet Code}]");
         }
 
         static void ProcessSidc(string sidc)
@@ -89,11 +96,12 @@ namespace ExportBitmap
 
             if (!success || (exportBitmap == null))
             {
-                Console.WriteLine("Export failed!");
+                Console.WriteLine("Export failed for ID:" + id.ShortenedCode);
                 return;
             }
 
-            string filepath = getFullFileName(id.Code);
+            string imageFileName = Utilities.GetHumanReadableCode(id);
+            string filepath = getFullFileName(imageFileName);
 
             Console.WriteLine("Exporting File: " + filepath);
 
@@ -130,19 +138,21 @@ namespace ExportBitmap
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
             sidc.FullEntityCode = symbolSetEntityCode.Substring(2, 6);
 
-            // Export all 4 affiliations if only SymbolSet & EntityCode supplied
-
             sidc.Affiliation = StandardIdentityAffiliationType.Friend;
             ExportSymbolId(sidc);
 
-            sidc.Affiliation = StandardIdentityAffiliationType.Hostile;
-            ExportSymbolId(sidc);
+            // Export all 4 affiliations if only SymbolSet & EntityCode supplied (& has frame)
+            if (TypeUtilities.HasFrame(sidc.SymbolSet))
+            {
+                sidc.Affiliation = StandardIdentityAffiliationType.Hostile;
+                ExportSymbolId(sidc);
 
-            sidc.Affiliation = StandardIdentityAffiliationType.Neutral;
-            ExportSymbolId(sidc);
+                sidc.Affiliation = StandardIdentityAffiliationType.Neutral;
+                ExportSymbolId(sidc);
 
-            sidc.Affiliation = StandardIdentityAffiliationType.Unknown;
-            ExportSymbolId(sidc);
+                sidc.Affiliation = StandardIdentityAffiliationType.Unknown;
+                ExportSymbolId(sidc);
+            }
         }
 
         static void ExportCharlieSymbol(string code2525Charlie)
@@ -231,5 +241,43 @@ namespace ExportBitmap
                 ProcessSidc(sidc);
             }
         }
+
+        static void ProcessAll(string symbolSetAsString)
+        {
+            SymbolSetType symbolSet = SymbolSetType.NotSet;
+
+            if (symbolSetAsString.Length == 2)
+               symbolSet = (SymbolSetType)TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetAsString);
+
+            List<MilitarySymbol> matchingSymbols = Utilities.GetMilitarySymbols(symbolSet);
+
+            if (matchingSymbols.Count == 0)
+                Console.WriteLine("No Symbols found for Set: " + symbolSetAsString);
+
+            foreach (MilitarySymbol matchSymbol in matchingSymbols)
+            {
+                Console.Write("SimpleCode=" + Utilities.GetHumanReadableCode(matchSymbol.Id));
+                Console.Write(", Name=" + matchSymbol.Id.Name);
+                Console.WriteLine(", Tags=" + matchSymbol.TagsAsString);
+
+                // Unknown
+                ExportSymbolId(matchSymbol.Id);
+
+                // Export each affiliation if it has a frame
+                if (TypeUtilities.HasFrame(matchSymbol.Id.SymbolSet))
+                {
+                    matchSymbol.Id.Affiliation = StandardIdentityAffiliationType.Friend;
+                    ExportSymbolId(matchSymbol.Id);
+
+                    matchSymbol.Id.Affiliation = StandardIdentityAffiliationType.Hostile;
+                    ExportSymbolId(matchSymbol.Id);
+
+                    matchSymbol.Id.Affiliation = StandardIdentityAffiliationType.Neutral;
+                    ExportSymbolId(matchSymbol.Id);
+                }
+            }
+
+        }
+
     }
 }

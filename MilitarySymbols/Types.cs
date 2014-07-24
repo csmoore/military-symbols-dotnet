@@ -53,7 +53,6 @@ namespace MilitarySymbols
         Neutral = 4,
         Suspect_Joker = 5,
         Hostile = 6,       // + Faker
-        Assumed_Neutral = 7,  // NOTE: I invented this one to have a neutral planning frame
         Invalid = 8,
         NotSet = 9
     }
@@ -227,6 +226,7 @@ namespace MilitarySymbols
             return zeroPaddedString;
         }
 
+        // Mapping the SymbolSet to the "Dimension" or expected frame
         public static Dictionary<SymbolSetType, SymbolSetType> SymbolSetToFrameMapping 
             = new Dictionary<SymbolSetType, SymbolSetType>()
         {  
@@ -315,26 +315,11 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, StandardIdentityAffiliationType.Neutral },            
             { StandardIdentityAffiliationType.Suspect_Joker, StandardIdentityAffiliationType.Hostile },
             { StandardIdentityAffiliationType.Hostile, StandardIdentityAffiliationType.Hostile },
-            { StandardIdentityAffiliationType.Assumed_Neutral, StandardIdentityAffiliationType.Neutral },            
             { StandardIdentityAffiliationType.Invalid, StandardIdentityAffiliationType.Unknown },
             { StandardIdentityAffiliationType.NotSet, StandardIdentityAffiliationType.Unknown }
         };
 
-        public static Dictionary<StandardIdentityAffiliationType, StandardIdentityAffiliationType>
-            AffiliationToPlanningFrameMapping = new Dictionary<StandardIdentityAffiliationType, StandardIdentityAffiliationType>()
-        {
-            { StandardIdentityAffiliationType.Pending, StandardIdentityAffiliationType.Pending },
-            { StandardIdentityAffiliationType.Unknown, StandardIdentityAffiliationType.Pending },
-            { StandardIdentityAffiliationType.Assumed_Friend, StandardIdentityAffiliationType.Assumed_Friend },
-            { StandardIdentityAffiliationType.Friend, StandardIdentityAffiliationType.Assumed_Friend },
-            { StandardIdentityAffiliationType.Neutral, StandardIdentityAffiliationType.Assumed_Neutral },            
-            { StandardIdentityAffiliationType.Suspect_Joker, StandardIdentityAffiliationType.Suspect_Joker },
-            { StandardIdentityAffiliationType.Hostile, StandardIdentityAffiliationType.Suspect_Joker },
-            { StandardIdentityAffiliationType.Assumed_Neutral, StandardIdentityAffiliationType.Assumed_Neutral },            
-            { StandardIdentityAffiliationType.Invalid, StandardIdentityAffiliationType.Pending },
-            { StandardIdentityAffiliationType.NotSet, StandardIdentityAffiliationType.Pending }
-        };
-
+        // The suffix used for those center icons that need to touch the frame
         // Decoder _0 - Unknown, _1 - Friend, _2 - Neutral, _3 - Hostile
         public static Dictionary<StandardIdentityAffiliationType, string> AffiliationFrameToSuffixName 
             = new Dictionary<StandardIdentityAffiliationType, string>()
@@ -346,7 +331,6 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, "_2" },
             { StandardIdentityAffiliationType.Suspect_Joker, "_3" },
             { StandardIdentityAffiliationType.Hostile, "_3" },
-            { StandardIdentityAffiliationType.Assumed_Neutral, "_2" },
             { StandardIdentityAffiliationType.Invalid, "_0" },
             { StandardIdentityAffiliationType.NotSet, "_0" }
         };
@@ -361,7 +345,6 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, 'N' },
             { StandardIdentityAffiliationType.Suspect_Joker, 'S' },
             { StandardIdentityAffiliationType.Hostile, 'H' },
-            { StandardIdentityAffiliationType.Assumed_Neutral, 'N' },
             { StandardIdentityAffiliationType.Invalid, 'U' },
             { StandardIdentityAffiliationType.NotSet, 'U' }
         };

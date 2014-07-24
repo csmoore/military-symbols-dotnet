@@ -191,6 +191,67 @@ namespace MilitarySymbols
 
             return true;
         }
+
+        /// <summary>
+        /// Returns all symbols within a symbol set (affiliation will be set to Unknown)
+        /// </summary>
+        /// <param name="symbolSet">(symbolSet == NotSet) returns all symbols</param>
+        /// <returns></returns>
+        public static List<MilitarySymbol> GetMilitarySymbols(SymbolSetType symbolSet = SymbolSetType.NotSet)
+        {
+            SymbolLookup milSymbolLookup = getSymbolLookup();
+
+            List<MilitarySymbol> matchingSymbols = milSymbolLookup.GetMilitarySymbols(symbolSet);
+
+            return matchingSymbols;
+        }
+
+        /// <summary>
+        /// Creates an easier to read code, eliminates unset attributes
+        /// </summary>
+        public static string GetHumanReadableCode(SymbolIdCode id, bool showAffiliation = true)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.SymbolSet, 2));
+            sb.Append("_");
+            sb.Append(id.FullEntityCode);
+
+            if (showAffiliation)
+            {
+                sb.Append("_");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.Affiliation));
+            }
+
+            if ((id.FirstModifier != "00") || (id.SecondModifier != "00"))
+            {
+                sb.Append("_M1-");
+                sb.Append(id.FirstModifier);
+                sb.Append("_M2-");
+                sb.Append(id.SecondModifier);
+            }
+
+            if (id.Status != StatusType.Present)
+            {
+                sb.Append("_S-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.Status));
+            }
+
+            if (id.HeadquartersTaskForceDummy != HeadquartersTaskForceDummyType.NoHQTFDummyModifier)
+            {
+                sb.Append("_HQ-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.HeadquartersTaskForceDummy));
+            }
+
+            if (id.EchelonMobility != EchelonMobilityType.NoEchelonMobility)
+            {
+                sb.Append("_EM-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.EchelonMobility));
+            }
+
+            return sb.ToString();
+        }
+
        
         public static SymbolLookup getSymbolLookup()
         {

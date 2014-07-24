@@ -478,14 +478,7 @@ namespace MilitarySymbols
 
             sb.Append("0_"); // TODO change to 1_, 2_ for Sim, Exercise
 
-            StandardIdentityAffiliationType mappedAffiliation = affiliation;
-            if (status == StatusType.Planned_Anticipated_Suspect)
-            {
-                // if a planning symbol, we need to swap out the affiliation
-                mappedAffiliation = TypeUtilities.AffiliationToPlanningFrameMapping[affiliation];
-            }
-
-            string affiliationString = TypeUtilities.EnumHelper.getEnumValAsString(mappedAffiliation, 1);
+            string affiliationString = TypeUtilities.EnumHelper.getEnumValAsString(affiliation, 1);
             sb.Append(affiliationString);
 
             // map the actual symbolSet to the supported/available frame
@@ -493,6 +486,18 @@ namespace MilitarySymbols
 
             string mappedSymbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(mappedSymbolSet, 2);
             sb.Append(mappedSymbolSetString);
+
+            string status_suffix = "_0"; // normal case
+
+            // Planned / Present Status (but only for standard/non-anticipated frames)
+            if (status == StatusType.Planned_Anticipated_Suspect)
+                if ((affiliation == StandardIdentityAffiliationType.Friend) ||
+                    (affiliation == StandardIdentityAffiliationType.Hostile) ||
+                    (affiliation == StandardIdentityAffiliationType.Neutral) ||
+                    (affiliation == StandardIdentityAffiliationType.Unknown))
+                    status_suffix = "_1";
+
+            sb.Append(status_suffix);
 
             sb.Append(ImageSuffix);
 

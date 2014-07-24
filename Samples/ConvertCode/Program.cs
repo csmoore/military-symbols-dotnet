@@ -23,12 +23,17 @@ namespace ConvertCode
     class Program
     {
         /// <summary>
-        /// Takes either a Symbol ID Code (SIDC) or a CSV filename as a command line argument
+        /// As a command line argument, takes either:
+        /// {Symbol ID Code (SIDC)} 
+        /// {CSV filename} 
+        /// {"ALL"} 
+        /// {SymbolSet Code}, ex: "10"
         /// 
         /// Makes these assumptions:
         /// For SIDC:
         /// if Length == 20 | Length == 8 ->  Delta Code (full or shortened) Supplied - convert to Charlie
         /// if Length == 15 | Length == 10 -> Charlie Code (full or shortened) Supplied - convert to Delta
+        /// if Length == 2 -> Convert all  Delta Codes from that Symbol Set Code
         /// 
         /// For CSV File:
         /// First Column (Column 0) has the SIDC
@@ -38,7 +43,7 @@ namespace ConvertCode
         {
             // Sample Test Case/Mapping
             // SFGAUCIL--AA---, 10031012111211000019, ( (10, 03, 10, 1, 2, 11), (121100, 00, 19) )
-            string arg = "10031012111211000019";       
+            string arg = "1003101211" + "1211000019";       
             // string arg = "SFGPUCIL--AA---";
 
             if (args.Length < 1)
@@ -50,7 +55,9 @@ namespace ConvertCode
                 arg = args[0];
             }
 
-            if (arg.Contains("csv")) // csv file supplied
+            if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
+                ProcessAll(arg);
+            else if (arg.EndsWith("csv")) // csv file supplied
                 ProcessCsv(arg);
             else
                 ProcessSidc(arg);
@@ -58,7 +65,7 @@ namespace ConvertCode
 
         static void Usage()
         {
-            Console.WriteLine("ConvertCodes [SymbolIDCode]");
+            Console.WriteLine("ConvertCodes [SymbolIDCode | {Filename}.csv | ALL | {SymbolSet Code}]");
         }
 
         static void ProcessSidc(string sidc)
@@ -71,7 +78,7 @@ namespace ConvertCode
                 Console.WriteLine("Failed to recognize SIDC: " + sidc + ", Length = " + sidc.Length);
         }
 
-        static void ConvertDeltaToCharlie(string sidcString)
+        static void ConvertDeltaToCharlie(string sidcString, bool newline = true)
         {
             SymbolIdCode sidc = new SymbolIdCode();
 
@@ -91,7 +98,13 @@ namespace ConvertCode
             string code2525Charlie;
             bool success = Utilities.ConvertCodeDeltaToCharlie(sidc, out code2525Charlie);
 
-            Console.WriteLine(sidcString + "," + code2525Charlie);
+            string simpleCode = Utilities.GetHumanReadableCode(sidc);
+
+            Console.Write(code2525Charlie + "," + simpleCode + ","
+                + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
+
+            if (newline)
+                Console.WriteLine();
         }
 
         static void ConvertCharlieToDelta(string code2525Charlie)
@@ -100,8 +113,7 @@ namespace ConvertCode
 
             bool success = Utilities.ConvertCodeCharlieToDelta(code2525Charlie, out sidc);
 
-            string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(sidc.SymbolSet, 2);
-            string simpleCode = symbolSetString + sidc.FullEntityCode;
+            string simpleCode = Utilities.GetHumanReadableCode(sidc);
 
             if (success)
                 Console.WriteLine(code2525Charlie + "," + simpleCode + ","
@@ -144,5 +156,27 @@ namespace ConvertCode
             }
         }
 
+        static void ProcessAll(string symbolSetAsString)
+        {
+            SymbolSetType symbolSet = SymbolSetType.NotSet;
+
+            if (symbolSetAsString.Length == 2)
+                symbolSet = (SymbolSetType)TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetAsString);
+
+            List<MilitarySymbol> matchingSymbols = Utilities.GetMilitarySymbols(symbolSet);
+
+            if (matchingSymbols.Count == 0)
+                Console.WriteLine("No Symbols found for Set: " + symbolSetAsString);
+
+            foreach (MilitarySymbol matchSymbol in matchingSymbols)
+            {
+                ConvertDeltaToCharlie(matchSymbol.Id.Code, false);
+
+                Console.Write("," + Utilities.GetHumanReadableCode(matchSymbol.Id, false));
+                Console.Write("," + matchSymbol.Id.Name);
+                Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
+            }
+
+        }
     }
 }

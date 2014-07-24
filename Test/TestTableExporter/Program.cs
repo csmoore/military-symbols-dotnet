@@ -231,7 +231,7 @@ namespace TestMilitarySymbolsLibrary
                 // Copying so making ref below useless, but had to do this because of use of iterator/ref
                 MilitarySymbol currentMilSymbol = matchSymbol;
 
-                // IMPORTANT: SKIPPING ALL POINTS CURRENTLY
+                // IMPORTANT: SKIPPING ALL NON-POINTS CURRENTLY
                 if (currentMilSymbol.Shape != ShapeType.Point)
                 {
                     System.Diagnostics.Trace.WriteLine("Skipping export of non-point: Name=" + matchSymbol.Id.Name);

@@ -40,11 +40,9 @@ namespace MilitarySymbols
         }
 
 
-        public static string GetWellFormedName(SymbolSetType symbolSet, string entityPart,
+        public static string GetWellFormedName(string symbolSetName, string entityPart,
             string entityTypePart, string entitySubTypePart)
         {
-            string symbolSetName = symbolSet.ToString().Replace("_", " ");
-
             StringBuilder nameBuilder = new StringBuilder();
 
             if (!string.IsNullOrEmpty(symbolSetName) && symbolSetName.Length > 0)
@@ -73,8 +71,9 @@ namespace MilitarySymbols
 
         /// <summary>
         /// Search based on the one or more attributes supplied
+        /// Default param (symbolSet == NotSet) returns all symbols with affiliation set to Unknown
         /// </summary>
-        public List<MilitarySymbol> GetMilitarySymbols(SymbolSetType symbolSet,
+        public List<MilitarySymbol> GetMilitarySymbols(SymbolSetType symbolSet = SymbolSetType.NotSet,
             StandardIdentityAffiliationType affiliation = StandardIdentityAffiliationType.Unknown,
             string entityNameString = "", string entityTypeNameString = "", 
             string entitySubTypeNameString = "", bool exactEntityMatchOnly = false)
@@ -91,6 +90,10 @@ namespace MilitarySymbols
             var results = from row in EntityTable.AsEnumerable()
                       where (row.Field<string>("SymbolSet") == symbolSetToSearch)
                       select row;
+
+            if (symbolSet == SymbolSetType.NotSet)
+                results = from row in EntityTable.AsEnumerable()
+                          select row;
 
             // Check that search returned something
             int resultCount = results.Count();
@@ -154,15 +157,16 @@ namespace MilitarySymbols
                 string entityCode = row["Code"] as string;
                 string geoType = row["GeometryType"] as string;
 
-                string entityPart = row["Entity"] as string;
-                string entityTypePart = row["EntityType"] as string;
-                string entitySubTypePart = row["EntitySubType"] as string;
+                string entityName = row["Entity"] as string;
+                string entityTypeName = row["EntityType"] as string;
+                string entitySubTypeName = row["EntitySubType"] as string;
 
-                MilitarySymbol createSymbol = CreateSymbolFromStringProperties(symbolSet, 
+                MilitarySymbol createSymbol = CreateSymbolFromStringProperties( 
                     affiliation, symbolSetString, entityCode, geoType,
-                    entityPart, entityTypePart, entitySubTypePart);
+                    entityName, entityTypeName, entitySubTypeName);
 
-                symbolList.Add(createSymbol);
+                if (createSymbol != null)
+                    symbolList.Add(createSymbol);
             }
 
             return symbolList;
@@ -456,16 +460,16 @@ namespace MilitarySymbols
             foreach (DataRow row in results)
             {
                 string symbolSetString = row["SymbolSet"] as string;
-                string entityCode = row["Code"] as string;
-                string geoType = row["GeometryType"] as string;
+                string entityCode      = row["Code"] as string;
+                string geoType         = row["GeometryType"] as string;
 
-                string entityPart        = row["Entity"] as string;
-                string entityTypePart    = row["EntityType"] as string;
-                string entitySubTypePart = row["EntitySubType"] as string;
+                string entityNameFromLookup        = row["Entity"] as string;
+                string entityTypeNameFromLookup    = row["EntityType"] as string;
+                string entitySubTypeNameFromLookup = row["EntitySubType"] as string;
 
-                retSymbol = CreateSymbolFromStringProperties(symbolSet, 
+                retSymbol = CreateSymbolFromStringProperties(
                     affiliation, symbolSetString, entityCode, geoType,
-                    entityPart, entityTypePart, entitySubTypePart);
+                    entityNameFromLookup, entityTypeNameFromLookup, entitySubTypeNameFromLookup);
 
                 // TODO: figure out what to do if we get more than 1 result
                 break;
@@ -475,11 +479,25 @@ namespace MilitarySymbols
         }
 
         public MilitarySymbol CreateSymbolFromStringProperties(
-            SymbolSetType symbolSet,
+            // SymbolSetType symbolSet,
             StandardIdentityAffiliationType affiliation,
             string symbolSetString, string entityCode, string geoType,
-            string entityPart, string entityTypePart, string entitySubTypePart)
+            string entityName, string entityTypeName, string entitySubTypeName)
         {
+
+            if ((string.IsNullOrEmpty(symbolSetString) || symbolSetString.Length != 2))
+            {
+                System.Diagnostics.Trace.WriteLine("CreateSymbolFromStringProperties - Bad Symbol Set Code");
+                return null;
+            }
+
+            if ((string.IsNullOrEmpty(entityCode) || entityCode.Length != 6))
+            {
+                System.Diagnostics.Trace.WriteLine("CreateSymbolFromStringProperties - Bad Entity Code");
+                return null;
+            }
+
+
             MilitarySymbol retSymbol = new MilitarySymbol();
 
             SymbolIdCode sidc = new SymbolIdCode();
@@ -487,10 +505,19 @@ namespace MilitarySymbols
             sidc.SymbolSetAsString = symbolSetString;
             sidc.FullEntityCode = entityCode;
 
-            sidc.Name = GetWellFormedName(symbolSet, entityPart, entityTypePart, entitySubTypePart);
+            SymbolSetType symbolSet = (SymbolSetType)
+                TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
+
+            string symbolSetName = TypeUtilities.EnumHelper.getStringFromEnum(symbolSet);
+            sidc.Name = GetWellFormedName(symbolSetName, entityName, entityTypeName, entitySubTypeName);
 
             retSymbol.Id = sidc;
             retSymbol.Shape = (ShapeType)TypeUtilities.EnumHelper.getEnumFromString(typeof(ShapeType), geoType);
+
+            string charlieCode;
+            bool canConvertToCharlie = GetCharlieCodeFromDelta(symbolSetString, entityCode, "00", "00", out charlieCode);
+            if (canConvertToCharlie)
+                retSymbol.Legacy2525Code = charlieCode;
 
             return retSymbol;
         }
@@ -513,7 +540,8 @@ namespace MilitarySymbols
             int resultCount = results.Count();
             if (resultCount < 1)
             {
-                // Try one more time without modifiers
+                // Try one more time without modifiers 
+                // (TODO: this is a bit inefficient - if performance is a problem - refactor)
                 results = from row in LegacyCodeMappingTable.AsEnumerable()
                           where (row.Field<string>("2525DeltaSymbolSet") == symbolSetString)
                                 & (row.Field<string>("2525DeltaEntity") == entityString)
@@ -523,9 +551,15 @@ namespace MilitarySymbols
             resultCount = results.Count();
             if (resultCount < 1)
             {
-                System.Diagnostics.Trace.WriteLine("Delta Code not found: " + symbolSetString
-                    + " : " + entityString + " : " + mod1String + " : " + mod2String);
+                // Uncomment if you want this info, but this is a normal result for many symbols
+                // System.Diagnostics.Trace.WriteLine("Charlie Code not found: " + symbolSetString
+                //    + " : " + entityString + " : " + mod1String + " : " + mod2String);
                 return false;
+            }
+            else if (resultCount > 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Warning > 1, Charlie Code not found, may not be correct: " 
+                    + symbolSetString + " : " + entityString + " : " + mod1String + " : " + mod2String);
             }
 
             foreach (DataRow row in results)

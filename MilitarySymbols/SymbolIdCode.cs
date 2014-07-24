@@ -68,6 +68,29 @@ namespace MilitarySymbols
         }
         protected string code = null;
 
+        /// <summary>
+        /// The most significant portions of the Code: symbol set, entity & modifier (if set)
+        /// </summary>
+        public string ShortenedCode
+        {
+            get
+            {
+                StringBuilder sbCode = new StringBuilder();
+                // SymbolSet (Digits 5 & 6)
+                sbCode.Append(TypeUtilities.EnumHelper.getEnumValAsString(this.SymbolSet, 2));
+                // EntityCode (Digit 11-16)
+                sbCode.Append(FullEntityCode);
+
+                if (FirstModifier != "00")
+                    sbCode.Append(FirstModifier);
+
+                if (SecondModifier != "00")
+                    sbCode.Append(FirstModifier);
+
+                return sbCode.ToString();
+            }
+        }
+
         // HACK: Having this "Name" Attribute here is somewhat of a hack
         // It just allows a readable form of this to be set like:
         // "SymbolSet : Entity : EntityType : EntitySubType : Modifier1 : Modifier2"

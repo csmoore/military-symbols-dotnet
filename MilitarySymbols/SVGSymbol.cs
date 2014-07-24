@@ -42,12 +42,22 @@ namespace MilitarySymbols
                     continue;
                 }
 
-                System.Diagnostics.Debug.WriteLine("Drawing SVG layer: "
-                        + graphicLayer);
+                // Uncomment if you want to see the layers drawn:
+                // System.Diagnostics.Debug.WriteLine("Drawing SVG layer: " + graphicLayer);
 
-                SvgDocument document = GetSvgDoc(graphicLayer);
+                try
+                {
+                    SvgDocument document = GetSvgDoc(graphicLayer);
 
-                document.Draw(bitmap);
+                    document.Draw(bitmap);
+                }
+                catch (Exception ex)
+                {
+                    // TODO: figure out why SVG is now crashing on some (ex. 25214700)
+                    System.Diagnostics.Trace.WriteLine("Exception drawing SVG layer: " + graphicLayer);
+                    bitmap = null;
+                    break;
+                }
             }
 
             // TODO: figure out why image is not centered....
