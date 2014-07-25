@@ -79,13 +79,13 @@ namespace MilitarySymbols
                 // SymbolSet (Digits 5 & 6)
                 sbCode.Append(TypeUtilities.EnumHelper.getEnumValAsString(this.SymbolSet, 2));
                 // EntityCode (Digit 11-16)
-                sbCode.Append(FullEntityCode);
+                sbCode.Append(EntityCode);
 
-                if (FirstModifier != "00")
-                    sbCode.Append(FirstModifier);
+                if (ModifierOne != "00")
+                    sbCode.Append(ModifierOne);
 
-                if (SecondModifier != "00")
-                    sbCode.Append(FirstModifier);
+                if (ModifierTwo != "00")
+                    sbCode.Append(ModifierOne);
 
                 return sbCode.ToString();
             }
@@ -234,7 +234,7 @@ namespace MilitarySymbols
         // Sector 2 modifier (Digits 19 and 20)
         //
 
-        public string Entity //  (Digit 11-12)
+        public string EntityField //  (Digit 11-12)
         {
             get
             {
@@ -243,12 +243,16 @@ namespace MilitarySymbols
             set
             {
                 string checkString = value;
+                // An unfortunate side-effect of having 2 similarly-named "Entity"
+                if (checkString.Length == 6)
+                    System.Diagnostics.Trace.WriteLine("Appear to be setting wrong field: Use `EntityCode`");
+
                 entity = TypeUtilities.ValidateAndZeroPad(checkString, 2);
             }
         }
         protected string entity = "00";
 
-        public string EntityType //  (Digit 13-14)
+        public string EntityTypeField //  (Digit 13-14)
         {
             get
             {
@@ -262,7 +266,7 @@ namespace MilitarySymbols
         }
         protected string entityType = "00";
 
-        public string EntitySubType //  (Digit 13-14)
+        public string EntitySubTypeField //  (Digit 13-14)
         {
             get
             {
@@ -276,49 +280,52 @@ namespace MilitarySymbols
         }
         protected string entitySubType = "00";
 
-        public string FullEntityCode //  (Digit 11-16)  (property for convenience)
+        /// <summary>
+        /// The FULL/Complete 6-character Entity Code (Digit 11-16)  
+        /// </summary>
+        public string EntityCode 
         {
             get
             {
-                return Entity + EntityType + EntitySubType;
+                return EntityField + EntityTypeField + EntitySubTypeField;
             }
             set
             {
                 string checkString = value;
                 string fullCode = TypeUtilities.ValidateAndZeroPad(checkString, 6);
-                Entity        = fullCode.Substring(0, 2);
-                EntityType    = fullCode.Substring(2, 2);
-                EntitySubType = fullCode.Substring(4, 2);
+                EntityField        = fullCode.Substring(0, 2);
+                EntityTypeField    = fullCode.Substring(2, 2);
+                EntitySubTypeField = fullCode.Substring(4, 2);
             }
         }
 
-        public string FirstModifier //  (Digit 17-18)
+        public string ModifierOne //  (Digit 17-18)
         {
             get
             {
-                return firstModifier;
+                return modifierOne;
             }
             set
             {
                 string checkString = value;
-                firstModifier = TypeUtilities.ValidateAndZeroPad(checkString, 2);
+                modifierOne = TypeUtilities.ValidateAndZeroPad(checkString, 2);
             }
         }
-        protected string firstModifier = "00";
+        protected string modifierOne = "00";
 
-        public string SecondModifier //  (Digit 19-20)
+        public string ModifierTwo //  (Digit 19-20)
         {
             get
             {
-                return secondModifier;
+                return modifierTwo;
             }
             set
             {
                 string checkString = value;
-                secondModifier = TypeUtilities.ValidateAndZeroPad(checkString, 2);
+                modifierTwo = TypeUtilities.ValidateAndZeroPad(checkString, 2);
             }
         }
-        protected string secondModifier = "00";
+        protected string modifierTwo = "00";
         ///////////////////////////////////////////////////////////
 
         public override string ToString()
@@ -452,19 +459,19 @@ namespace MilitarySymbols
                 sbSymbolIdCode.Append("(");
 
             // EntityCode (Digit 11-16)
-            sbSymbolIdCode.Append(FullEntityCode);
+            sbSymbolIdCode.Append(EntityCode);
 
             if (formatted)
                 sbSymbolIdCode.Append(", ");
 
             // FirstModifier (Digit 17-18)
-            sbSymbolIdCode.Append(FirstModifier);
+            sbSymbolIdCode.Append(ModifierOne);
 
             if (formatted)
                 sbSymbolIdCode.Append(", ");
 
             // SecondModifier (Digit 19-20)
-            sbSymbolIdCode.Append(SecondModifier);
+            sbSymbolIdCode.Append(ModifierTwo);
 
             if (formatted)
                 sbSymbolIdCode.Append(")");
@@ -530,9 +537,9 @@ namespace MilitarySymbols
             this.EchelonMobility = (EchelonMobilityType)
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(EchelonMobilityType), echelonMobilityString);
 
-            this.FullEntityCode = code.Substring(10, 6);
-            this.FirstModifier  = code.Substring(16, 2);
-            this.SecondModifier = code.Substring(18, 2);
+            this.EntityCode = code.Substring(10, 6);
+            this.ModifierOne  = code.Substring(16, 2);
+            this.ModifierTwo = code.Substring(18, 2);
         }
 
     }

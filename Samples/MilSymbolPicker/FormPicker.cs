@@ -371,7 +371,7 @@ namespace MilSymbolPicker
 
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet, currentEntityName);
 
-                    currentSymbol.Id.FullEntityCode = entityCode;
+                    currentSymbol.Id.EntityCode = entityCode;
 
                     currentPane = PaneSequenceType.EntityTypePane;
                 }
@@ -392,7 +392,7 @@ namespace MilSymbolPicker
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet,
                         currentEntityName, currentEntityTypeName);
 
-                    currentSymbol.Id.FullEntityCode = entityCode;
+                    currentSymbol.Id.EntityCode = entityCode;
 
                     currentPane = PaneSequenceType.EntitySubTypePane;
                 }
@@ -414,7 +414,7 @@ namespace MilSymbolPicker
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet,
                         currentEntityName, currentEntityTypeName, currentEntitySubTypeName);
 
-                    currentSymbol.Id.FullEntityCode = entityCode;
+                    currentSymbol.Id.EntityCode = entityCode;
 
                     currentPane = PaneSequenceType.Modifier1Pane;
                 }
@@ -431,7 +431,7 @@ namespace MilSymbolPicker
                 string modifier1Code = symbolLookup.GetModifierCodeFromName(
                     currentSymbol.Id.SymbolSet, 1, currentModifier1Name);
 
-                currentSymbol.Id.FirstModifier = modifier1Code;
+                currentSymbol.Id.ModifierOne = modifier1Code;
 
                 currentPane = PaneSequenceType.Modifier2Pane;
             }
@@ -448,7 +448,7 @@ namespace MilSymbolPicker
                 string modifier2Code = symbolLookup.GetModifierCodeFromName(
                     currentSymbol.Id.SymbolSet, 2, currentModifier2Name);
 
-                currentSymbol.Id.SecondModifier = modifier2Code;
+                currentSymbol.Id.ModifierTwo = modifier2Code;
 
                 currentPane = PaneSequenceType.EchelonMobilityPane;
             }

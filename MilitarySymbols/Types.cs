@@ -192,7 +192,7 @@ namespace MilitarySymbols
             get { return " : "; }
         }
 
-        public static bool HasFrame(SymbolSetType symbolSet)
+        public static bool HasFrame(SymbolSetType symbolSet, string entityCode = "")
         {
             bool hasFrame = false;
 
@@ -204,7 +204,15 @@ namespace MilitarySymbols
                 case SymbolSetType.Meteorological_Space:
                     hasFrame = false;
                     break;
-
+                case SymbolSetType.Sea_Surface :
+                    if (entityCode == "150000") // exception case - ownship
+                        hasFrame = false;
+                    else 
+                        hasFrame = true;
+                    break;
+                case SymbolSetType.Special_Cases:
+                    hasFrame = false;
+                    break;
                 default :
                     hasFrame = true;
                     break;
@@ -221,7 +229,11 @@ namespace MilitarySymbols
             if (pass)
                 return checkString;
 
-            string zeroPaddedString = checkString.PadLeft(requiredLength, '0');
+            string zeroPaddedString = string.Empty;
+            if (checkString.Length <= requiredLength)
+                zeroPaddedString = checkString.PadLeft(requiredLength, '0');
+            else
+                zeroPaddedString = zeroPaddedString.PadLeft(requiredLength, '0'); 
 
             return zeroPaddedString;
         }

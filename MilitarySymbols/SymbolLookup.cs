@@ -503,7 +503,7 @@ namespace MilitarySymbols
             SymbolIdCode sidc = new SymbolIdCode();
             sidc.Affiliation = affiliation;
             sidc.SymbolSetAsString = symbolSetString;
-            sidc.FullEntityCode = entityCode;
+            sidc.EntityCode = entityCode;
 
             SymbolSetType symbolSet = (SymbolSetType)
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
@@ -558,7 +558,7 @@ namespace MilitarySymbols
             }
             else if (resultCount > 1)
             {
-                System.Diagnostics.Trace.WriteLine("Warning > 1, Charlie Code not found, may not be correct: " 
+                System.Diagnostics.Trace.WriteLine("Warning Mutiple, Charlie Codes found, may not be correct or require modifiers: " 
                     + symbolSetString + " : " + entityString + " : " + mod1String + " : " + mod2String);
             }
 

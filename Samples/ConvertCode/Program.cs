@@ -92,7 +92,7 @@ namespace ConvertCode
 
                 sidc.SymbolSet = (SymbolSetType)
                     TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
-                sidc.FullEntityCode = sidcString.Substring(2, 6);
+                sidc.EntityCode = sidcString.Substring(2, 6);
             }
 
             string code2525Charlie;

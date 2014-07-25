@@ -136,7 +136,7 @@ namespace ExportBitmap
 
             sidc.SymbolSet = (SymbolSetType)
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
-            sidc.FullEntityCode = symbolSetEntityCode.Substring(2, 6);
+            sidc.EntityCode = symbolSetEntityCode.Substring(2, 6);
 
             sidc.Affiliation = StandardIdentityAffiliationType.Friend;
             ExportSymbolId(sidc);

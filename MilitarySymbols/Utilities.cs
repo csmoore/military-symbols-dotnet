@@ -95,11 +95,11 @@ namespace MilitarySymbols
 
             code2525Delta.SymbolSet = (SymbolSetType)
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
-            code2525Delta.FullEntityCode = entityString;
+            code2525Delta.EntityCode = entityString;
             if (!string.IsNullOrEmpty(mod1String))
-                code2525Delta.FirstModifier = mod1String;
+                code2525Delta.ModifierOne = mod1String;
             if (!string.IsNullOrEmpty(mod2String))
-                code2525Delta.SecondModifier = mod2String;
+                code2525Delta.ModifierTwo = mod2String;
 
             char affilChar = code2525CharlieUpper[1];
             foreach (KeyValuePair<StandardIdentityAffiliationType, char> kvp in TypeUtilities.AffiliationToCharlieChar)
@@ -156,9 +156,9 @@ namespace MilitarySymbols
 
             string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(
                 code2525Delta.SymbolSet, 2);
-            string entityString = code2525Delta.FullEntityCode;
-            string mod1String = code2525Delta.FirstModifier;
-            string mod2String = code2525Delta.SecondModifier;
+            string entityString = code2525Delta.EntityCode;
+            string mod1String = code2525Delta.ModifierOne;
+            string mod2String = code2525Delta.ModifierTwo;
 
             string code2525CharlieFromLookup;
 
@@ -215,7 +215,7 @@ namespace MilitarySymbols
 
             sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.SymbolSet, 2));
             sb.Append("_");
-            sb.Append(id.FullEntityCode);
+            sb.Append(id.EntityCode);
 
             if (showAffiliation)
             {
@@ -223,12 +223,12 @@ namespace MilitarySymbols
                 sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.Affiliation));
             }
 
-            if ((id.FirstModifier != "00") || (id.SecondModifier != "00"))
+            if ((id.ModifierOne != "00") || (id.ModifierTwo != "00"))
             {
                 sb.Append("_M1-");
-                sb.Append(id.FirstModifier);
+                sb.Append(id.ModifierOne);
                 sb.Append("_M2-");
-                sb.Append(id.SecondModifier);
+                sb.Append(id.ModifierTwo);
             }
 
             if (id.Status != StatusType.Present)

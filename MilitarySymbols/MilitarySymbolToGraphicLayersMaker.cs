@@ -116,7 +116,7 @@ namespace MilitarySymbols
 
         public static string GetMainIconName(ref MilitarySymbol milSymbol)
         {
-            string mainIcon = GetMainIconName(milSymbol.Id.SymbolSet, milSymbol.Id.FullEntityCode);
+            string mainIcon = GetMainIconName(milSymbol.Id.SymbolSet, milSymbol.Id.EntityCode);
 
             return mainIcon;
         }
@@ -158,6 +158,12 @@ namespace MilitarySymbols
                 string newFrameSuffix =
                     TypeUtilities.AffiliationFrameToSuffixName[milSymbol.Id.Affiliation] + ImageSuffix;
 
+                if (milSymbol.Id.SymbolSet == SymbolSetType.Control_Measures)
+                {
+                    // use ".a" instead
+                    newFrameSuffix = ".a" + ImageSuffix; 
+                }
+
                 string subMainIconName = mainIconNameFullPath;
                 subMainIconName = subMainIconName.Replace(ImageSuffix, newFrameSuffix);
                 if (System.IO.File.Exists(subMainIconName)) // if the other file/version exists, use that one
@@ -197,12 +203,12 @@ namespace MilitarySymbols
                 return string.Empty;
 
             string sModifierNumber = "1";
-            string sModifier = milSymbol.Id.FirstModifier;
+            string sModifier = milSymbol.Id.ModifierOne;
 
             if (modifierNumber == 2)
             {
                 sModifierNumber = "2";
-                sModifier = milSymbol.Id.SecondModifier;
+                sModifier = milSymbol.Id.ModifierTwo;
             }
 
             string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(milSymbol.Id.SymbolSet, 2);
@@ -256,7 +262,7 @@ namespace MilitarySymbols
             if (!((modifierNumber == 1) || (modifierNumber == 2)))
                 return string.Empty;
 
-            string sModifierCode = (modifierNumber == 1) ? milSymbol.Id.FirstModifier : milSymbol.Id.SecondModifier;
+            string sModifierCode = (modifierNumber == 1) ? milSymbol.Id.ModifierOne : milSymbol.Id.ModifierTwo;
 
             int modifierCodeInt = Convert.ToInt32(sModifierCode);
 
@@ -539,11 +545,8 @@ namespace MilitarySymbols
             // Assembly the layers
 
             // Start with the Frame
-            if (TypeUtilities.HasFrame(milSymbol.Id.SymbolSet))
+            if (TypeUtilities.HasFrame(milSymbol.Id.SymbolSet, milSymbol.Id.EntityCode))
             {
-                //sb.Clear();
-                //sb.Append(ImageFilesHome);
-
                 string frameIconNameWithFullPath =
                     GetFrameIconNameWithFullPath(
                         milSymbol.Id.StandardIdentity,
@@ -582,8 +585,8 @@ namespace MilitarySymbols
                 // Appendices\{SymbolSetTypeName}\Mod{#}\{SymbolSetType} + {ModifierCode} + {#}
 
                 // Main Icon Modfier 1
-                if (!string.IsNullOrEmpty(milSymbol.Id.FirstModifier)
-                    && (milSymbol.Id.FirstModifier != "00")) // TODO: find better way of checking that this isn't set/valid
+                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierOne)
+                    && (milSymbol.Id.ModifierOne != "00")) // TODO: find better way of checking that this isn't set/valid
                 {
                     sb.Clear();
                     sb.Append(ImageFilesHome);
@@ -596,8 +599,8 @@ namespace MilitarySymbols
                 }
 
                 // Main Icon Modfier 2
-                if (!string.IsNullOrEmpty(milSymbol.Id.SecondModifier)
-                    && (milSymbol.Id.SecondModifier != "00")) // TODO: find better way of checking that this isn't set/valid
+                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierTwo)
+                    && (milSymbol.Id.ModifierTwo != "00")) // TODO: find better way of checking that this isn't set/valid
                 {
                     sb.Clear();
                     sb.Append(ImageFilesHome);
