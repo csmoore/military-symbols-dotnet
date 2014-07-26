@@ -402,8 +402,40 @@ namespace TestMilitarySymbolsLibrary
 
         private static void MyAdHocTest()
         {
+            /////////////////////////////////////////////////////
+            // TODO: move this test code to a Unit Test Project
+            /////////////////////////////////////////////////////
+
             SymbolIdCode sidc = new SymbolIdCode();
             System.Diagnostics.Trace.WriteLine("SIDC=" + sidc);
+
+            sidc.Affiliation = StandardIdentityAffiliationType.Hostile;
+
+            SymbolIdCode sidc2 = new SymbolIdCode();
+            sidc2.Affiliation = StandardIdentityAffiliationType.Hostile;
+
+            if (sidc == sidc2)
+                System.Diagnostics.Trace.WriteLine("pass");
+
+            sidc2.EntityField = "AB"; 
+            sidc.Affiliation = StandardIdentityAffiliationType.Friend;
+
+            if (sidc != sidc2)
+                System.Diagnostics.Trace.WriteLine("pass");
+
+
+            MilitarySymbol ms1 = new MilitarySymbol();
+            ms1.Id = SymbolIdCode.DefaultSymbolIdCode;
+
+            MilitarySymbol ms2 = new MilitarySymbol();
+            ms2.Id = new SymbolIdCode();
+
+            if (ms1 == ms2)
+                System.Diagnostics.Trace.WriteLine("pass");
+
+            ms2.Id.HeadquartersTaskForceDummy = HeadquartersTaskForceDummyType.Feint_Dummy;
+            if (ms1 != ms2)
+                System.Diagnostics.Trace.WriteLine("pass");
 
             SymbolLookup symbolLookup = new SymbolLookup();
             symbolLookup.Initialize();
@@ -450,7 +482,7 @@ namespace TestMilitarySymbolsLibrary
             }
 
             matchingStrings = symbolLookup.GetDistinctEntries(SymbolSetType.Air, "Military",
-                "Fixed Wing");
+                "Fixed-Wing");
 
             matchCount = 0;
             foreach (string distinctMatch in matchingStrings)

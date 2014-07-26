@@ -514,10 +514,13 @@ namespace MilitarySymbols
                     index++;
                 }
 
-                if (found)
-                    return (Enum)enumValues.GetValue(index);
-                else
-                    return (Enum)enumValues.GetValue(0); // just return the 1st one
+                if (!found)
+                {
+                    System.Diagnostics.Trace.WriteLine("Warning Enum Value not found for value: " + hashCodeString);
+                    index = 0;
+                }
+
+                return (Enum)enumValues.GetValue(index);
             }
 
             static public string getStringFromEnum(Enum theEnum)
@@ -537,12 +540,22 @@ namespace MilitarySymbols
 
                 System.Array enumValues = Enum.GetValues(type);
 
+                bool found = false;
                 foreach (Enum enumValue in enumValues)
                 {
                     if (enumValue.ToString() == enumStringNoSpaces)
+                    {
+                        found = true;
                         break;
+                    }
 
                     index++;
+                }
+
+                if (!found)
+                {
+                    System.Diagnostics.Trace.WriteLine("Warning Enum Value not found: " + enumString);
+                    index = 0; // just return first value
                 }
 
                 return (Enum)enumValues.GetValue(index);

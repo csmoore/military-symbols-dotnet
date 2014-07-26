@@ -33,7 +33,7 @@ namespace MilitarySymbols
         {
             get
             {
-                // TODO/TRICKY: we have to create a new one every time (or implement equals/hashcode)
+                // TODO: detetmine if this is the behavior we want(just creates a new one every time)
                 return new SymbolIdCode();
             }
         }
@@ -339,18 +339,14 @@ namespace MilitarySymbols
             {
                 tags.Clear();
 
-                // TOTAL HACK: TODO: FIX
-                if (!MilitarySymbol.FormatTagsForStyleFiles)
-                    if (this.Affiliation != StandardIdentityAffiliationType.NotSet)
-                        tags.Add(this.Affiliation.ToString());
+                if (this.Affiliation != StandardIdentityAffiliationType.NotSet)
+                    tags.Add(this.Affiliation.ToString());
 
                 if (this.SymbolSet != SymbolSetType.NotSet)
                     tags.Add(TypeUtilities.EnumHelper.getStringFromEnum(this.SymbolSet));
 
-                // TOTAL HACK: TODO: FIX
-                if (!MilitarySymbol.FormatTagsForStyleFiles)
-                    if (this.Status != StatusType.NotSet)
-                        tags.Add(this.Status.ToString());
+                if (this.Status != StatusType.NotSet)
+                    tags.Add(this.Status.ToString());
 
                 if (this.HeadquartersTaskForceDummy != HeadquartersTaskForceDummyType.NoHQTFDummyModifier)
                     tags.Add(this.HeadquartersTaskForceDummy.ToString());
@@ -464,13 +460,13 @@ namespace MilitarySymbols
             if (formatted)
                 sbSymbolIdCode.Append(", ");
 
-            // FirstModifier (Digit 17-18)
+            // ModifierOne (Digit 17-18)
             sbSymbolIdCode.Append(ModifierOne);
 
             if (formatted)
                 sbSymbolIdCode.Append(", ");
 
-            // SecondModifier (Digit 19-20)
+            // ModifierTwo (Digit 19-20)
             sbSymbolIdCode.Append(ModifierTwo);
 
             if (formatted)
@@ -541,6 +537,41 @@ namespace MilitarySymbols
             this.ModifierOne  = code.Substring(16, 2);
             this.ModifierTwo = code.Substring(18, 2);
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if ((System.Object)obj == null)
+                return false;
+
+            SymbolIdCode sidc = obj as SymbolIdCode;
+            if ((System.Object)sidc == null)
+                return false;
+
+            return Equals(sidc);
+        }
+
+        public bool Equals(SymbolIdCode sidc)
+        {
+            if ((System.Object)sidc == null)
+                return false;
+
+            return (Code == sidc.Code);
+        }
+
+        public override int GetHashCode()
+        {
+            return Code.GetHashCode();
+        }
+
+        public static bool operator ==(SymbolIdCode sidc1, SymbolIdCode sidc2)
+        {
+            return sidc1.Equals(sidc2);
+        }
+
+        public static bool operator !=(SymbolIdCode sidc1, SymbolIdCode sidc2)
+        {
+            return !sidc1.Equals(sidc2);
+        }   
 
     }
 

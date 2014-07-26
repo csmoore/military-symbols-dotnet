@@ -161,5 +161,40 @@ namespace MilitarySymbols
             return sb.ToString();
         }
 
+        public override bool Equals(System.Object obj)
+        {
+            if ((System.Object)obj == null)
+                return false;
+
+            MilitarySymbol ms = obj as MilitarySymbol;
+            if ((System.Object)ms == null)
+                return false;
+
+            return Equals(ms);
+        }
+
+        public bool Equals(MilitarySymbol ms)
+        {
+            if ((System.Object)ms == null)
+                return false;
+
+            return ((Id == ms.Id) && (Shape == ms.Shape));
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode() ^ Shape.GetHashCode();
+        }
+
+        public static bool operator ==(MilitarySymbol ms1, MilitarySymbol ms2)
+        {
+            return ms1.Equals(ms2);
+        }
+
+        public static bool operator !=(MilitarySymbol ms1, MilitarySymbol ms2)
+        {
+            return !ms1.Equals(ms2);
+        }   
+
     }
 }
