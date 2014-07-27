@@ -198,10 +198,7 @@ namespace MilSymbolPicker
                         else
                             currentPane++;
 
-                        button31.Visible = true;
-                        button31.Enabled = true; // just in case no values so PerformClick will work 
-                        button31.Text = string.Empty;
-                        button31.PerformClick();
+                        resetColumn3State();
                     }
                     else
                     {
@@ -238,10 +235,7 @@ namespace MilSymbolPicker
                         else
                             currentPane++;
 
-                        button31.Visible = true;
-                        button31.Enabled = true; // just in case no values so PerformClick will work 
-                        button31.Text = string.Empty;
-                        button31.PerformClick();
+                        resetColumn3State();
                     }
                     else
                     {
@@ -256,20 +250,37 @@ namespace MilSymbolPicker
                     enableColumnButtons(1, false);
                     enableColumnButtons(2, false);
                 }
+                ////////////////////////////////////////////////////////////////
+                //
+                // Don't do these if non-framed
+                //
                 else if (currentPane == PaneSequenceType.EchelonMobilityPane)
                 {
-                    this.labCol3.Text = "Echelon/Mobility";
-                    this.labCol3.Visible = true;
+                    // Don't do if Non-framed
+                    if (!TypeUtilities.HasFrame(this.currentSymbol.Id.SymbolSet))
+                    {
+                        if (goingBackwards)
+                            currentPane = PaneSequenceType.EntitySubTypePane;
+                        else
+                            currentPane = PaneSequenceType.StartOver;
 
-                    currentColValues = TypeUtilities.EnumHelper.getEnumValuesAsStrings(typeof(EchelonMobilityType));
+                        resetColumn3State();
+                    }
+                    else
+                    {
+                        this.labCol3.Text = "Echelon/Mobility";
+                        this.labCol3.Visible = true;
 
-                    currentColRowIndex = 0;
+                        currentColValues = TypeUtilities.EnumHelper.getEnumValuesAsStrings(typeof(EchelonMobilityType));
 
-                    currentColumn = 3;
-                    enableColumnButtons(3, true);
-                    setColumnValues();
-                    enableColumnButtons(1, false);
-                    enableColumnButtons(2, false);
+                        currentColRowIndex = 0;
+
+                        currentColumn = 3;
+                        enableColumnButtons(3, true);
+                        setColumnValues();
+                        enableColumnButtons(1, false);
+                        enableColumnButtons(2, false);
+                    }
                 }
                 else if (currentPane == PaneSequenceType.HqTfFdPane)
                 {
@@ -288,19 +299,36 @@ namespace MilSymbolPicker
                 }
                 else if (currentPane == PaneSequenceType.StatusPane)
                 {
-                    this.labCol3.Text = "Op Condition";
-                    this.labCol3.Visible = true;
+                    // Don't do if non-framed
+                    if (!TypeUtilities.HasFrame(this.currentSymbol.Id.SymbolSet))
+                    {
+                        if (goingBackwards)
+                            currentPane = PaneSequenceType.EntitySubTypePane;
+                        else
+                            currentPane = PaneSequenceType.StartOver;
 
-                    currentColValues = TypeUtilities.EnumHelper.getEnumValuesAsStrings(typeof(StatusType));
+                        resetColumn3State();
+                    }
+                    else
+                    {
+                        this.labCol3.Text = "Op Condition";
+                        this.labCol3.Visible = true;
 
-                    currentColRowIndex = 0;
+                        currentColValues = TypeUtilities.EnumHelper.getEnumValuesAsStrings(typeof(StatusType));
 
-                    currentColumn = 3;
-                    enableColumnButtons(3, true);
-                    setColumnValues();
-                    enableColumnButtons(1, false);
-                    enableColumnButtons(2, false);
+                        currentColRowIndex = 0;
+
+                        currentColumn = 3;
+                        enableColumnButtons(3, true);
+                        setColumnValues();
+                        enableColumnButtons(1, false);
+                        enableColumnButtons(2, false);
+                    }
                 }
+                //
+                // End of don't do if non-framed
+                //
+                ////////////////////////////////////////////////////////////////
                 else if (currentPane == PaneSequenceType.StartOver)
                 {
                     this.labCol3.Text = "Finished";
@@ -319,6 +347,14 @@ namespace MilSymbolPicker
             }
 
             previousPane = currentPane;
+        }
+
+        void resetColumn3State()
+        {
+            button31.Visible = true;
+            button31.Enabled = true; // just in case no values so PerformClick will work 
+            button31.Text = string.Empty;
+            button31.PerformClick(); // force the states to be re-evaluatedd
         }
 
         void setSymbolState(string valueSelected)
