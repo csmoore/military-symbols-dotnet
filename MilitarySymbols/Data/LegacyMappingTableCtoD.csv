@@ -2562,41 +2562,41 @@ S*GPUCFML-,S*GPUCFML-*****,10,130300,00,00,Substitute,Mobility=52
 S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon SUGPUCR---
 S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked (120501)	
 S*GPUCRVG-,S*GPUCRVG-*****,10,121300,00,00,Repeat,
-#S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code
-#S*GPUCSGD-*****,Repeat?
-#S*GPUUACRS*****,Repeat?
-#S*GPUUMSEA*****,Repeat?
+#S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code,,,,,
+#S*GPUCSGD-*****,Repeat?,,,,,,
+#S*GPUUACRS*****,Repeat?,,,,,,
+#S*GPUUMSEA*****,Repeat?,,,,,,
 S*GPUUMR--,S*GPUUMR--*****,10,151000,00,00,Repeat,Repeat of SUGPUUM---*****
-#S*GPUUL---*****,Repeat?
-#S*GPUUSCL-*****,Repeat?
-#S*GPUUSMS-*****,Repeat?
-#S*GPUUSW--*****,Repeat?
-#S*GPUUI---*****,Repeat?
-#S*GPUSS3AT*****,Repeat?,Use Theater amplifier
-#S*GPUSS3AC*****,Repeat?,Use Theater amplifier
-#S*GPUSXR--*****,Repeat?
-#S*GPUSXRT-*****,Repeat?
-#S*GPUSXRC-*****,Repeat?
+#S*GPUUL---*****,Repeat?,,,,,,
+#S*GPUUSCL-*****,Repeat?,,,,,,
+#S*GPUUSMS-*****,Repeat?,,,,,,
+#S*GPUUSW--*****,Repeat?,,,,,,
+#S*GPUUI---*****,Repeat?,,,,,,
+#S*GPUSS3AT*****,Repeat?,Use Theater amplifier,,,,,
+#S*GPUSS3AC*****,Repeat?,Use Theater amplifier,,,,,
+#S*GPUSXR--*****,Repeat?,,,,,,
+#S*GPUSXRT-*****,Repeat?,,,,,,
+#S*GPUSXRC-*****,Repeat?,,,,,,
 S*GPE-----,S*GPE-----*****,15,000000,00,00,
-#S*GPEWMATR*****,Repeat?,Use Theater amplifier
-#S*GPEWMATE*****,Repeat?,Use Theater amplifier
-#S*GPEWHLS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEWHMS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEWHHS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEWDLS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEWDMS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEWDHS-*****,Repeat?,Use Mobiliity amplifier
-#S*GPEVC---*****,Repeat?,Use Mod1 civilian
+#S*GPEWMATR*****,Repeat?,Use Theater amplifier,,,,,
+#S*GPEWMATE*****,Repeat?,Use Theater amplifier,,,,,
+#S*GPEWHLS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEWHMS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEWHHS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEWDLS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEWDMS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEWDHS-*****,Repeat?,Use Mobiliity amplifier,,,,,
+#S*GPEVC---*****,Repeat?,Use Mod1 civilian,,,,,
 S*GPI-----,S*GPI-----H----,20,000000,00,00,
-#S*GPIR----H****,Repeat?
-#S*GPIP----H****,Repeat?
-#S*GPIU----H****,Repeat?
-#S*GPIUR---H****,Repeat?
-#S*GPIUT---H****,Repeat?
-#S*GPIUED--H****,Repeat?
-#S*GPIUEF--H****,Repeat?
-#S*SPCPSUM-*****,Deleted 
-#S*SPCH----*****,Deleted 
+#S*GPIR----H****,Repeat?,,,,,,
+#S*GPIP----H****,Repeat?,,,,,,
+#S*GPIU----H****,Repeat?,,,,,,
+#S*GPIUR---H****,Repeat?,,,,,,
+#S*GPIUT---H****,Repeat?,,,,,,
+#S*GPIUED--H****,Repeat?,,,,,,
+#S*GPIUEF--H****,Repeat?,,,,,,
+#S*SPCPSUM-*****,Deleted,,,,,,
+#S*SPCH----*****,Deleted,,,,,, 
 S*SPNH----,S*SPNH----*****,30,140107,00,00,,
 S*SP------,S*SP------*****,30,000000,00,00,,
 S*UP------,S*UP------*****,35,000000,00,00,,
@@ -2614,11 +2614,11 @@ S*UPSCG---,S*UPSCG---*****,35,110100,00,02,Substitute,
 S*UPSCB---,S*UPSCB---*****,35,110100,00,02,Substitute,
 S*UPSOF---,S*UPSOF---*****,35,110101,00,00,Substitute,Deleted
 S*UPSK----,S*UPSK----*****,35,110102,00,00,Substitute,Deleted 
-#S*UPWMGC--*****		
-#S*UPWMMC--*****		
-#S*UPWMFC--*****		
-#S*UPWMC---*****		
-#S*FPAH----*****,Repeat?
+#S*UPWMGC--*****,,,,,,,
+#S*UPWMMC--*****,,,,,,,
+#S*UPWMFC--*****,,,,,,,
+#S*UPWMC---*****,,,,,,,
+#S*FPAH----*****,Repeat?,,,,,,
 G*GPDAB---,G*GPDAB---****X,25,151201,,,Repeat,
 G*OPSB----,G*OPSB----****X,25,218700,,,Repeat,Repeat of G*OPSBN---****X
 O*IPR-----,O*IPR-----*****,11,110400,00,00,Repeat,
