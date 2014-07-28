@@ -1,4 +1,4 @@
-# Apache V2 - reused from/courtesy of https://github.com/Esri/joint-military-symbology-xml/tree/master/samples/simple_symbolset_entity_modifier_codes
+# Apache V2 - reused from/courtesy of https://github.com/Esri/joint-military-symbology-xml/tree/master/samples/simple_symbolset_entity_modifier_codes,,,,,,,,
 SymbolSet,Entity,EntityType,EntitySubType,StandardIdentity,Code,GeometryType,IconType,UniqueName
 01,Military,,,,110000,Point,MAIN,Military (Air)
 01,Military,Fixed-Wing,,,110100,Point,MAIN,Military (Air) : Fixed-Wing
