@@ -1,8 +1,8 @@
-# Apache V2 - reused from/courtesy of https://github.com/Esri/joint-military-symbology-xml/tree/master/samples/simple_symbolset_entity_modifier_codes 
+#,,,,,Apache V2 - reused from/courtesy of https://github.com/Esri/joint-military-symbology-xml/tree/master/samples/simple_symbolset_entity_modifier_codes 
 SymbolSet,ModifierNumber,Category,Name,Code,UniqueName
-#####################################################################
-# MODIFIER 1
-#####################################################################
+#,,,,,####################################################################
+#,,,,, MODIFIER 1
+#,,,,,####################################################################
 01,1,Military Aircraft Type,Attack/Strike,01,Military Aircraft Type : Attack/Strike
 01,1,Military Aircraft Type,Bomber,02,Military Aircraft Type : Bomber
 01,1,Aircraft Type,Cargo,03,Aircraft Type : Cargo
@@ -466,9 +466,9 @@ SymbolSet,ModifierNumber,Category,Name,Code,UniqueName
 54,1,Space/Air/Land/Sea Surface/Subsurface Radar,Unknown,62,Radar : Unknown (Sea Subsurface)
 54,1,Space/Air/Land/Sea Surface/Subsurface Radar,Video Remoting,63,Radar : Video Remoting (Sea Subsurface)
 54,1,Space/Air/Land/Sea Surface/Subsurface Radar,Experimental,64,Radar : Experimental (Sea Subsurface)
-#####################################################################
-# MODIFIER 2
-#####################################################################
+#,,,,,####################################################################
+#,,,,, MODIFIER 2
+#,,,,,####################################################################
 01,2,Cargo/Transport Capacity,Heavy,01,Cargo/Transport Capacity : Heavy
 01,2,Cargo/Transport Capacity,Medium,02,Cargo/Transport Capacity : Medium
 01,2,Cargo/Transport Capacity,Light,03,Cargo/Transport Capacity : Light
@@ -609,5 +609,3 @@ SymbolSet,ModifierNumber,Category,Name,Code,UniqueName
 35,2,UUV Control,Autonomous Control,14,UUV Control : Autonomous Control
 35,2,UUV Control,Remotely Piloted,15,UUV Control : Remotely Piloted
 35,2,UUV Control,Expendable,16,UUV Control : Expendable
-
-
