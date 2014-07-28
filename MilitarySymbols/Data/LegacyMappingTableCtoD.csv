@@ -2562,7 +2562,7 @@ S*GPUCFML-,S*GPUCFML-*****,10,130300,00,00,Substitute,Mobility=52
 S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon SUGPUCR---
 S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked (120501)	
 S*GPUCRVG-,S*GPUCRVG-*****,10,121300,00,00,Repeat,
-#S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code,,,,,
+#S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code,,,,
 #S*GPUCSGD-*****,Repeat?,,,,,,
 #S*GPUUACRS*****,Repeat?,,,,,,
 #S*GPUUMSEA*****,Repeat?,,,,,,
