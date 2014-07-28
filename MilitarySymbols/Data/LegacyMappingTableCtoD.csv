@@ -340,7 +340,7 @@ SUGPUCMS--,SUGPUCMS--*****,10,130700,00,44,
 SUGPUCMT--,SUGPUCMT--*****,10,130700,00,46,
 SUGPUCFM--,SUGPUCFM--*****,10,130800,00,00,
 SUGPUCFMTC,SUGPUCFMTC*****,10,130800,00,02,
-SUGPUCA---,SUGPUCA---*****,10,130801,00,00,
+SUGPUCFMS-,SUGPUCFMS-*****,10,130801,00,00,
 SUGPUCFMW-,SUGPUCFMW-*****,10,130802,00,00,
 SUGPUCFMT-,SUGPUCFMT-*****,10,130803,00,00,
 SUGPUCFMTS,SUGPUCFMTS*****,10,130803,01,00,
@@ -415,7 +415,7 @@ SUGPUULS--,SUGPUULS--*****,10,142000,00,00,
 ,,10,142100,00,00,
 ,,10,150000,00,00,
 ,,10,150100,00,00,
-,,10,150200,00,00,
+SUGPUUMC--,SUGPUUMC-------,10,150200,00,00,
 ,,10,150300,00,00,
 SUGPUUSX--,SUGPUUSX--*****,10,150400,00,00,
 SUGPUUMSE-,SUGPUUMSE-*****,10,150500,00,00,
@@ -457,7 +457,7 @@ SUGPUSTAT-,SUGPUSTAT-*****,10,160398,00,00,
 ,,10,160500,00,00,
 SUGPUS----,SUGPUS----*****,10,160600,00,00,
 SUGPUSAF--,SUGPUSAF--*****,10,160700,00,00,
-SUGPUSAF--,SUGPUSAF--*****,10,160797,00,00,
+SUGPUSAFC-,SUGPUSAFC-*****,10,160797,00,00,
 SUGPUSAFT-,SUGPUSAFT-*****,10,160798,00,00,
 SUGPUSAJ--,SUGPUSAJ--*****,10,160800,00,00,
 SUGPUSAJC-,SUGPUSAJC-*****,10,160897,00,00,
@@ -702,7 +702,7 @@ SUGPEWMTM-,SUGPEWMTM-*****,15,111202,00,00,
 SUGPEWMTH-,SUGPEWMTH-*****,15,111203,00,00,
 SUGPEWMS--,SUGPEWMS--*****,15,111300,00,00,
 SUGPEWMSS-,SUGPEWMSS-*****,15,111301,00,00,
-SUGPEWMSM-,SUGPEWMSM-*****,15,111302,00,00,
+SUGPEWMSI-,SUGPEWMSI-*****,15,111302,00,00,
 SUGPEWMSL-,SUGPEWMSL-*****,15,111303,00,00,
 SUGPEWO---,SUGPEWO---*****,15,111400,00,00,
 SUGPEWOL--,SUGPEWOL--*****,15,111401,00,00,
@@ -903,7 +903,7 @@ SUGPIMF---,SUGPIMF---H****,20,111500,00,00,
 SUGPIMFA--,SUGPIMFA--H****,20,111500,00,05,
 SUGPIMFP--,SUGPIMFP--H****,20,111500,00,06,
 SUGPIMFS--,SUGPIMFS--H****,20,111500,00,07,
-SUGPIMFW--,SUGPIMFW--H****,20,111500,00,08,
+SUGPIMFPW-,SUGPIMFPW-H****,20,111500,00,08,
 ,,20,111600,00,00,
 OUIPS-----,OUIPS-----*****,20,111700,00,00,
 OULPW-----,OULPW-----*****,20,111800,00,00,
@@ -1359,10 +1359,9 @@ G*FPATR---,G*FPATR---****X,25,240802,,,
 G*FPATC---,G*FPATC---****X,25,240803,,,
 ,,25,240804,,,
 G*FPATG---,G*FPATG---****X,25,240805,,,
-,,25,240806,,,
-G*FPATS---,G*FPATS---****X,25,240807,,,
-,,25,240808,,,
-G*FPATB---,G*FPATB---****X,25,240809,,,
+G*FPATS---,G*FPATS---****X,25,240806,,,
+,,25,240807,,,
+G*FPATB---,G*FPATB---****X,25,240808,,,
 G*FPPCF---,G*FPPCF---****X,25,240900,,,
 ,,25,241000,,,
 G*FPACSI--,G*FPACSI--****X,25,241001,,,
@@ -1739,7 +1738,7 @@ SUUPSB----,SUUPSB----*****,35,110103,00,00,
 SUUPSO----,SUUPSO----*****,35,110200,00,00,
 SUUPSX----,SUUPSX----*****,35,110300,00,00,
 SUUPSU----,SUUPSU----*****,35,110400,00,00,
-,,35,110400,01,00,
+SUUPSUS---,SUUPSUS---*****,35,110400,01,00,
 ,,35,110400,05,00,
 ,,35,110400,07,00,
 ,,35,110500,00,00,
@@ -1959,7 +1958,7 @@ OUOPHV----,OUOPHV----*****,40,160200,03,00,
 EUIPF-----,EUIPF-----*****,40,160200,17,00,
 ,,40,160300,00,00,
 EUIPGA----,EUIPGA----*****,40,160300,16,00,
-,,40,160300,03,00,
+EUIPGB----,EUIPGB----*****,40,160300,03,00,
 EUIPG-----,EUIPG-----*****,40,160300,17,00,
 ,,40,160400,00,00,
 EUIPHA----,EUIPHA----*****,40,160400,16,00,
@@ -2525,4 +2524,110 @@ WOS-HHDMDF,WOS-HHDMDF,98,110000,00,00,Retired
 WOS-HHDMDB,WOS-HHDMDB,98,110000,00,00,Retired
 G*GPGLB---,G*GPGLB---****X,25,110100,,,
 SUGPUCII--,SUGPUCII-------,10,121105,0,0,
-SUGPUCAW--,SFGPUCAW-------,15,120100,0,0,
+SUGPUCAW--,SUGPUCAW-------,15,120100,0,0,
+SUGPUCAWS-,SUGPUCAWS-*****,10,120400,01,51,
+SUGPUCFRMR,SUGPUCFRMR*****,10,130301,41,51,
+SFGPUCFRMT,SFGPUCFRMT*****,10,130302,41,47,
+######################################################,,,,,,
+# 2525C -> D ones left out of original table(2nd Tab),,,,,,
+SUZP------,SUZP------*****,00,000000,00,00,
+SUAP------,SUAP------*****,01,000000,00,00,
+SUGP------,SUGP------*****,15,000000,00,00,
+SUGPU-----,SUGPU-----*****,10,000000,00,00,
+SUGPUH----,SUGPUH----*****,10,000000,00,00,Substitute,Needs HQ Code=2
+SUGPUCDSC-,SUGPUCDSC-*****,10,111101,00,00,Substitute
+SUGPUCDSS-,SUGPUCDSS-*****,10,111101,00,00,Substitute
+SUGPUCDSV-,SUGPUCDSV-*****,10,111101,00,00,Substitute
+SUGPUCDMLA,SUGPUCDMLA*****,10,111107,00,00,Substitute
+SUGPUCDHH-,SUGPUCDHH-*****,10,111107,00,00,Substitute
+SUGPUCDHP-,SUGPUCDHP-*****,10,111107,00,00,Substitute
+SUGPUCA---,SUGPUCA---*****,10,120500,00,00,Repeat
+SUGPUCAAD-,SUGPUCAAD-*****,10,120401,00,00,Repeat
+SUGPUCAAA-,SUGPUCAAA-*****,10,120401,00,00,Repeat-Ech/Mob=33
+SUGPUCAAAT,SUGPUCAAAT*****,10,120500,00,00,Repeat
+SUGPUCAWA-,SUGPUCAWA-*****,15,120100,00,00,Substitute
+SUGPUCAWL-,SUGPUCAWL-*****,15,120100,00,00,Substitute 
+SUGPUCAWM-,SUGPUCAWM-*****,15,120100,00,00,Substitute
+SUGPUCAWH-,SUGPUCAWH-*****,15,120100,00,00,Substitute
+SUGPUCAWR-,SUGPUCAWR-*****,15,120100,00,00,Substitute
+SUGPUCAWWR,SUGPUCAWWR*****,15,120100,00,00,Substitute
+SUGPUCAAAS,SUGPUCAAAS*****,15,120100,00,00,Substitute
+SUGPUCAWWR,SUGPUCAWWR*****,15,120100,00,00,Substitute
+SUGPUCVR--,SUGPUCVR--*****,10,120600,00,00,Repeat
+SUGPUCVRS-,SUGPUCVRS-*****,10,120601,00,00,Repeat
+SUGPUCFHX-,SUGPUCFHX-*****,10,130300,00,00,Substitute
+SUGPUCFR--,SUGPUCFR--*****,10,130300,00,00,Substitute,Mobility=52
+SUGPUCFTCD,SUGPUCFTCD*****,10,130400,00,00,Repeat
+SUGPUCFML-,SUGPUCFML-*****,10,130300,00,00,Substitute,Mobility=52
+SUGPUCRV--,SUGPUCRV--*****,10,121303,00,00,Repeat,Same as Recon SUGPUCR---
+SUGPUCRVA-,SUGPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked (120501)	
+SUGPUCRVG-,SUGPUCRVG-*****,10,121300,00,00,Repeat
+#S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code
+#S*GPUCSGD-*****,Repeat?
+#S*GPUUACRS*****,Repeat?
+#S*GPUUMSEA*****,Repeat?
+SUGPUUMR--,SUGPUUMR--*****,10,151000,00,00,Repeat,Repeat of SUGPUUM---*****
+#S*GPUUL---*****,Repeat?
+#S*GPUUSCL-*****,Repeat?
+#S*GPUUSMS-*****,Repeat?
+#S*GPUUSW--*****,Repeat?
+#S*GPUUI---*****,Repeat?
+#S*GPUSS3AT*****,Repeat?,Use Theater amplifier
+#S*GPUSS3AC*****,Repeat?,Use Theater amplifier
+#S*GPUSXR--*****,Repeat?
+#S*GPUSXRT-*****,Repeat?
+#S*GPUSXRC-*****,Repeat?
+SUGPE-----,SUGPE-----*****,15,000000,00,00,
+#S*GPEWMATR*****,Repeat?,Use Theater amplifier
+#S*GPEWMATE*****,Repeat?,Use Theater amplifier
+#S*GPEWHLS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEWHMS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEWHHS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEWDLS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEWDMS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEWDHS-*****,Repeat?,Use Mobiliity amplifier
+#S*GPEVC---*****,Repeat?,Use Mod1 civilian
+SUGPI-----,SUGPI-----H----,20,000000,00,00,
+#S*GPIR----H****,Repeat?
+#S*GPIP----H****,Repeat?
+#S*GPIU----H****,Repeat?
+#S*GPIUR---H****,Repeat?
+#S*GPIUT---H****,Repeat?
+#S*GPIUED--H****,Repeat?
+#S*GPIUEF--H****,Repeat?
+#S*SPCPSUM-*****,Deleted 
+#S*SPCH----*****,Deleted 	
+SUSPNH----,SUSPNH----*****,30,140107,00,00,
+SUSP------,SUSP------*****,30,000000,00,00,
+SUUP------,SUUP------*****,35,000000,00,00,
+SUUPSN----,SUUPSN----*****,35,110100,00,06,Substitute
+SUUPSNF---,SUUPSNF---*****,35,110100,00,06,Substitute
+SUUPSNA---,SUUPSNA---*****,35,110100,00,06,Substitute
+SUUPSNM---,SUUPSNM---*****,35,110100,00,06,Substitute
+SUUPSNG---,SUUPSNG---*****,35,110100,00,06,Substitute
+SUUPSNB---,SUUPSNB---*****,35,110100,00,06,Substitute
+SUUPSC----,SUUPSC----*****,35,110100,00,02,Substitute
+SUUPSCF---,SUUPSCF---*****,35,110100,00,02,Substitute
+SUUPSCA---,SUUPSCA---*****,35,110100,00,02,Substitute
+SUUPSCM---,SUUPSCM---*****,35,110100,00,02,Substitute
+SUUPSCG---,SUUPSCG---*****,35,110100,00,02,Substitute
+SUUPSCB---,SUUPSCB---*****,35,110100,00,02,Substitute
+SUUPSOF---,SUUPSOF---*****,35,110101,00,00,Substitute,Deleted
+SUUPSK----,SUUPSK----*****,35,110102,00,00,Substitute,Deleted 
+#S*UPWMGC--*****		
+#S*UPWMMC--*****		
+#S*UPWMFC--*****		
+#S*UPWMC---*****		
+#S*FPAH----*****,Repeat?
+G*GPDAB---,G*GPDAB---****X,25,151201,,,Repeat
+G*OPSB----,G*OPSB----****X,25,218700,,,Repeat,Repeat of G*OPSBN---****X
+OUIPR-----,OUIPR-----*****,11,110400,00,00,Repeat
+EUOPDD----,EUOPDD----*****,40,150100,00,00,
+EUOPA-----,EUOPA-----*****,40,131300,00,00,Repeat
+EUOPB-----,EUOPB-----*****,40,131300,00,00,Repeat
+EUOPBJ----,EUOPBJ----*****,40,131200,00,00,Repeat,Needs Team echelon amplifier
+EUOPC-----,EUOPC-----*****,40,131300,00,00,Substitute
+SUGPIMV---,S*GPIMV---H****,20,121306,00,00,Repeat,Repeat of EUFPLH----H****
+######################################################,,,,,,
+## New Mappings
+S*APWB----,S*APWB---------,02,110000,00,00,Substitute,Substitute Air Missile for Bomb symbol
