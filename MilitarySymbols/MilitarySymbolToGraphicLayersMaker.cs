@@ -67,6 +67,12 @@ namespace MilitarySymbols
 
         const string ImageSuffix = ".svg";
 
+        public static bool AddReferenceCenterPoint
+        {
+            get;
+            set;
+        }
+
         // IMPORTANT: If you don't have the expected SVG Files, in the expected folder format
         //            then this class will not do anything.
         // The assumed/expected Folder structure:
@@ -654,6 +660,21 @@ namespace MilitarySymbols
                 // Other? ex. "Land unit icons – special entity subtypes"
 
             } // end skipRemainingLayers
+
+            if (AddReferenceCenterPoint)
+            {
+                // For testing if icons are centered properly:
+                // Outer Circle:
+                string centerIcon = ImageFilesHome +
+                    @"Appendices\ControlMeasures\25200500.svg"; // (Large Yellow Circle)
+                milSymbol.GraphicLayers.Add(centerIcon);
+
+                // Center Dot/Crosshair:
+                string centerIcon2 = ImageFilesHome +
+                    // @"Appendices\Land\10130300.svg"; // (Center Black Circle)
+                    @"Appendices\Land\10161300_2.svg";  // (Center Black Crosshairs)
+                milSymbol.GraphicLayers.Add(centerIcon2);
+            }
 
             //TODO: look at the layers to see if any do not exist:
             foreach (string graphicLayer in milSymbol.GraphicLayers)

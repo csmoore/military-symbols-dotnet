@@ -79,13 +79,8 @@ namespace MilSymbolPicker
         PaneSequenceType currentPane  = PaneSequenceType.AffiliationPane;
         SymbolLookup symbolLookup = new SymbolLookup();
 
-        private void FormPicker_Load(object sender, EventArgs e)
+        private void CheckSettings()
         {
-            symbolLookup.Initialize();
-
-            if (!symbolLookup.Initialized)
-                MessageBox.Show(@"Symbol Search will not work: Could not initialize the Symbol Lookup (Do Data\*.csv files exist? Are they locked/open anywhere else?)");
-
             // Set SVG Images Home if set in App Settings
             string appSettingsSvgHomeKey = "SVGImagesHome";
             var svgHomeFolderSetting = System.Configuration.ConfigurationManager.AppSettings[appSettingsSvgHomeKey];
@@ -100,6 +95,24 @@ namespace MilSymbolPicker
             }
             if (!Utilities.CheckImageFilesHomeExists())
                 MessageBox.Show("Images will not work: could not find folder: " + MilitarySymbolToGraphicLayersMaker.ImageFilesHome);
+
+            string appSettingsShowCenterPoint = "ShowCenterPoint";
+            bool showCenterPointSetting = Convert.ToBoolean(
+                System.Configuration.ConfigurationManager.AppSettings[appSettingsShowCenterPoint]);
+            if (showCenterPointSetting)
+            {
+                MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint = true;
+            }
+        }
+
+        private void FormPicker_Load(object sender, EventArgs e)
+        {
+            symbolLookup.Initialize();
+
+            if (!symbolLookup.Initialized)
+                MessageBox.Show(@"Symbol Search will not work: Could not initialize the Symbol Lookup (Do Data\*.csv files exist? Are they locked/open anywhere else?)");
+
+            CheckSettings();
 
             buttonList.Add(this.button11);
             buttonList.Add(this.button12);

@@ -21,7 +21,12 @@ namespace MilitarySymbols
 {
     public class SvgSymbol
     {
-        public static Size ImageSize { get; set; }
+        public static Size ImageSize 
+        { 
+            get { return defaultImageSize; }
+            set { defaultImageSize = value; }
+        }
+        private static Size defaultImageSize = new Size(256, 256);
 
         public static Bitmap GetBitmap(List<string> graphicLayers)
         {
@@ -60,8 +65,6 @@ namespace MilitarySymbols
                 }
             }
 
-            // TODO: figure out why image is not centered....
-
             return bitmap;
         }
 
@@ -74,9 +77,10 @@ namespace MilitarySymbols
 
         private static SvgDocument Resize(SvgDocument document)
         {
-            if (document.Height > ImageSize.Height)
+            // Make document have same dimensions as image
+            if (document.Height != ImageSize.Height)
             {
-                document.Width = (int)(((double)document.Width / (double)document.Height) * (double) ImageSize.Height);
+                document.Width = ImageSize.Width; 
                 document.Height = ImageSize.Height;
             }
             return document;

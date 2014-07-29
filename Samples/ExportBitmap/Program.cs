@@ -55,7 +55,7 @@ namespace ExportBitmap
                 arg = args[0];
             }
 
-            if (!CheckImageFolder())
+            if (!CheckSettings())
                 return;
 
             if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
@@ -184,7 +184,7 @@ namespace ExportBitmap
             return filepath;
         }
 
-        static bool CheckImageFolder()
+        static bool CheckSettings()
         {
             // Set SVG Images Home if set in App Settings
             string appSettingsSvgHomeKey = "SVGImagesHome";
@@ -203,6 +203,14 @@ namespace ExportBitmap
             {
                 Console.WriteLine("Image folder does not exist, export failed!");
                 return false;
+            }
+
+            // Debug setting to overlay Center Point/Crosshairs to check centering
+            string appSettingsShowCenterPoint = "ShowCenterPoint";
+            bool showCenterPointSetting = Convert.ToBoolean(ConfigurationManager.AppSettings[appSettingsShowCenterPoint]);
+            if (showCenterPointSetting)
+            {
+                MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint = true;
             }
 
             return true;
