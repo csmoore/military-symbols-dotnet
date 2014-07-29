@@ -171,17 +171,22 @@ namespace MilitarySymbols
 
             char charlieAffilationChar = TypeUtilities.AffiliationToCharlieChar[code2525Delta.Affiliation];
 
-            // TODO: get/set planning, echelon, other
-            
+            bool isWeather = (code2525CharlieFromLookup[0] == 'W');
+
             char replaceChar1 = charlieAffilationChar;
-            if (code2525CharlieFromLookup[0] == 'W') // Don't replace weather with affiliation
+            if (isWeather) // Don't replace weather with affiliation
                 replaceChar1 = code2525CharlieFromLookup[1];
 
             StringBuilder sbCharlieCode = new StringBuilder();
             sbCharlieCode.Append(code2525CharlieFromLookup[0]);
             sbCharlieCode.Append(replaceChar1);
-            sbCharlieCode.Append(code2525CharlieFromLookup[2]); 
-            sbCharlieCode.Append(TypeUtilities.StatusToCharlieChar[code2525Delta.Status]); 
+            sbCharlieCode.Append(code2525CharlieFromLookup[2]);
+
+            if (isWeather)
+                sbCharlieCode.Append(code2525CharlieFromLookup[3]);
+            else
+                sbCharlieCode.Append(TypeUtilities.StatusToCharlieChar[code2525Delta.Status]); 
+
             sbCharlieCode.Append(code2525CharlieFromLookup.Substring(4, 6));
             sbCharlieCode.Append(TypeUtilities.HqTfFdToCharlieChar[code2525Delta.HeadquartersTaskForceDummy]);
             sbCharlieCode.Append(TypeUtilities.EchelonMobilityToCharlieChar[code2525Delta.EchelonMobility]); 

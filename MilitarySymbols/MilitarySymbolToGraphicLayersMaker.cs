@@ -157,17 +157,24 @@ namespace MilitarySymbols
 
             string mainIconNameFullPath = sb.ToString();
 
-            // WORKAROUND/TRICKY: some symbols have wacky _0, _1, _2, _3 thing instead of base version
-            // Method: Find the frame from the affiliation & add _0, _1, _2, _3 accordingly
+            // WORKAROUND/TRICKY: some center icon symbols that need to touch fram have _0, _1, _2, _3 suffix instead of base version
+            // Method: Find the frame suffix from the affiliation & add _0, _1, _2, _3 accordingly
+            // Also test for 2 other exceptional cases while we are at it
             if (!System.IO.File.Exists(mainIconNameFullPath))
             {
                 string newFrameSuffix =
                     TypeUtilities.AffiliationFrameToSuffixName[milSymbol.Id.Affiliation] + ImageSuffix;
 
+                // more exceptional cases:
                 if (milSymbol.Id.SymbolSet == SymbolSetType.Control_Measures)
                 {
-                    // use ".a" instead
-                    newFrameSuffix = ".a" + ImageSuffix; 
+                    // use ".a" instead - 6 symbols
+                    newFrameSuffix = ".a" + ImageSuffix;
+                }
+                else if (milSymbol.Id.SymbolSet == SymbolSetType.Atmospheric)
+                {
+                    // use ".0" instead - only 1 symbol 45140200.0 
+                    newFrameSuffix = ".0" + ImageSuffix;
                 }
 
                 string subMainIconName = mainIconNameFullPath;
@@ -225,6 +232,8 @@ namespace MilitarySymbols
             return sb.ToString();
         }
 
+        // Center/Main Icon Modifiers: { # = 1 | 2 }, format = 
+        // Appendices\{SymbolSetTypeName}\Mod{#}\{SymbolSetType} + {ModifierCode} + {#}
         public static string GetModfierIconNameWithFolder(SymbolSetType symbolSet, int modifierNumber, int modifierCodeInt)
         {
             StringBuilder sb = new StringBuilder();
@@ -370,6 +379,10 @@ namespace MilitarySymbols
 
             // map the actual symbolSet to the supported/availble frame
             SymbolSetType mappedSymbolSet = TypeUtilities.SymbolSetToFrameMapping[symbolSet];
+
+            // Exceptional case for this one 
+            if (symbolSet == SymbolSetType.Activities)
+                mappedSymbolSet = SymbolSetType.Land_Unit; 
 
             string mappedSymbolSetValueString = TypeUtilities.EnumHelper.getEnumValAsString(mappedSymbolSet, 2);
             sb.Append(mappedSymbolSetValueString);
@@ -550,7 +563,7 @@ namespace MilitarySymbols
             //////////////////////////////////////////////////////////////////////////
             // Assembly the layers
 
-            // Start with the Frame
+            // Start with the Frame (if framed)
             if (TypeUtilities.HasFrame(milSymbol.Id.SymbolSet, milSymbol.Id.EntityCode))
             {
                 string frameIconNameWithFullPath =
@@ -565,7 +578,7 @@ namespace MilitarySymbols
             //////////////////////////////////////////////////////////////////////////
 
             //////////////////////////////////////////////////////////////////////////
-            // Main Icon Layer
+            // Main Icon Layer (all symbols should have this)
             string mainIconNameFullPath = GetMainIconNameWithFullPath(ref milSymbol);
 
             milSymbol.GraphicLayers.Add(mainIconNameFullPath);
@@ -573,22 +586,11 @@ namespace MilitarySymbols
 
             //////////////////////////////////////////////////////////////////////////
             // Skip the remaining if no more layers needed
-            //
-            // TODO: Verify this logic
-            //       Stop here for Control Measures (Lines/Areas for now) & 
-            //       Symbols *without* frames
-            //
-            bool skipRemainingLayers = false;
-            if ((milSymbol.Shape == ShapeType.Line) || (milSymbol.Shape == ShapeType.Area) || 
-                (!TypeUtilities.HasFrame(milSymbol.Id.SymbolSet)))
-                skipRemainingLayers = true;
+            bool skipRemainingLayers = !TypeUtilities.HasFrame(milSymbol.Id.SymbolSet);
 
             if (!skipRemainingLayers)
             {
                 StringBuilder sb = new StringBuilder();
-
-                // Center/Main Icon Modifiers: { # = 1 | 2 }
-                // Appendices\{SymbolSetTypeName}\Mod{#}\{SymbolSetType} + {ModifierCode} + {#}
 
                 // Main Icon Modfier 1
                 if (!string.IsNullOrEmpty(milSymbol.Id.ModifierOne)
@@ -645,7 +647,10 @@ namespace MilitarySymbols
                         milSymbol.GraphicLayers.Add(hqTfFdIconNameWithFullPath);
                 }
 
-                if (milSymbol.Id.Status !=  StatusType.NotSet)
+                // Status/Operational Condition Icon 
+                // (Note: if "planned" was set in the frame used above)
+                if ((milSymbol.Id.Status !=  StatusType.NotSet) ||
+                    (milSymbol.Id.Status !=  StatusType.Planned_Anticipated_Suspect))
                 {
                     string opConditionIconNameWithFullPath =
                         GetOperationalConditionNameWithFullPath(
@@ -657,9 +662,22 @@ namespace MilitarySymbols
                         milSymbol.GraphicLayers.Add(opConditionIconNameWithFullPath);
                 }
                 
-                // Other? ex. "Land unit icons – special entity subtypes"
+                // Other? ex. "Land unit icons – special entity subtypes" ?
 
             } // end skipRemainingLayers
+
+            // check this before we add debug/unknown icons at the end
+            int validLayerCount = 0;
+            // Look at the layers to see if any do not exist:
+            foreach (string graphicLayer in milSymbol.GraphicLayers)
+            {
+                if (!System.IO.File.Exists(graphicLayer))
+                    System.Diagnostics.Trace.WriteLine("SetMilitarySymbolGraphicLayers: Could not find layer: " + graphicLayer);
+                else
+                    validLayerCount++;
+            }
+
+            bool success = validLayerCount > 0;
 
             if (AddReferenceCenterPoint)
             {
@@ -676,17 +694,14 @@ namespace MilitarySymbols
                 milSymbol.GraphicLayers.Add(centerIcon2);
             }
 
-            //TODO: look at the layers to see if any do not exist:
-            foreach (string graphicLayer in milSymbol.GraphicLayers)
+            if (!success)
             {
-                if (!System.IO.File.Exists(graphicLayer))
-                    System.Diagnostics.Trace.WriteLine("SetMilitarySymbolGraphicLayers: Could not find layer: " + graphicLayer);
+                // add a default symbol
+                string defaultUnknownIcon = ImageFilesHome + @"Appendices\98100000.svg";
+                milSymbol.GraphicLayers.Add(defaultUnknownIcon);
             }
 
-            if (milSymbol.GraphicLayers.Count == 0)
-                return false;
-            else
-                return true;
+            return success;
 
         }
 
