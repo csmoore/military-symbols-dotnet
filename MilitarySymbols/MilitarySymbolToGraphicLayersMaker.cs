@@ -649,8 +649,8 @@ namespace MilitarySymbols
 
                 // Status/Operational Condition Icon 
                 // (Note: if "planned" was set in the frame used above)
-                if ((milSymbol.Id.Status !=  StatusType.NotSet) ||
-                    (milSymbol.Id.Status !=  StatusType.Planned_Anticipated_Suspect))
+                if ((milSymbol.Id.Status !=  StatusType.NotSet) &&
+                    (milSymbol.Id.Status > StatusType.Planned_Anticipated_Suspect))
                 {
                     string opConditionIconNameWithFullPath =
                         GetOperationalConditionNameWithFullPath(

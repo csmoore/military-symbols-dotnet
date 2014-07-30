@@ -75,7 +75,7 @@ namespace ConvertCode
             else if ((sidc.Length == 15) || (sidc.Length == 10)) // Charlie Code (full or shortened) Supplied
                 ConvertCharlieToDelta(sidc);
             else
-                Console.WriteLine("Failed to recognize SIDC: " + sidc + ", Length = " + sidc.Length);
+                Console.WriteLine("NOT FOUND," + sidc + ",Failed to recognize SIDC Length = " + sidc.Length);
         }
 
         static void ConvertDeltaToCharlie(string sidcString, bool newline = true)

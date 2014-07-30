@@ -1,4 +1,4 @@
-2525Charlie1stTen,2525Charlie,2525DeltaSymbolSet,2525DeltaEntity,2525DeltaMod1,2525DeltaMod2,Remarks,Remarks2
+2525Charlie1stTen,2525Charlie,2525DeltaSymbolSet,2525DeltaEntity,2525DeltaMod1,2525DeltaMod2,LegacyMappingStatus,Remarks
 S*APM-----,S*APM-----*****,01,110000,00,00,,
 S*APMF----,S*APMF----*****,01,110100,00,00,,
 S*APMFO---,S*APMFO---*****,01,110101,00,00,,
@@ -1135,7 +1135,7 @@ G*GPDPOS--,G*GPDPOS--****X,25,160204,,,,
 G*GPDPOC--,G*GPDPOC--****X,25,160205,,,,
 G*GPDPT---,G*GPDPT---****X,25,160300,,,,
 G*GPOPP---,G*GPOPP---****X,25,160400,,,,
-G*GPGPA---,G*GPGPA---****X,25,160500,,,,
+G*GPGPA---,G*GPGPA---****X,25,180100,,,,
 ,,25,170000,,,,
 G*GPALC---,G*GPALC---****X,25,170100,,,,
 ,,25,170101,,,,
@@ -1548,7 +1548,7 @@ G*SPASD---,G*SPASD---****X,25,310700,,,,
 ,,25,320000,,,,
 G*SPPX----,G*SPPX----****X,25,320100,,,,
 G*SPPAS---,G*SPPAS---****X,25,320200,,,,
-G*SPPAT---,G*SPPAT---****X,25,320310,,,,
+G*SPPAT---,G*SPPAT---****X,25,320300,,,,
 G*SPPC----,G*SPPC----****X,25,320400,,,,
 G*SPPY----,G*SPPY----****X,25,320500,,,,
 G*SPPT----,G*SPPT----****X,25,320600,,,,
@@ -2534,7 +2534,7 @@ S*ZP------,S*ZP------*****,00,000000,00,00,,
 S*AP------,S*AP------*****,01,000000,00,00,,
 S*GP------,S*GP------*****,15,000000,00,00,,
 S*GPU-----,S*GPU-----*****,10,000000,00,00,,
-S*GPUH----,S*GPUH----*****,10,000000,00,00,Substitute,Needs HQ Code=2
+S*GPUH----,S*GPUH----*****,10,000000,00,00,Substitute,Set HQ/TF/FD to HQ(2)
 S*GPUCDSC-,S*GPUCDSC-*****,10,111101,00,00,Substitute,
 S*GPUCDSS-,S*GPUCDSS-*****,10,111101,00,00,Substitute,
 S*GPUCDSV-,S*GPUCDSV-*****,10,111101,00,00,Substitute,
@@ -2543,10 +2543,10 @@ S*GPUCDHH-,S*GPUCDHH-*****,10,111107,00,00,Substitute,
 S*GPUCDHP-,S*GPUCDHP-*****,10,111107,00,00,Substitute,
 S*GPUCA---,S*GPUCA---*****,10,120500,00,00,Repeat,
 S*GPUCAAD-,S*GPUCAAD-*****,10,120401,00,00,Repeat,
-S*GPUCAAA-,S*GPUCAAA-*****,10,120401,00,00,Repeat-Ech/Mob=33,
+S*GPUCAAA-,S*GPUCAAA-*****,10,120401,00,00,Repeat,Set Mobility=Tracked(33)
 S*GPUCAAAT,S*GPUCAAAT*****,10,120500,00,00,Repeat,
 S*GPUCAWA-,S*GPUCAWA-*****,15,120100,00,00,Substitute,
-S*GPUCAWL-,S*GPUCAWL-*****,15,120100,00,00,Substitute ,
+S*GPUCAWL-,S*GPUCAWL-*****,15,120100,00,00,Substitute,
 S*GPUCAWM-,S*GPUCAWM-*****,15,120100,00,00,Substitute,
 S*GPUCAWH-,S*GPUCAWH-*****,15,120100,00,00,Substitute,
 S*GPUCAWR-,S*GPUCAWR-*****,15,120100,00,00,Substitute,
@@ -2556,11 +2556,11 @@ S*GPUCAWWR,S*GPUCAWWR*****,15,120100,00,00,Substitute,
 S*GPUCVR--,S*GPUCVR--*****,10,120600,00,00,Repeat,
 S*GPUCVRS-,S*GPUCVRS-*****,10,120601,00,00,Repeat,
 S*GPUCFHX-,S*GPUCFHX-*****,10,130300,00,00,Substitute,
-S*GPUCFR--,S*GPUCFR--*****,10,130300,00,00,Substitute,Mobility=52
+S*GPUCFR--,S*GPUCFR--*****,10,130300,00,00,Substitute,Set Mobility=Amphibious(52)
 S*GPUCFTCD,S*GPUCFTCD*****,10,130400,00,00,Repeat,
-S*GPUCFML-,S*GPUCFML-*****,10,130300,00,00,Substitute,Mobility=52
-S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon SUGPUCR---
-S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked (120501)	
+S*GPUCFML-,S*GPUCFML-*****,10,130300,00,00,Substitute,Set Mobility=Amphibious(52)
+S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon 10,121300(SUGPUCR---)
+S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked 10,120501
 S*GPUCRVG-,S*GPUCRVG-*****,10,121300,00,00,Repeat,
 #S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code,,,,
 #S*GPUCSGD-*****,Repeat?,,,,,,
