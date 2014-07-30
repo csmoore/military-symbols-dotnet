@@ -2559,8 +2559,8 @@ S*GPUCFHX-,S*GPUCFHX-*****,10,130300,00,00,Substitute,
 S*GPUCFR--,S*GPUCFR--*****,10,130300,00,00,Substitute,Set Mobility=Amphibious(52)
 S*GPUCFTCD,S*GPUCFTCD*****,10,130400,00,00,Repeat,
 S*GPUCFML-,S*GPUCFML-*****,10,130300,00,00,Substitute,Set Mobility=Amphibious(52)
-S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon 10,121300(SUGPUCR---)
-S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked 10,120501
+S*GPUCRV--,S*GPUCRV--*****,10,121303,00,00,Repeat,Same as Recon 10-121300(SUGPUCR---)
+S*GPUCRVA-,S*GPUCRVA-*****,10,120501,00,00,Repeat,Recon tracked 10-120501
 S*GPUCRVG-,S*GPUCRVG-*****,10,121300,00,00,Repeat,
 #S*GPUCSG--*****,Repeat,Use Combat, Internal Security Force code,,,,
 #S*GPUCSGD-*****,Repeat?,,,,,,
