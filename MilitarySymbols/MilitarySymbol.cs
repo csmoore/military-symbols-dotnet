@@ -38,7 +38,15 @@ namespace MilitarySymbols
 
         public string Legacy2525Code
         {
-            get; set;
+            get
+            {
+                string code2525Charlie;
+                bool convertSuccess = Utilities.ConvertCodeDeltaToCharlie(Id, out code2525Charlie);
+                if (convertSuccess)
+                    return code2525Charlie;
+                else
+                    return string.Empty;
+            }
         }
 
         public ShapeType Shape
@@ -63,43 +71,26 @@ namespace MilitarySymbols
         }
         protected List<string> graphicLayers = new List<string>();
 
-        public static bool FormatTagsForStyleFiles
-        {
-            get
-            {
-                return formatTagsForStyleFiles;
-            }
-            set
-            {
-                formatTagsForStyleFiles = value;
-            }
-        }
-        private static bool formatTagsForStyleFiles = false;
-
         public List<string> Tags
         {
             get
             {
                 tags.Clear();
 
-                if (!formatTagsForStyleFiles)
-                    if (this.id != null)
-                        tags.AddRange(this.id.Tags);
+                if (this.id != null)
+                    tags.AddRange(this.id.Tags);
 
                 if (this.Shape != ShapeType.Unknown)
                     tags.Add(this.Shape.ToString());
 
-                if (!string.IsNullOrEmpty(this.Legacy2525Code))
-                    tags.Add(this.Legacy2525Code);
+                string legacy2525Code = this.Legacy2525Code;
+                if (!string.IsNullOrEmpty(legacy2525Code))
+                    tags.Add(legacy2525Code);
 
                 // TODO: Add Other Desired Tags
 
-
-                // TRICKY: the old Tag format assumed that the SIDC was always last, 
-                //         not sure if that is still the convention (but putting last just in case)
-                if (!formatTagsForStyleFiles)
-                    if (this.Id.IsValid)
-                        tags.Add(this.Id.ToString());
+                if (this.Id.IsValid)
+                    tags.Add(this.Id.ToString());
 
                 return tags;
             }
@@ -148,13 +139,20 @@ namespace MilitarySymbols
                 sb.Append("2525C:");
                 sb.Append(Legacy2525Code);
             }
-            if (Tags.Count > 0)
+
+            // Change if you want to include
+            bool INCLUDE_TAGS = false;
+            if (INCLUDE_TAGS)
             {
-                sb.Append(":Tags:");
-                foreach (string s in Tags)
+                List<string> writeTags = Tags;
+                if (writeTags.Count > 0)
                 {
-                    sb.Append(s);
-                    sb.Append(":");
+                    sb.Append(":Tags:");
+                    foreach (string s in writeTags)
+                    {
+                        sb.Append(s);
+                        sb.Append(":");
+                    }
                 }
             }
 

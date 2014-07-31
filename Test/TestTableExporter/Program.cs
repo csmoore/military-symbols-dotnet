@@ -23,11 +23,11 @@ namespace TestMilitarySymbolsLibrary
     class Program
     {
         // TODO: SET THESE TO DESIRED VALUES IF USING STYLE EXPORT
-        const bool FORMAT_IS_STYLE_CSV = false;
+        static bool FORMAT_IS_STYLE_CSV = false;
         const string POINT_SIZE_STRING = "32";
         const int MAX_STYLE_LENGTH = 255;
         const bool IMAGE_FORMAT_IS_EMF = true;
-        const bool INCLUDE_NOTES = true;
+        static bool INCLUDE_NOTES = true;
         const string IMAGES_HOME =
             @"C:\MyFiles\Esri\MilitaryFeatures2525D\SymbolsApril32014\2525D_EMF";
 
@@ -58,9 +58,6 @@ namespace TestMilitarySymbolsLibrary
                 if (!FORMAT_IS_STYLE_CSV)
                     Console.WriteLine("Looking for Type: " + typeToExportUpper);
             }
-
-            // HACK:
-            MilitarySymbol.FormatTagsForStyleFiles = true;
 
             bool found = false;
 
@@ -417,12 +414,22 @@ namespace TestMilitarySymbolsLibrary
             if (sidc == sidc2)
                 System.Diagnostics.Trace.WriteLine("pass");
 
-            sidc2.EntityField = "AB"; 
             sidc.Affiliation = StandardIdentityAffiliationType.Friend;
+
+            sidc2.SymbolSet = SymbolSetType.Control_Measures;
+            sidc2.EntityCode = "110100"; 
 
             if (sidc != sidc2)
                 System.Diagnostics.Trace.WriteLine("pass");
 
+            string wfn = Utilities.GetWellFormedName(sidc2);
+
+            sidc.SymbolSet = SymbolSetType.Air;
+            sidc.EntityCode = "110131";
+            sidc.ModifierOne = "01";
+            sidc.ModifierTwo = "02";
+
+            string wfn2 = Utilities.GetWellFormedName(sidc);
 
             MilitarySymbol ms1 = new MilitarySymbol();
             ms1.Id = SymbolIdCode.DefaultSymbolIdCode;

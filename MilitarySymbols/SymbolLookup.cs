@@ -39,36 +39,6 @@ namespace MilitarySymbols
         {
         }
 
-
-        public static string GetWellFormedName(string symbolSetName, string entityPart,
-            string entityTypePart, string entitySubTypePart)
-        {
-            StringBuilder nameBuilder = new StringBuilder();
-
-            if (!string.IsNullOrEmpty(symbolSetName) && symbolSetName.Length > 0)
-                nameBuilder.Append(symbolSetName);
-
-            if (!string.IsNullOrEmpty(entityPart) && entityPart.Length > 0)
-            {
-                nameBuilder.Append(TypeUtilities.NameSeparator);
-                nameBuilder.Append(entityPart);
-            }
-
-            if (!string.IsNullOrEmpty(entityTypePart) && entityTypePart.Length > 0)
-            {
-                nameBuilder.Append(TypeUtilities.NameSeparator);
-                nameBuilder.Append(entityTypePart);
-            }
-
-            if (!string.IsNullOrEmpty(entitySubTypePart) && entitySubTypePart.Length > 0)
-            {
-                nameBuilder.Append(TypeUtilities.NameSeparator);
-                nameBuilder.Append(entitySubTypePart);
-            }
-
-            return nameBuilder.ToString();
-        }
-
         /// <summary>
         /// Search based on the one or more attributes supplied
         /// Default param (symbolSet == NotSet) returns all symbols with affiliation set to Unknown
@@ -170,6 +140,44 @@ namespace MilitarySymbols
             }
 
             return symbolList;
+        }
+
+        public string GetModifierNameFromCode(SymbolSetType symbolSet, int modifierNumber,
+            string modifierCodeString)
+        {
+            Initialize();
+
+            if ((ModifierTable == null) || (modifierCodeString == "00"))
+                return string.Empty;
+
+            string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
+            string modifierToSearch = modifierNumber.ToString();
+
+            var results = from row in ModifierTable.AsEnumerable()
+                          where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
+                               & (row.Field<string>("Code") == modifierCodeString)
+                               & (row.Field<string>("ModifierNumber") == modifierToSearch))
+                          select row;
+
+            int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Modifier Code not found: " + modifierCodeString);
+                return string.Empty;
+            }
+
+            string modifierName = string.Empty;
+
+            foreach (DataRow row in results)
+            {
+                modifierName = row["Name"] as string;
+
+                // We only care about the 1st result
+                break;
+            }
+
+            return modifierName;
         }
 
         public string GetModifierCodeFromName(SymbolSetType symbolSet, int modifierNumber, 
@@ -357,6 +365,46 @@ namespace MilitarySymbols
             return distinctResultStrings;
         }
 
+        public bool GetEntityNamesFromCode(SymbolSetType symbolSet, string entityCode, 
+            out string entityName, out string entityTypeName, out string entitySubTypeName)
+        {
+            Initialize();
+
+            entityName = string.Empty;
+            entityTypeName = string.Empty;
+            entitySubTypeName = string.Empty; 
+
+            if ((EntityTable == null) || (symbolSet == SymbolSetType.NotSet) ||
+                (entityCode == "000000"))
+                return false;
+
+            string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
+            var results = from row in EntityTable.AsEnumerable()
+                          where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
+                                & (row.Field<string>("Code") == entityCode))
+                          select row;
+
+            int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Entity Code not found: " + entityCode);
+                return false;
+            }
+
+            foreach (DataRow row in results)
+            {
+                entityName = row["Entity"] as string;
+                entityTypeName = row["EntityType"] as string;
+                entitySubTypeName = row["EntitySubType"] as string;
+
+                // We only care about the 1st result
+               break;
+            }
+
+            return true;
+        }
+
         public string GetEntityCode(SymbolSetType symbolSet, string entityNameString, 
             string entityTypeNameString = "", string entitySubTypeNameString = "")
         {
@@ -409,7 +457,7 @@ namespace MilitarySymbols
         }
 
         /// <summary>
-        /// Creates a symbol by looking up the SymbolSet + Entity Name 
+        /// Creates a symbol by looking up the SymbolSet + {any} Entity Name 
         /// And then it sets the Affiliation if provided
         /// - this is just a simple/basic test
         /// </summary>
@@ -424,7 +472,7 @@ namespace MilitarySymbols
 
             var results = from row in EntityTable.AsEnumerable()
                           where ((row.Field<string>("EntitySubType").Contains(entityName)
-                            | (row.Field<string>("EntitySubType").Contains(entityName)
+                            | (row.Field<string>("EntityType").Contains(entityName)
                             | (row.Field<string>("Entity").Contains(entityName)))))
                             select row;
 
@@ -497,7 +545,6 @@ namespace MilitarySymbols
                 return null;
             }
 
-
             MilitarySymbol retSymbol = new MilitarySymbol();
 
             SymbolIdCode sidc = new SymbolIdCode();
@@ -509,15 +556,9 @@ namespace MilitarySymbols
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
 
             string symbolSetName = TypeUtilities.EnumHelper.getStringFromEnum(symbolSet);
-            sidc.Name = GetWellFormedName(symbolSetName, entityName, entityTypeName, entitySubTypeName);
 
             retSymbol.Id = sidc;
             retSymbol.Shape = (ShapeType)TypeUtilities.EnumHelper.getEnumFromString(typeof(ShapeType), geoType);
-
-            string charlieCode;
-            bool canConvertToCharlie = GetCharlieCodeFromDelta(symbolSetString, entityCode, "00", "00", out charlieCode);
-            if (canConvertToCharlie)
-                retSymbol.Legacy2525Code = charlieCode;
 
             return retSymbol;
         }

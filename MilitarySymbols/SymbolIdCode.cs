@@ -70,6 +70,7 @@ namespace MilitarySymbols
 
         /// <summary>
         /// The most significant portions of the Code: symbol set, entity & modifier (if set)
+        /// TODO: may be overkill/redundant, see HumanReadableCode below
         /// </summary>
         public string ShortenedCode
         {
@@ -91,33 +92,63 @@ namespace MilitarySymbols
             }
         }
 
-        // HACK: Having this "Name" Attribute here is somewhat of a hack
-        // It just allows a readable form of this to be set like:
+        /// <summary>
+        /// Creates an easier to read code, eliminates unset attributes
+        /// </summary>
+        public string HumanReadableCode(bool showAffiliation = true)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(SymbolSet, 2));
+            sb.Append("_");
+            sb.Append(EntityCode);
+
+            if (showAffiliation)
+            {
+                sb.Append("_");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(Affiliation));
+            }
+
+            if ((ModifierOne != "00") || (ModifierTwo != "00"))
+            {
+                sb.Append("_M1-");
+                sb.Append(ModifierOne);
+                sb.Append("_M2-");
+                sb.Append(ModifierTwo);
+            }
+
+            if (Status != StatusType.Present)
+            {
+                sb.Append("_S-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(Status));
+            }
+
+            if (HeadquartersTaskForceDummy != HeadquartersTaskForceDummyType.NoHQTFDummyModifier)
+            {
+                sb.Append("_HQ-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(HeadquartersTaskForceDummy));
+            }
+
+            if (EchelonMobility != EchelonMobilityType.NoEchelonMobility)
+            {
+                sb.Append("_EM-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(EchelonMobility));
+            }
+
+            return sb.ToString();
+        }
+
+        // This is an readable form of the id with words instead of numbers:
         // "SymbolSet : Entity : EntityType : EntitySubType : Modifier1 : Modifier2"
         // "Air : Military : Fixed Wing : Bomber : Light"
-        // TODO: Find a better way to have this set automatically 
-        // The probem is that only the SymbolLookup class knows how to lookup the Names from the 
-        // codes (which it does in SymbolLookup.CreateSymbolFromStringProperties)
-        // so we would need to add a (circular) dependency (& that probably isn't a good idea)
+        // TODO: WARNING: this triggers a name lookup in SymbolLookup so use sparingly
         public string Name
         {
             get
             {
-                return name;
-            }
-            set
-            {
-                name = value;
-
-                // HACK: TODO: fix - remove any empy " : "
-                if (!string.IsNullOrEmpty(name))
-                {
-                    name = name.Replace(" :  :  : ", " : ");
-                    name = name.Replace(" :  : ", " : ");
-                }
+                return Utilities.GetWellFormedName(this);
             }
         }
-        protected string name = null;
 
         ///////////////////////////////////////////////////////////
         // 2525D: A.5.2.1  Set A - First ten digits 
@@ -354,8 +385,9 @@ namespace MilitarySymbols
                 if (this.EchelonMobility != EchelonMobilityType.NoEchelonMobility)
                     tags.Add(this.EchelonMobility.ToString());
 
-                if (!string.IsNullOrEmpty(this.Name) && this.Name.Length > 0)
-                    tags.Add(this.Name);
+                string name = this.Name; // Warning: we only want to call this property once
+                if (!string.IsNullOrWhiteSpace(name))
+                    tags.Add(name);
 
                 return tags;
             }

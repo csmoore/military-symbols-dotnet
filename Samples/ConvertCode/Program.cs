@@ -98,7 +98,7 @@ namespace ConvertCode
             string code2525Charlie;
             bool success = Utilities.ConvertCodeDeltaToCharlie(sidc, out code2525Charlie);
 
-            string simpleCode = Utilities.GetHumanReadableCode(sidc);
+            string simpleCode = sidc.HumanReadableCode();
 
             Console.Write(code2525Charlie + "," + simpleCode + ","
                 + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
@@ -113,7 +113,7 @@ namespace ConvertCode
 
             bool success = Utilities.ConvertCodeCharlieToDelta(code2525Charlie, out sidc);
 
-            string simpleCode = Utilities.GetHumanReadableCode(sidc);
+            string simpleCode = sidc.HumanReadableCode();
 
             if (success)
                 Console.WriteLine(code2525Charlie + "," + simpleCode + ","
@@ -172,7 +172,7 @@ namespace ConvertCode
             {
                 ConvertDeltaToCharlie(matchSymbol.Id.Code, false);
 
-                Console.Write("," + Utilities.GetHumanReadableCode(matchSymbol.Id, false));
+                Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
                 Console.Write("," + matchSymbol.Id.Name);
                 Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
             }

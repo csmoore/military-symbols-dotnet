@@ -48,11 +48,6 @@ namespace MilSymbolPicker
         string currentEntityName = string.Empty;
         string currentEntityTypeName = string.Empty;
         string currentEntitySubTypeName = string.Empty;
-        string currentModifier1Name = string.Empty;
-        string currentModifier2Name = string.Empty;
-        string currentEchelonMobilityName = string.Empty;
-        string currentHqTfFdName = string.Empty;
-        string currentStatusName = string.Empty;
 
         string NOT_SET = "NONE/NOT SET";
 
@@ -172,7 +167,7 @@ namespace MilSymbolPicker
                     this.labCol3.Visible = false;
 
                     currentColValues = TypeUtilities.EnumHelper.getEnumValuesAsStrings(typeof(SymbolSetType));
-
+                   
                     currentColRowIndex = 0;
 
                     currentColumn = 2;
@@ -415,9 +410,6 @@ namespace MilSymbolPicker
                 {
                     currentEntityName = valueSelected;
 
-                    currentSymbol.Id.Name = symbolSetName + TypeUtilities.NameSeparator + 
-                        currentEntityName;
-
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet, currentEntityName);
 
                     currentSymbol.Id.EntityCode = entityCode;
@@ -434,9 +426,6 @@ namespace MilSymbolPicker
                 else
                 {
                     currentEntityTypeName = valueSelected;
-
-                    currentSymbol.Id.Name = symbolSetName + TypeUtilities.NameSeparator + 
-                        currentEntityName + TypeUtilities.NameSeparator + currentEntityTypeName;
 
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet,
                         currentEntityName, currentEntityTypeName);
@@ -456,10 +445,6 @@ namespace MilSymbolPicker
                 {
                     currentEntitySubTypeName = valueSelected;
 
-                    currentSymbol.Id.Name = symbolSetName + TypeUtilities.NameSeparator + 
-                        currentEntityName + TypeUtilities.NameSeparator +
-                        currentEntityTypeName + TypeUtilities.NameSeparator + currentEntitySubTypeName;
-
                     string entityCode = symbolLookup.GetEntityCode(currentSymbol.Id.SymbolSet,
                         currentEntityName, currentEntityTypeName, currentEntitySubTypeName);
 
@@ -470,12 +455,7 @@ namespace MilSymbolPicker
             }
             else if (currentPane == PaneSequenceType.Modifier1Pane)
             {
-                currentModifier1Name = valueSelected;
-
-                currentSymbol.Id.Name = symbolSetName + TypeUtilities.NameSeparator + 
-                    currentEntityName + TypeUtilities.NameSeparator +
-                    currentEntityTypeName + TypeUtilities.NameSeparator + currentEntitySubTypeName +
-                    TypeUtilities.NameSeparator + "Mod1-" + currentModifier1Name;
+                string currentModifier1Name = valueSelected;
 
                 string modifier1Code = symbolLookup.GetModifierCodeFromName(
                     currentSymbol.Id.SymbolSet, 1, currentModifier1Name);
@@ -486,13 +466,7 @@ namespace MilSymbolPicker
             }
             else if (currentPane == PaneSequenceType.Modifier2Pane)
             {
-                currentModifier2Name = valueSelected;
-
-                currentSymbol.Id.Name = symbolSetName + TypeUtilities.NameSeparator + 
-                    currentEntityName + TypeUtilities.NameSeparator +
-                    currentEntityTypeName + TypeUtilities.NameSeparator + currentEntitySubTypeName +
-                    TypeUtilities.NameSeparator + "Mod1-" + currentModifier1Name +
-                    TypeUtilities.NameSeparator + "Mod2-" + currentModifier2Name;
+                string currentModifier2Name = valueSelected;
 
                 string modifier2Code = symbolLookup.GetModifierCodeFromName(
                     currentSymbol.Id.SymbolSet, 2, currentModifier2Name);
@@ -503,7 +477,7 @@ namespace MilSymbolPicker
             }
             else if (currentPane == PaneSequenceType.EchelonMobilityPane)
             {
-                currentEchelonMobilityName = valueSelected;
+                string currentEchelonMobilityName = valueSelected;
 
                 EchelonMobilityType echelonMobilitySelection =
                     (EchelonMobilityType)
@@ -516,7 +490,7 @@ namespace MilSymbolPicker
             }
             else if (currentPane == PaneSequenceType.HqTfFdPane)
             {
-                currentHqTfFdName = valueSelected;
+                string currentHqTfFdName = valueSelected;
 
                 HeadquartersTaskForceDummyType hqTfFdSelection =
                     (HeadquartersTaskForceDummyType)
@@ -529,7 +503,7 @@ namespace MilSymbolPicker
             }
             else if (currentPane == PaneSequenceType.StatusPane)
             {
-                currentStatusName = valueSelected;
+                string currentStatusName = valueSelected;
 
                 StatusType statusSelection =
                     (StatusType)TypeUtilities.EnumHelper.getEnumFromString(
@@ -561,11 +535,6 @@ namespace MilSymbolPicker
             currentEntityName = string.Empty;
             currentEntityTypeName = string.Empty;
             currentEntitySubTypeName = string.Empty;
-            currentModifier1Name = string.Empty;
-            currentModifier2Name = string.Empty;
-            currentEchelonMobilityName = string.Empty;
-            currentHqTfFdName = string.Empty;
-            currentStatusName = string.Empty;
 
             StandardIdentityAffiliationType affil = currentSymbol.Id.Affiliation;
 
@@ -676,8 +645,9 @@ namespace MilSymbolPicker
 
             MilitarySymbolToGraphicLayersMaker.SetMilitarySymbolGraphicLayers(ref currentSymbol);
 
-            System.Diagnostics.Trace.WriteLine("MilitarySymbol State After SetMilitarySymbolGraphicLayers : ");
-            System.Diagnostics.Trace.WriteLine(this.currentSymbol);
+            // Debug in case drawing layers crazed:
+            // System.Diagnostics.Trace.WriteLine("MilitarySymbol State After SetMilitarySymbolGraphicLayers : ");
+            // System.Diagnostics.Trace.WriteLine(this.currentSymbol);
 
             if (currentSymbol.GraphicLayers.Count == 0)
             {
@@ -720,15 +690,6 @@ namespace MilSymbolPicker
             foreach (string tag in this.currentSymbol.Tags)
             {
                 tagBuilder.Append(tag.Replace('_', ' '));
-                tagBuilder.Append(";");
-            }
-
-            // Add Charlie ID as tag if it maps
-            string code2525Charlie;
-            bool convertSuccess = Utilities.ConvertCodeDeltaToCharlie(currentSymbol.Id, out code2525Charlie);
-            if (convertSuccess)
-            {
-                tagBuilder.Append(code2525Charlie);
                 tagBuilder.Append(";");
             }
 
@@ -817,9 +778,11 @@ namespace MilSymbolPicker
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void butReset_Click(object sender, EventArgs e)
         {
             currentPane = PaneSequenceType.AffiliationPane;
+
+            resetSymbolState();
 
             SetPaneState();
         }

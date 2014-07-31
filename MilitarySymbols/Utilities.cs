@@ -150,6 +150,9 @@ namespace MilitarySymbols
         public static bool ConvertCodeDeltaToCharlie(SymbolIdCode code2525Delta,
             out string code2525Charlie)
         {
+            // Just monitoring how often this is being called for now:
+            System.Diagnostics.Trace.WriteLine("ConvertCodeDeltaToCharlie");
+
             code2525Charlie = "NOT FOUND";
 
             SymbolLookup codeLookup = getSymbolLookup();
@@ -212,51 +215,66 @@ namespace MilitarySymbols
         }
 
         /// <summary>
-        /// Creates an easier to read code, eliminates unset attributes
+        /// Creates an consistent name from a Symbol ID Code
+        /// (not in SymbolIdCode because it needs SymbolLookup)
         /// </summary>
-        public static string GetHumanReadableCode(SymbolIdCode id, bool showAffiliation = true)
+        public static string GetWellFormedName(SymbolIdCode id)
         {
+            // Just monitoring how often this is being called for now:
+            System.Diagnostics.Trace.WriteLine("GetWellFormedName");
+
+            SymbolLookup milSymbolLookup = getSymbolLookup();
+
             StringBuilder sb = new StringBuilder();
+            string symbolSetName = TypeUtilities.EnumHelper.getStringFromEnum(id.SymbolSet);
+            sb.Append(symbolSetName);
 
-            sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.SymbolSet, 2));
-            sb.Append("_");
-            sb.Append(id.EntityCode);
+            string entityName = string.Empty;
+            string entityTypeName = string.Empty;
+            string entitySubTypeName = string.Empty;
 
-            if (showAffiliation)
+            bool found = milSymbolLookup.GetEntityNamesFromCode(id.SymbolSet, id.EntityCode,
+                out entityName, out entityTypeName, out entitySubTypeName);
+
+            if (!found)
+                return sb.ToString();
+
+            sb.Append(TypeUtilities.NameSeparator);
+            sb.Append(entityName);
+
+            if (!string.IsNullOrWhiteSpace(entityTypeName))
             {
-                sb.Append("_");
-                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.Affiliation));
+                sb.Append(TypeUtilities.NameSeparator);
+                sb.Append(entityTypeName);
             }
 
-            if ((id.ModifierOne != "00") || (id.ModifierTwo != "00"))
+            if (!string.IsNullOrWhiteSpace(entitySubTypeName))
             {
-                sb.Append("_M1-");
-                sb.Append(id.ModifierOne);
-                sb.Append("_M2-");
-                sb.Append(id.ModifierTwo);
+                sb.Append(TypeUtilities.NameSeparator);
+                sb.Append(entitySubTypeName);
             }
 
-            if (id.Status != StatusType.Present)
+            string modifier1Name = 
+                milSymbolLookup.GetModifierNameFromCode(id.SymbolSet, 1, id.ModifierOne);
+            string modifier2Name = 
+                milSymbolLookup.GetModifierNameFromCode(id.SymbolSet, 2, id.ModifierTwo);
+
+            if (!string.IsNullOrWhiteSpace(modifier1Name))
             {
-                sb.Append("_S-");
-                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.Status));
+                sb.Append(TypeUtilities.NameSeparator);
+                sb.Append("M1-");
+                sb.Append(modifier1Name);
             }
 
-            if (id.HeadquartersTaskForceDummy != HeadquartersTaskForceDummyType.NoHQTFDummyModifier)
+            if (!string.IsNullOrWhiteSpace(modifier2Name))
             {
-                sb.Append("_HQ-");
-                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.HeadquartersTaskForceDummy));
-            }
-
-            if (id.EchelonMobility != EchelonMobilityType.NoEchelonMobility)
-            {
-                sb.Append("_EM-");
-                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(id.EchelonMobility));
+                sb.Append(TypeUtilities.NameSeparator);
+                sb.Append("M2-");
+                sb.Append(modifier2Name);
             }
 
             return sb.ToString();
         }
-
        
         public static SymbolLookup getSymbolLookup()
         {

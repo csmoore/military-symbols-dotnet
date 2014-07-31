@@ -23,8 +23,6 @@ namespace MilitarySymbols
     /// represent that Symbol Id
     /// For convenience, it takes a MilitarySymbol object in it main entry method:
     /// SetMilitarySymbolGraphicLayers and sets the GraphicLayers to these strings
-    /// (NOTE: a possible TODO could be to remove this MilitarySymbol dependency, 
-    ///  this was just done for rapid prototyping)
     /// We might also replace this complicated logic with a table lookup, but for now
     /// it is a nice way to validate that the rules are actually consistent.
     /// </summary>
@@ -34,14 +32,7 @@ namespace MilitarySymbols
         private static readonly string DEFAULT_PATH =
             System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"MIL_STD_2525D_Symbols");
 
-        // TODO/IMPORTANT: 
-        // If you don't want to use the default: 
-        // 1) You must uncomment & set this to the location on your machine &
-        // 2) Change imageFilesHome default/TODO below
-        private static readonly string ALTERNATE_PATH = 
-                        @"[!!!!!!!!!!!SET_THIS_FOLDER_IF_DESIRED!!!!!!!!!!!]";
-
-        // - OR - set this at Runtime with 
+        // IMPORTANT: - OR - you can set this at Runtime with 
         // Utilities.SetImageFilesHome -or- MilitarySymbolToGraphicLayersMaker.ImageFilesHome
 
         // Allow this property to be set externally at runtime (if desired/needed)
@@ -61,8 +52,7 @@ namespace MilitarySymbols
             }
         }
         private static string imageFilesHome =
-            // ALTERNATE_PATH // <-- TODO: SET THIS to ALTERNATE_PATH if you don't want to use default
-            DEFAULT_PATH      // (and comment out this) 
+            DEFAULT_PATH 
             + System.IO.Path.DirectorySeparatorChar; // IMPORTANT/NOTE: Ends in DirectorySeparator
 
         const string ImageSuffix = ".svg";

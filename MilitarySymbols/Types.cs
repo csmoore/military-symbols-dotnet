@@ -494,7 +494,10 @@ namespace MilitarySymbols
                 }
                 catch (Exception ex)
                 {
+                    if (string.IsNullOrWhiteSpace(hashCodeString))
+                        throw;
 
+                    System.Diagnostics.Trace.WriteLine("getEnumFromHashCodeString: Exception Converting String to Int: " + hashCodeString + ", Msg: " +  ex.Message);
                 }
 
                 int index = 0;

@@ -100,7 +100,7 @@ namespace ExportBitmap
                 return;
             }
 
-            string imageFileName = Utilities.GetHumanReadableCode(id);
+            string imageFileName = id.HumanReadableCode();
             string filepath = getFullFileName(imageFileName);
 
             Console.WriteLine("Exporting File: " + filepath);
@@ -264,7 +264,7 @@ namespace ExportBitmap
 
             foreach (MilitarySymbol matchSymbol in matchingSymbols)
             {
-                Console.Write("SimpleCode=" + Utilities.GetHumanReadableCode(matchSymbol.Id));
+                Console.Write("SimpleCode=" + matchSymbol.Id.HumanReadableCode());
                 Console.Write(", Name=" + matchSymbol.Id.Name);
                 Console.WriteLine(", Tags=" + matchSymbol.TagsAsString);
 
