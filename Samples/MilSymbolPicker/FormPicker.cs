@@ -215,11 +215,15 @@ namespace MilSymbolPicker
 
                     currentColRowIndex = 0;
 
-                    currentColumn = 3;
-                    enableColumnButtons(3, true);
-                    setColumnValues();
-                    enableColumnButtons(1, false);
-                    enableColumnButtons(2, false);
+                    // if we are navigating backwards, and there were no entities (e.g. SpaceMet)
+                    if (currentPane != PaneSequenceType.SymbolSetPane)
+                    {
+                        currentColumn = 3;
+                        enableColumnButtons(3, true);
+                        setColumnValues();
+                        enableColumnButtons(1, false);
+                        enableColumnButtons(2, false);
+                    }
                 }
                 else if ((currentPane == PaneSequenceType.Modifier1Pane)
                       || (currentPane == PaneSequenceType.Modifier2Pane))
@@ -252,11 +256,15 @@ namespace MilSymbolPicker
 
                     currentColRowIndex = 0;
 
-                    currentColumn = 3;
-                    enableColumnButtons(3, true);
-                    setColumnValues();
-                    enableColumnButtons(1, false);
-                    enableColumnButtons(2, false);
+                    // if we are navigating backwards, and there were no modifiers (e.g. SpaceMet)
+                    if (currentPane != PaneSequenceType.SymbolSetPane)
+                    {
+                        currentColumn = 3;
+                        enableColumnButtons(3, true);
+                        setColumnValues();
+                        enableColumnButtons(1, false);
+                        enableColumnButtons(2, false);
+                    }
                 }
                 ////////////////////////////////////////////////////////////////
                 //
@@ -362,7 +370,7 @@ namespace MilSymbolPicker
             button31.Visible = true;
             button31.Enabled = true; // just in case no values so PerformClick will work 
             button31.Text = string.Empty;
-            button31.PerformClick(); // force the states to be re-evaluatedd
+            button31.PerformClick(); // force the states to be re-evaluated
         }
 
         void setSymbolState(string valueSelected)

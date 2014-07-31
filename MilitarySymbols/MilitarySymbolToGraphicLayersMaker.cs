@@ -370,8 +370,9 @@ namespace MilitarySymbols
             // map the actual symbolSet to the supported/availble frame
             SymbolSetType mappedSymbolSet = TypeUtilities.SymbolSetToFrameMapping[symbolSet];
 
-            // Exceptional case for this one 
-            if (symbolSet == SymbolSetType.Activities)
+            // Exceptional cases for this one 
+            if ((symbolSet == SymbolSetType.Activities) || (symbolSet == SymbolSetType.NotSet) ||
+                (symbolSet == SymbolSetType.Unknown))
                 mappedSymbolSet = SymbolSetType.Land_Unit; 
 
             string mappedSymbolSetValueString = TypeUtilities.EnumHelper.getEnumValAsString(mappedSymbolSet, 2);
@@ -525,6 +526,9 @@ namespace MilitarySymbols
                         SymbolSetType symbolSet,
                         StatusType status)
         {
+            if (affiliation >= StandardIdentityAffiliationType.Dont_Display_Frame)
+                return string.Empty;
+
             StringBuilder sb = new StringBuilder();
             sb.Append(ImageFilesHome);
 
@@ -563,7 +567,8 @@ namespace MilitarySymbols
                         milSymbol.Id.SymbolSet,
                         milSymbol.Id.Status);
 
-                milSymbol.GraphicLayers.Add(frameIconNameWithFullPath);            
+                if (!string.IsNullOrEmpty(frameIconNameWithFullPath))
+                    milSymbol.GraphicLayers.Add(frameIconNameWithFullPath);            
             }
             //////////////////////////////////////////////////////////////////////////
 

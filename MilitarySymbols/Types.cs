@@ -53,7 +53,7 @@ namespace MilitarySymbols
         Neutral = 4,
         Suspect_Joker = 5,
         Hostile = 6,       // + Faker
-        Invalid = 8,
+        Dont_Display_Frame = 8,
         NotSet = 9
     }
 
@@ -327,7 +327,7 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, StandardIdentityAffiliationType.Neutral },            
             { StandardIdentityAffiliationType.Suspect_Joker, StandardIdentityAffiliationType.Hostile },
             { StandardIdentityAffiliationType.Hostile, StandardIdentityAffiliationType.Hostile },
-            { StandardIdentityAffiliationType.Invalid, StandardIdentityAffiliationType.Unknown },
+            { StandardIdentityAffiliationType.Dont_Display_Frame, StandardIdentityAffiliationType.Unknown },
             { StandardIdentityAffiliationType.NotSet, StandardIdentityAffiliationType.Unknown }
         };
 
@@ -343,7 +343,7 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, "_2" },
             { StandardIdentityAffiliationType.Suspect_Joker, "_3" },
             { StandardIdentityAffiliationType.Hostile, "_3" },
-            { StandardIdentityAffiliationType.Invalid, "_0" },
+            { StandardIdentityAffiliationType.Dont_Display_Frame, "_0" },
             { StandardIdentityAffiliationType.NotSet, "_0" }
         };
 
@@ -357,7 +357,7 @@ namespace MilitarySymbols
             { StandardIdentityAffiliationType.Neutral, 'N' },
             { StandardIdentityAffiliationType.Suspect_Joker, 'S' },
             { StandardIdentityAffiliationType.Hostile, 'H' },
-            { StandardIdentityAffiliationType.Invalid, 'U' },
+            { StandardIdentityAffiliationType.Dont_Display_Frame, 'U' },
             { StandardIdentityAffiliationType.NotSet, 'U' }
         };
 
