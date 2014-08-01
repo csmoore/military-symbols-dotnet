@@ -57,7 +57,7 @@ namespace MilitarySymbols
                 SymbolIdCode newCode;
                 bool success = Utilities.ConvertCodeCharlieToDelta(legacyCode, out newCode);
 
-                if (success)
+                if ((success) && (newCode.IsValid))
                     this.Id = newCode;
                 else
                     System.Diagnostics.Trace.WriteLine("Could not create MilitarySymbol.SymbolId with legacy code: " + legacyCode);

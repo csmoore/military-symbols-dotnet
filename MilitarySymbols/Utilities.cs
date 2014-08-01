@@ -90,8 +90,18 @@ namespace MilitarySymbols
             bool success = codeLookup.GetDeltaCodeFromCharlie(code2525CharlieUpper, out symbolSetString,
                 out entityString, out mod1String, out mod2String);
 
-            if (!success || string.IsNullOrEmpty(symbolSetString) || string.IsNullOrEmpty(entityString))
+            if (!success || string.IsNullOrEmpty(symbolSetString) || string.IsNullOrEmpty(entityString) 
+                || entityString.Length != 6)
                 return false;
+
+            // TRICKY/WORKAROUND: to ones with "TABLE D-V. Land unit icons–special entity subtypes"
+            if (entityString.EndsWith("95") || entityString.EndsWith("96") ||
+                entityString.EndsWith("97") || entityString.EndsWith("98"))
+            {
+                entityString = entityString.Substring(0, 4) + "00";
+
+                // TODO: test/implement this in MilitarySymbol + drawing to see if we can get it to show up
+            }
 
             code2525Delta.SymbolSet = (SymbolSetType)
                 TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetString);
@@ -112,37 +122,43 @@ namespace MilitarySymbols
             }
 
             char planningChar = code2525CharlieUpper[3];
-            foreach (KeyValuePair<StatusType, char> kvp in TypeUtilities.StatusToCharlieChar)
+            if (!TypeUtilities.IsWeather(code2525Delta.SymbolSet))
             {
-                if (kvp.Value == planningChar)
+                foreach (KeyValuePair<StatusType, char> kvp in TypeUtilities.StatusToCharlieChar)
                 {
-                    code2525Delta.Status = kvp.Key;
-                    break;
+                    if (kvp.Value == planningChar)
+                    {
+                        code2525Delta.Status = kvp.Key;
+                        break;
+                    }
                 }
-            }
+            } // ! IsWeather
 
             if (code2525Charlie.Length < 12) // allow codes to be 10 or 15, but don't go past here if not > 12
                 return true;
 
-            char hqFdTfChar = code2525CharlieUpper[10];
-            foreach (KeyValuePair<HeadquartersTaskForceDummyType, char> kvp in TypeUtilities.HqTfFdToCharlieChar)
+            if (TypeUtilities.HasFrame(code2525Delta.SymbolSet))
             {
-                if (kvp.Value == hqFdTfChar)
+                char hqFdTfChar = code2525CharlieUpper[10];
+                foreach (KeyValuePair<HeadquartersTaskForceDummyType, char> kvp in TypeUtilities.HqTfFdToCharlieChar)
                 {
-                    code2525Delta.HeadquartersTaskForceDummy = kvp.Key;
-                    break;
+                    if (kvp.Value == hqFdTfChar)
+                    {
+                        code2525Delta.HeadquartersTaskForceDummy = kvp.Key;
+                        break;
+                    }
                 }
-            }
 
-            char echelonChar = code2525CharlieUpper[11];
-            foreach (KeyValuePair<EchelonMobilityType, char> kvp in TypeUtilities.EchelonMobilityToCharlieChar)
-            {
-                if (kvp.Value == echelonChar)
+                char echelonChar = code2525CharlieUpper[11];
+                foreach (KeyValuePair<EchelonMobilityType, char> kvp in TypeUtilities.EchelonMobilityToCharlieChar)
                 {
-                    code2525Delta.EchelonMobility = kvp.Key;
-                    break;
+                    if (kvp.Value == echelonChar)
+                    {
+                        code2525Delta.EchelonMobility = kvp.Key;
+                        break;
+                    }
                 }
-            }
+            } // HasFrame
 
             return true;
         }

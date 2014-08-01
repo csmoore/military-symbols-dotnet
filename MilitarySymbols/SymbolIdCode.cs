@@ -25,7 +25,8 @@ namespace MilitarySymbols
             { 
                 // TODO: Use Regex or some other method to see if format good, 
                 // or check properties are set, just check 1 property for now
-                return (this.SymbolSet != SymbolSetType.NotSet); 
+                return !((this.SymbolSet == SymbolSetType.NotSet) ||  
+                    (this.SymbolSet == SymbolSetType.Special_Cases)); 
             }
         }
 

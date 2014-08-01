@@ -221,6 +221,22 @@ namespace MilitarySymbols
             return hasFrame;
         }
 
+        public static bool IsWeather(SymbolSetType symbolSet)
+        {
+            bool isWeather = false;
+
+            switch (symbolSet)
+            {
+                case SymbolSetType.Atmospheric:
+                case SymbolSetType.Oceanographic:
+                case SymbolSetType.Meteorological_Space:
+                    isWeather = true;
+                    break;
+            }
+
+            return isWeather;
+        }
+
         public static string ValidateAndZeroPad(string checkString, int requiredLength)
         {
             bool pass = !(string.IsNullOrEmpty(checkString) ||

@@ -606,11 +606,14 @@ namespace MilitarySymbols
             foreach (DataRow row in results)
             {
                 charlieCode = row["2525Charlie"] as string;
-
-                break; // should only be 1 result
+                if (!string.IsNullOrEmpty(charlieCode))
+                {
+                    // may be muliple results with this table (some that do not have 2525C set)
+                    break; 
+                }
             }
 
-            return true;
+            return !string.IsNullOrEmpty(charlieCode);
         }
 
         public bool GetDeltaCodeFromCharlie(string charlieCode, 
