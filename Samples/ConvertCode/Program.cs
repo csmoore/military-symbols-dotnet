@@ -55,7 +55,9 @@ namespace ConvertCode
                 arg = args[0];
             }
 
-            if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
+            if (arg.StartsWith("ALL2525C"))  // export all known 2525C symbols
+                ProcessAll2525C(); 
+            else if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
                 ProcessAll(arg);
             else if (arg.EndsWith("csv")) // csv file supplied
                 ProcessCsv(arg);
@@ -176,7 +178,24 @@ namespace ConvertCode
                 Console.Write("," + matchSymbol.Id.Name);
                 Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
             }
-
         }
+
+        static void ProcessAll2525C()
+        {
+            // Get all 2525C symbols that the system knows about
+            List<MilitarySymbol> matchingSymbols = Utilities.GetMilitarySymbolsFromCharlie();
+
+            if (matchingSymbols.Count == 0)
+                Console.WriteLine("No 2525C Symbols found.");
+
+            foreach (MilitarySymbol matchSymbol in matchingSymbols)
+            {
+                Console.Write(matchSymbol.Legacy2525Code);
+                Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
+                Console.Write("," + matchSymbol.Id.Name);
+                Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
+            }
+        }
+
     }
 }

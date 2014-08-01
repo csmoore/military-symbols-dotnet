@@ -204,12 +204,17 @@ namespace MilitarySymbols
         {
             get
             {
-                return TypeUtilities.EnumHelper.getEnumValAsString(symbolSet);
+                return TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
             }
             set
             {
                 string symbolSetAsString = value;
-                symbolSet = (SymbolSetType)TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetAsString); 
+
+                SymbolSetType symbolSetVal = (SymbolSetType)TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), symbolSetAsString);
+
+                // just in case the enum couldn't be converted (but doesn't let you set this to Unknown)
+                if (symbolSetVal != SymbolSetType.Unknown) 
+                    symbolSet = symbolSetVal; 
             }
         }
 

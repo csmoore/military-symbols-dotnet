@@ -69,7 +69,7 @@ namespace MilitarySymbols
             int resultCount = results.Count();
             if (resultCount < 1)
             {
-                System.Diagnostics.Trace.WriteLine("WARNING: Empty result of search");
+                System.Diagnostics.Trace.WriteLine("WARNING: Empty result of EntityTable search: " + symbolSetToSearch);
                 // TODO: add search params to the debug output
                 return symbolList; // empty list
             }
@@ -669,6 +669,46 @@ namespace MilitarySymbols
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Search the Charlie table and create a list of all of these symbols that can be 
+        /// created/mapped to Delta
+        /// </summary>
+        public List<MilitarySymbol> GetMilitarySymbolsFromCharlie()
+        {
+            Initialize();
+
+            List<MilitarySymbol> symbolList = new List<MilitarySymbol>();
+
+            var results = from row in LegacyCodeMappingTable.AsEnumerable()
+                          select row;
+
+            // Check that search returned something
+            int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("WARNING: Empty result of LegacyCodeMappingTable search");
+                // TODO: add search params to the debug output
+                return symbolList; // empty list
+            }
+
+            foreach (DataRow row in results)
+            {
+                string legacyCode = row["2525Charlie"] as string;
+
+                if (!string.IsNullOrWhiteSpace(legacyCode))
+                {
+                    MilitarySymbol milSymbol = new MilitarySymbol();
+                    milSymbol.Legacy2525Code = legacyCode;
+
+                    // TODO: set MilitarySymbol.Shape from SymbolId
+
+                    symbolList.Add(milSymbol);
+                }
+            }
+
+            return symbolList;
         }
 
         public bool Initialized

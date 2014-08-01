@@ -215,6 +215,18 @@ namespace MilitarySymbols
         }
 
         /// <summary>
+        /// Returns all symbols found from Charlie Table
+        /// </summary>
+        public static List<MilitarySymbol> GetMilitarySymbolsFromCharlie()
+        {
+            SymbolLookup milSymbolLookup = getSymbolLookup();
+
+            List<MilitarySymbol> matchingSymbols = milSymbolLookup.GetMilitarySymbolsFromCharlie();
+
+            return matchingSymbols;
+        }
+
+        /// <summary>
         /// Creates an consistent name from a Symbol ID Code
         /// (not in SymbolIdCode because it needs SymbolLookup)
         /// </summary>

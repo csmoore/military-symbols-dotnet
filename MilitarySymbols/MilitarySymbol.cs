@@ -47,6 +47,21 @@ namespace MilitarySymbols
                 else
                     return string.Empty;
             }
+            set
+            {
+                // WARNING: this will change the SymbolId/State of the Symbol
+                string legacyCode = value;
+
+                System.Diagnostics.Trace.WriteLine("Setting MilitarySymbol.SymbolId from legacy code: " + legacyCode);
+
+                SymbolIdCode newCode;
+                bool success = Utilities.ConvertCodeCharlieToDelta(legacyCode, out newCode);
+
+                if (success)
+                    this.Id = newCode;
+                else
+                    System.Diagnostics.Trace.WriteLine("Could not create MilitarySymbol.SymbolId with legacy code: " + legacyCode);
+            }
         }
 
         public ShapeType Shape

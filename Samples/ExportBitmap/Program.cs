@@ -58,7 +58,9 @@ namespace ExportBitmap
             if (!CheckSettings())
                 return;
 
-            if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
+            if (arg.StartsWith("ALL2525C"))  // export all known 2525C symbols
+                ProcessAll2525C();
+            else if ((arg.StartsWith("ALL") || arg.Length == 2)) // export all known symbols
                 ProcessAll(arg);
             else if (arg.EndsWith("csv")) // csv file supplied
                 ProcessCsv(arg);
@@ -84,7 +86,7 @@ namespace ExportBitmap
                 Console.WriteLine("Failed to recognize SIDC: " + sidc + ", Length = " + sidc.Length);
         }
 
-        static void ExportSymbolId(SymbolIdCode id)
+        static void ExportSymbolId(SymbolIdCode id, string optionalLegacyCode = "")
         {
             int width = 256, height = 256;
 
@@ -101,6 +103,9 @@ namespace ExportBitmap
             }
 
             string imageFileName = id.HumanReadableCode();
+            if (!string.IsNullOrWhiteSpace(optionalLegacyCode))
+                imageFileName += "-" + optionalLegacyCode;
+
             string filepath = getFullFileName(imageFileName);
 
             Console.WriteLine("Exporting File: " + filepath);
@@ -284,7 +289,26 @@ namespace ExportBitmap
                     ExportSymbolId(matchSymbol.Id);
                 }
             }
+        }
 
+        static void ProcessAll2525C()
+        {
+            // Get all 2525C symbols that the system knows about
+            List<MilitarySymbol> matchingSymbols = Utilities.GetMilitarySymbolsFromCharlie();
+
+            if (matchingSymbols.Count == 0)
+                Console.WriteLine("No 2525C Symbols found.");
+
+            foreach (MilitarySymbol matchSymbol in matchingSymbols)
+            {
+                string legacyCode = matchSymbol.Legacy2525Code;
+                Console.Write(legacyCode);
+                Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
+                Console.Write("," + matchSymbol.Id.Name);
+                Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
+
+                ExportSymbolId(matchSymbol.Id, legacyCode);
+            }
         }
 
     }
