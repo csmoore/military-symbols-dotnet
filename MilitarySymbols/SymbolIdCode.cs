@@ -19,6 +19,25 @@ namespace MilitarySymbols
 {
     public class SymbolIdCode
     {
+        public SymbolIdCode()
+        {
+        }
+
+        public SymbolIdCode(string codeLength20orCodeLength8)
+        {
+            if (string.IsNullOrWhiteSpace(codeLength20orCodeLength8) || 
+                (codeLength20orCodeLength8.Length != 8) ||
+                (codeLength20orCodeLength8.Length != 20))
+                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string length = " +
+                    codeLength20orCodeLength8.Length);
+
+            if (codeLength20orCodeLength8.Length == 8)
+                this.ShortenedCode = codeLength20orCodeLength8;
+            else
+                this.Code = codeLength20orCodeLength8;
+
+        }
+
         public bool IsValid 
         { 
             get 
@@ -91,6 +110,22 @@ namespace MilitarySymbols
 
                 return sbCode.ToString();
             }
+            set
+            {
+                string shortenedCodeIn = value;
+                if (string.IsNullOrWhiteSpace(shortenedCodeIn) ||
+                     (shortenedCodeIn.Length != 8))
+                {
+                    System.Diagnostics.Trace.WriteLine("WARNING: Trying to set SymbolIdCode.ShortenedCode from bad string length = " +
+                        shortenedCodeIn.Length);
+                    return;
+                }
+
+                string symbolSetAsStringIn = shortenedCodeIn.Substring(0, 2);
+                this.SymbolSetAsString = symbolSetAsStringIn;
+
+                this.EntityCode = shortenedCodeIn.Substring(2, 6);
+            }
         }
 
         /// <summary>
@@ -148,6 +183,26 @@ namespace MilitarySymbols
             get
             {
                 return Utilities.GetWellFormedName(this);
+            }
+        }
+
+        /// <summary>
+        /// This is a special/exceptional case that slightly complicates this class (&the standard)
+        /// Land Unit's can have 95/96/97/98 set in the EntitySubtypeCode field which impacts
+        /// changes the other rules for how one would normally 1) look up an entry in the 
+        /// Entity Table, 2) Draw the layers, etc.
+        /// </summary>
+        public bool IsLandUnitSpecialEntity
+        {
+            get
+            {
+                if (this.SymbolSet != SymbolSetType.Land_Unit)
+                    return false;
+
+                if (TypeUtilities.EntitySubtypeCodeToLandUnitSpecialEntityName.Keys.Contains(EntitySubTypeField))
+                    return true;
+                else
+                    return false;
             }
         }
 

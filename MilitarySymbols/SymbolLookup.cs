@@ -375,14 +375,25 @@ namespace MilitarySymbols
             entitySubTypeName = string.Empty; 
 
             if ((EntityTable == null) || (symbolSet == SymbolSetType.NotSet) ||
-                (entityCode == "000000"))
+                (entityCode == "000000") || entityCode.Length != 6)
                 return false;
+
+            string entityCodeToSearch = entityCode;
+            if (symbolSet == SymbolSetType.Land_Unit)
+            {
+                // See SymbolIdCode.IsLandUnitSpecialEntity for explanation of this exceptional case
+                string entitySubType = entityCode.Substring(4, 2);
+                if (TypeUtilities.EntitySubtypeCodeToLandUnitSpecialEntityName.Keys.Contains(entitySubType))
+                {
+                    entityCodeToSearch = entityCode.Substring(0, 4) + "00";
+                }
+            }
 
             string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
 
             var results = from row in EntityTable.AsEnumerable()
                           where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
-                                & (row.Field<string>("Code") == entityCode))
+                                & (row.Field<string>("Code") == entityCodeToSearch))
                           select row;
 
             int resultCount = results.Count();

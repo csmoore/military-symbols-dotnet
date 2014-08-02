@@ -436,6 +436,15 @@ namespace MilitarySymbols
             { EchelonMobilityType.Long_Towed_Array, '-' }
         };
 
+        public static Dictionary<string, string> EntitySubtypeCodeToLandUnitSpecialEntityName
+            = new Dictionary<string, string>()  
+        {
+            { "95", "Headquarters Element" }, 
+            { "96", "Division and Below Support" }, 
+            { "97", "Corps Support" }, 
+            { "98", "Theater/Echelons Above Corps Support" }
+        };
+
         /// <summary>
         /// A very general purpose enum, string, int converter class
         /// Not all of these methods are used by this library

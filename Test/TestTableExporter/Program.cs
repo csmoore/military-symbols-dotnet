@@ -403,6 +403,10 @@ namespace TestMilitarySymbolsLibrary
             // TODO: move this test code to a Unit Test Project
             /////////////////////////////////////////////////////
 
+            SymbolIdCode sidcSpecialLandUnit = new SymbolIdCode("10121195");
+            string wfnSpecialLandUnit = Utilities.GetWellFormedName(sidcSpecialLandUnit);
+
+
             SymbolIdCode sidc = new SymbolIdCode();
             System.Diagnostics.Trace.WriteLine("SIDC=" + sidc);
 

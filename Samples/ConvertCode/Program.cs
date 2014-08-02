@@ -102,8 +102,10 @@ namespace ConvertCode
 
             string simpleCode = sidc.HumanReadableCode();
 
+// TODO: combine these output lines in 1 method with a uniform output
             Console.Write(code2525Charlie + "," + simpleCode + ","
-                + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
+                + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"" + 
+                "," + sidc.Name);
 
             if (newline)
                 Console.WriteLine();
@@ -117,6 +119,7 @@ namespace ConvertCode
 
             string simpleCode = sidc.HumanReadableCode();
 
+// TODO: combine these output lines in 1 method with a uniform output
             if (success)
                 Console.WriteLine(code2525Charlie + "," + simpleCode + ","
                     + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
@@ -174,6 +177,7 @@ namespace ConvertCode
             {
                 ConvertDeltaToCharlie(matchSymbol.Id.Code, false);
 
+// TODO: combine these output lines in 1 method with a uniform output
                 Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
                 Console.Write("," + matchSymbol.Id.Name);
                 Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
@@ -190,6 +194,7 @@ namespace ConvertCode
 
             foreach (MilitarySymbol matchSymbol in matchingSymbols)
             {
+// TODO: combine these output lines in 1 method with a uniform output
                 Console.Write(matchSymbol.Legacy2525Code);
                 Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
                 Console.Write("," + matchSymbol.Id.Name);

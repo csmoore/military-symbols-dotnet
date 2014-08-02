@@ -104,6 +104,7 @@ namespace MilitarySymbols
             StringBuilder sb = new StringBuilder();
 
             string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
             sb.Append(symbolSetString);
             sb.Append(fullEntityCode);
 
@@ -112,7 +113,15 @@ namespace MilitarySymbols
 
         public static string GetMainIconName(ref MilitarySymbol milSymbol)
         {
-            string mainIcon = GetMainIconName(milSymbol.Id.SymbolSet, milSymbol.Id.EntityCode);
+            string mainIcon;
+
+            if (milSymbol.Id.IsLandUnitSpecialEntity) // Special/Exceptional Case for this
+            {
+                string altEntityCode = milSymbol.Id.EntityField + milSymbol.Id.EntityTypeField + "00";
+                mainIcon = GetMainIconName(milSymbol.Id.SymbolSet, altEntityCode);
+            }
+            else
+                mainIcon = GetMainIconName(milSymbol.Id.SymbolSet, milSymbol.Id.EntityCode);
 
             return mainIcon;
         }
@@ -470,6 +479,22 @@ namespace MilitarySymbols
 
             return sb.ToString();
         }
+
+        // Land Unit Special Entity Icon Icon
+        public static string GetLandUnitSpecialEntityIconNameWithFullPath(SymbolIdCode id)
+        {
+            if (!id.IsLandUnitSpecialEntity)
+                return string.Empty;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(ImageFilesHome);
+            sb.Append(@"Appendices\Land\10xxxx");
+            sb.Append(id.EntitySubTypeField);
+            sb.Append(TypeUtilities.AffiliationFrameToSuffixName[id.Affiliation]);
+            sb.Append(ImageSuffix);
+
+            return sb.ToString();
+        }
         
         // Frame Icon
         // StandardIdentityAffiliationType + SymbolSetType
@@ -656,8 +681,16 @@ namespace MilitarySymbols
                     if (opConditionIconNameWithFullPath.Length > 0)
                         milSymbol.GraphicLayers.Add(opConditionIconNameWithFullPath);
                 }
-                
-                // Other? ex. "Land unit icons – special entity subtypes" ?
+
+                if (milSymbol.Id.IsLandUnitSpecialEntity)
+                {
+                    // TABLE D-V. "Land unit icons – special entity subtypes"
+                    string landUnitSpecialEntityIconNameWithFullPath =
+                        GetLandUnitSpecialEntityIconNameWithFullPath(milSymbol.Id);
+
+                    if (landUnitSpecialEntityIconNameWithFullPath.Length > 0)
+                        milSymbol.GraphicLayers.Add(landUnitSpecialEntityIconNameWithFullPath);
+                }
 
             } // end skipRemainingLayers
 

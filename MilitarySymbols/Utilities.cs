@@ -282,6 +282,12 @@ namespace MilitarySymbols
                 sb.Append(entitySubTypeName);
             }
 
+            if (id.IsLandUnitSpecialEntity)
+            {
+                sb.Append(TypeUtilities.NameSeparator);
+                sb.Append(TypeUtilities.EntitySubtypeCodeToLandUnitSpecialEntityName[id.EntitySubTypeField]);
+            }
+
             string modifier1Name = 
                 milSymbolLookup.GetModifierNameFromCode(id.SymbolSet, 1, id.ModifierOne);
             string modifier2Name = 
