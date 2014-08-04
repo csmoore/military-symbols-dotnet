@@ -80,6 +80,39 @@ namespace ConvertCode
                 Console.WriteLine("NOT FOUND," + sidc + ",Failed to recognize SIDC Length = " + sidc.Length);
         }
 
+        static void printConversionLine(string code2525Charlie, SymbolIdCode sidc, bool success = true, bool newline = true)
+        {
+            if ((success) || (code2525Charlie == "NOT FOUND"))
+            {
+                string simpleCode = sidc.HumanReadableCode();
+
+                Console.Write(code2525Charlie + "," + simpleCode + "," + sidc.Name + "," + 
+                    sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
+            }
+            else
+            {
+                Console.Write(code2525Charlie + ",NOT FOUND,NOT FOUND,NOT FOUND,NOT FOUND");
+            }
+
+            if (newline)
+                Console.WriteLine();
+        }
+
+        static void printConversionLine(string codeLegacy2525C, MilitarySymbol symbol2525D, bool success = true)
+        {
+
+            printConversionLine(codeLegacy2525C, symbol2525D.Id, success, false);
+
+            if (success)
+            {
+                Console.WriteLine(",\"" + symbol2525D.TagsAsString + "\"");
+            }
+            else
+            {
+                Console.WriteLine(",NOT FOUND");
+            }
+        }
+
         static void ConvertDeltaToCharlie(string sidcString, bool newline = true)
         {
             SymbolIdCode sidc = new SymbolIdCode();
@@ -102,13 +135,7 @@ namespace ConvertCode
 
             string simpleCode = sidc.HumanReadableCode();
 
-// TODO: combine these output lines in 1 method with a uniform output
-            Console.Write(code2525Charlie + "," + simpleCode + ","
-                + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"" + 
-                "," + sidc.Name);
-
-            if (newline)
-                Console.WriteLine();
+            printConversionLine(code2525Charlie, sidc, success, newline);
         }
 
         static void ConvertCharlieToDelta(string code2525Charlie)
@@ -119,12 +146,7 @@ namespace ConvertCode
 
             string simpleCode = sidc.HumanReadableCode();
 
-// TODO: combine these output lines in 1 method with a uniform output
-            if (success)
-                Console.WriteLine(code2525Charlie + "," + simpleCode + ","
-                    + sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
-            else
-                Console.WriteLine(code2525Charlie + ",NOT FOUND,NOT FOUND,NOT FOUND");
+            printConversionLine(code2525Charlie, sidc, success);
         }
 
         static void ProcessCsv(string csvFile)
@@ -139,7 +161,7 @@ namespace ConvertCode
 
             foreach (string line in File.ReadLines(csvFile))
             {
-                if (line.StartsWith("#")) // allow "#" comment character
+                if (line.StartsWith("#") || (string.IsNullOrWhiteSpace(line))) // allow "#" comment character
                     continue;
 
                 if (firstRow)  // skip 1st/Header Row
@@ -157,6 +179,10 @@ namespace ConvertCode
                     continue;
 
                 string sidc = values[SIDC_INDEX];
+
+                if (string.IsNullOrWhiteSpace(sidc))
+                    continue;
+
                 ProcessSidc(sidc);
             }
         }
@@ -177,9 +203,6 @@ namespace ConvertCode
             {
                 ConvertDeltaToCharlie(matchSymbol.Id.Code, false);
 
-// TODO: combine these output lines in 1 method with a uniform output
-                Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
-                Console.Write("," + matchSymbol.Id.Name);
                 Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
             }
         }
@@ -194,11 +217,7 @@ namespace ConvertCode
 
             foreach (MilitarySymbol matchSymbol in matchingSymbols)
             {
-// TODO: combine these output lines in 1 method with a uniform output
-                Console.Write(matchSymbol.Legacy2525Code);
-                Console.Write("," + matchSymbol.Id.HumanReadableCode(false));
-                Console.Write("," + matchSymbol.Id.Name);
-                Console.WriteLine(",\"" + matchSymbol.TagsAsString + "\"");
+                printConversionLine(matchSymbol.Legacy2525Code, matchSymbol);
             }
         }
 
