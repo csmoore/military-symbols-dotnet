@@ -480,7 +480,7 @@ namespace MilitarySymbols
             return sb.ToString();
         }
 
-        // Land Unit Special Entity Icon Icon
+        // Land Unit Special Entity Icon
         public static string GetLandUnitSpecialEntityIconNameWithFullPath(SymbolIdCode id)
         {
             if (!id.IsLandUnitSpecialEntity)

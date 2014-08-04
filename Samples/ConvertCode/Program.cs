@@ -84,7 +84,7 @@ namespace ConvertCode
         {
             if ((success) || (code2525Charlie == "NOT FOUND"))
             {
-                string simpleCode = sidc.HumanReadableCode();
+                string simpleCode = sidc.HumanReadableCode(false);
 
                 Console.Write(code2525Charlie + "," + simpleCode + "," + sidc.Name + "," + 
                     sidc.CodeFirstTen + ":" + sidc.CodeSecondTen + ",\"" + sidc.ToString() + "\"");
