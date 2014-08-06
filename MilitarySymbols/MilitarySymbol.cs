@@ -66,16 +66,15 @@ namespace MilitarySymbols
 
         public ShapeType Shape
         {
-            get
-            {
-                return shape;
-            }
-            set
-            {
-                shape = value;
-            }
+            get;
+            set;
         }
-        protected ShapeType shape = ShapeType.Unknown;
+
+        public CentralIconType CentralIconFormat
+        {
+            get;
+            set;
+        }
 
         public List<string> GraphicLayers
         {

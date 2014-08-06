@@ -25,17 +25,16 @@ namespace MilitarySymbols
 
         public SymbolIdCode(string codeLength20orCodeLength8)
         {
-            if (string.IsNullOrWhiteSpace(codeLength20orCodeLength8) || 
-                (codeLength20orCodeLength8.Length != 8) ||
-                (codeLength20orCodeLength8.Length != 20))
-                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string length = " +
-                    codeLength20orCodeLength8.Length);
+            if (string.IsNullOrWhiteSpace(codeLength20orCodeLength8))
+                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string");
 
             if (codeLength20orCodeLength8.Length == 8)
                 this.ShortenedCode = codeLength20orCodeLength8;
-            else
+            else if (codeLength20orCodeLength8.Length == 20)
                 this.Code = codeLength20orCodeLength8;
-
+            else
+                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string length = " +
+                    codeLength20orCodeLength8.Length);
         }
 
         public bool IsValid 
@@ -45,7 +44,7 @@ namespace MilitarySymbols
                 // TODO: Use Regex or some other method to see if format good, 
                 // or check properties are set, just check 1 property for now
                 return !((this.SymbolSet == SymbolSetType.NotSet) ||  
-                    (this.SymbolSet == SymbolSetType.Special_Cases)); 
+                    (this.SymbolSet == SymbolSetType.Unknown)); 
             }
         }
 

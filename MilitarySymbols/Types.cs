@@ -182,6 +182,16 @@ namespace MilitarySymbols
         Area
     };
 
+    public enum CentralIconType
+    {
+        NotSet,        // From "standard-speak" to human:
+        MAIN,          // = Normal Case
+        MAIN_1,        // = Normal Case - but can't have Modifier 1 because area is taken
+        MAIN_2,        // = Normal Case - but can't have Modifier 2 because area is taken
+        FULL_FRAME,    // = Touches Frame
+        FULL_OCTAGON   // = Fills Full Central Icon Area
+    };
+
     /// <summary>
     /// Helper class for converting Types to strings, codes, etc.
     /// </summary>
@@ -202,6 +212,7 @@ namespace MilitarySymbols
                 case SymbolSetType.Atmospheric :
                 case SymbolSetType.Oceanographic :
                 case SymbolSetType.Meteorological_Space:
+                case SymbolSetType.Special_Cases:
                     hasFrame = false;
                     break;
                 case SymbolSetType.Sea_Surface :
@@ -209,9 +220,6 @@ namespace MilitarySymbols
                         hasFrame = false;
                     else 
                         hasFrame = true;
-                    break;
-                case SymbolSetType.Special_Cases:
-                    hasFrame = false;
                     break;
                 default :
                     hasFrame = true;

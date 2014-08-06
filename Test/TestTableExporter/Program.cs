@@ -63,7 +63,7 @@ namespace TestMilitarySymbolsLibrary
 
             if (!FORMAT_IS_STYLE_CSV) // don't do for Style Export
             {
-                Assembly myAssembly = Assembly.GetExecutingAssembly();
+                Assembly myAssembly = Assembly.GetAssembly(typeof(SymbolIdCode));
                 foreach (Type type in myAssembly.GetTypes())
                 {
                     if (!type.IsEnum)

@@ -131,9 +131,11 @@ namespace MilitarySymbols
                 string entityTypeName = row["EntityType"] as string;
                 string entitySubTypeName = row["EntitySubType"] as string;
 
+                string centralIconTypeString = row["IconType"] as string;
+
                 MilitarySymbol createSymbol = CreateSymbolFromStringProperties( 
                     affiliation, symbolSetString, entityCode, geoType,
-                    entityName, entityTypeName, entitySubTypeName);
+                    entityName, entityTypeName, entitySubTypeName, centralIconTypeString);
 
                 if (createSymbol != null)
                     symbolList.Add(createSymbol);
@@ -258,6 +260,32 @@ namespace MilitarySymbols
             return modifierCategory;
         }
 
+        public List<string> GetModifierCodesForSymbolSet(SymbolSetType symbolSet, int modfierNumber = 1)
+        {
+            Initialize();
+
+            List<string> modifierCodeStrings = new List<string>();
+
+            if (ModifierTable == null)
+                return modifierCodeStrings; // nothing
+
+            string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
+            string modifierToSearch = modfierNumber.ToString();
+
+            var results = (from row in ModifierTable.AsEnumerable()
+                           where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
+                                & (row.Field<string>("ModifierNumber") == modifierToSearch))
+                           select row.Field<string>("Code"));
+
+            foreach (var result in results)
+            {
+                modifierCodeStrings.Add(result);
+            }
+
+            return modifierCodeStrings;
+        }
+
         public List<string> GetDistinctModifierNames(SymbolSetType symbolSet, int modfierNumber = 1)
         {
             Initialize();
@@ -363,6 +391,96 @@ namespace MilitarySymbols
             }
 
             return distinctResultStrings;
+        }
+
+        public ShapeType GetEntityShapeFromCode(SymbolSetType symbolSet, string entityCode)
+        {
+            Initialize();
+
+            if ((EntityTable == null) || (symbolSet == SymbolSetType.NotSet) ||
+                (entityCode == "000000") || entityCode.Length != 6)
+                return ShapeType.Unknown;
+
+            string entityCodeToSearch = entityCode;
+            if (symbolSet == SymbolSetType.Land_Unit)
+            {
+                // See SymbolIdCode.IsLandUnitSpecialEntity for explanation of this exceptional case
+                string entitySubType = entityCode.Substring(4, 2);
+                if (TypeUtilities.EntitySubtypeCodeToLandUnitSpecialEntityName.Keys.Contains(entitySubType))
+                {
+                    entityCodeToSearch = entityCode.Substring(0, 4) + "00";
+                }
+            }
+
+            string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
+            var results = from row in EntityTable.AsEnumerable()
+                          where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
+                                & (row.Field<string>("Code") == entityCodeToSearch))
+                          select row;
+
+            int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Entity Code not found: " + entityCode);
+                return ShapeType.Unknown;
+            }
+
+            ShapeType shape = ShapeType.Unknown;
+
+            foreach (DataRow row in results)
+            {
+                string geoType = row["GeometryType"] as string;
+                shape = (ShapeType)TypeUtilities.EnumHelper.getEnumFromString(typeof(ShapeType), geoType);
+                break;
+            }
+
+            return shape;
+        }
+
+        public CentralIconType GetEntityIconTypeFromCode(SymbolSetType symbolSet, string entityCode)
+        {
+            Initialize();
+
+            if ((EntityTable == null) || (symbolSet == SymbolSetType.NotSet) ||
+                (entityCode == "000000") || entityCode.Length != 6)
+                return CentralIconType.NotSet;
+
+            string entityCodeToSearch = entityCode;
+            if (symbolSet == SymbolSetType.Land_Unit)
+            {
+                // See SymbolIdCode.IsLandUnitSpecialEntity for explanation of this exceptional case
+                string entitySubType = entityCode.Substring(4, 2);
+                if (TypeUtilities.EntitySubtypeCodeToLandUnitSpecialEntityName.Keys.Contains(entitySubType))
+                {
+                    entityCodeToSearch = entityCode.Substring(0, 4) + "00";
+                }
+            }
+
+            string symbolSetToSearch = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
+
+            var results = from row in EntityTable.AsEnumerable()
+                          where ((row.Field<string>("SymbolSet") == symbolSetToSearch)
+                                & (row.Field<string>("Code") == entityCodeToSearch))
+                          select row;
+
+            int resultCount = results.Count();
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Entity Code not found: " + entityCode);
+                return CentralIconType.NotSet;
+            }
+
+            CentralIconType iconFormat = CentralIconType.NotSet;
+
+            foreach (DataRow row in results)
+            {
+                string centralIconTypeString = row["IconType"] as string;
+                iconFormat = (CentralIconType)TypeUtilities.EnumHelper.getEnumFromString(typeof(CentralIconType), centralIconTypeString);
+                break;
+            }
+
+            return iconFormat;
         }
 
         public bool GetEntityNamesFromCode(SymbolSetType symbolSet, string entityCode, 
@@ -526,9 +644,12 @@ namespace MilitarySymbols
                 string entityTypeNameFromLookup    = row["EntityType"] as string;
                 string entitySubTypeNameFromLookup = row["EntitySubType"] as string;
 
+                string centralIconTypeString = row["IconType"] as string;
+
                 retSymbol = CreateSymbolFromStringProperties(
                     affiliation, symbolSetString, entityCode, geoType,
-                    entityNameFromLookup, entityTypeNameFromLookup, entitySubTypeNameFromLookup);
+                    entityNameFromLookup, entityTypeNameFromLookup, entitySubTypeNameFromLookup, 
+                    centralIconTypeString);
 
                 // TODO: figure out what to do if we get more than 1 result
                 break;
@@ -541,9 +662,9 @@ namespace MilitarySymbols
             // SymbolSetType symbolSet,
             StandardIdentityAffiliationType affiliation,
             string symbolSetString, string entityCode, string geoType,
-            string entityName, string entityTypeName, string entitySubTypeName)
+            string entityName, string entityTypeName, string entitySubTypeName,
+            string centralIconTypeString)
         {
-
             if ((string.IsNullOrEmpty(symbolSetString) || symbolSetString.Length != 2))
             {
                 System.Diagnostics.Trace.WriteLine("CreateSymbolFromStringProperties - Bad Symbol Set Code");
@@ -570,6 +691,7 @@ namespace MilitarySymbols
 
             retSymbol.Id = sidc;
             retSymbol.Shape = (ShapeType)TypeUtilities.EnumHelper.getEnumFromString(typeof(ShapeType), geoType);
+            retSymbol.CentralIconFormat = (CentralIconType)TypeUtilities.EnumHelper.getEnumFromString(typeof(CentralIconType), centralIconTypeString);
 
             return retSymbol;
         }

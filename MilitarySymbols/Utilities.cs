@@ -83,7 +83,7 @@ namespace MilitarySymbols
 
             string code2525CharlieUpper = code2525Charlie.ToUpper();
 
-            SymbolLookup codeLookup = getSymbolLookup();
+            SymbolLookup codeLookup = GetSymbolLookup();
 
             string symbolSetString, entityString, mod1String, mod2String;
 
@@ -171,7 +171,7 @@ namespace MilitarySymbols
 
             code2525Charlie = "NOT FOUND";
 
-            SymbolLookup codeLookup = getSymbolLookup();
+            SymbolLookup codeLookup = GetSymbolLookup();
 
             string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(
                 code2525Delta.SymbolSet, 2);
@@ -223,7 +223,7 @@ namespace MilitarySymbols
         /// <returns></returns>
         public static List<MilitarySymbol> GetMilitarySymbols(SymbolSetType symbolSet = SymbolSetType.NotSet)
         {
-            SymbolLookup milSymbolLookup = getSymbolLookup();
+            SymbolLookup milSymbolLookup = GetSymbolLookup();
 
             List<MilitarySymbol> matchingSymbols = milSymbolLookup.GetMilitarySymbols(symbolSet);
 
@@ -235,7 +235,7 @@ namespace MilitarySymbols
         /// </summary>
         public static List<MilitarySymbol> GetMilitarySymbolsFromCharlie()
         {
-            SymbolLookup milSymbolLookup = getSymbolLookup();
+            SymbolLookup milSymbolLookup = GetSymbolLookup();
 
             List<MilitarySymbol> matchingSymbols = milSymbolLookup.GetMilitarySymbolsFromCharlie();
 
@@ -249,9 +249,9 @@ namespace MilitarySymbols
         public static string GetWellFormedName(SymbolIdCode id)
         {
             // Just monitoring how often this is being called for now:
-            System.Diagnostics.Trace.WriteLine("GetWellFormedName");
+            // System.Diagnostics.Trace.WriteLine("GetWellFormedName");
 
-            SymbolLookup milSymbolLookup = getSymbolLookup();
+            SymbolLookup milSymbolLookup = GetSymbolLookup();
 
             StringBuilder sb = new StringBuilder();
             string symbolSetName = TypeUtilities.EnumHelper.getStringFromEnum(id.SymbolSet);
@@ -310,7 +310,7 @@ namespace MilitarySymbols
             return sb.ToString();
         }
        
-        public static SymbolLookup getSymbolLookup()
+        public static SymbolLookup GetSymbolLookup()
         {
             if (symbolLookup == null)
                 symbolLookup = new SymbolLookup();
