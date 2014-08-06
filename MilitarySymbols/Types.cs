@@ -229,6 +229,26 @@ namespace MilitarySymbols
             return hasFrame;
         }
 
+        public static bool HasFrameModifiers(SymbolSetType symbolSet)
+        {
+            bool hasFrameModifiers = false;
+
+            switch (symbolSet)
+            {
+                case SymbolSetType.Land_Unit:
+                case SymbolSetType.Land_Civilian_Unit_Organization:
+                case SymbolSetType.Land_Equipment:
+                case SymbolSetType.Land_Installation:
+                    hasFrameModifiers = true;
+                    break;
+                default:
+                    hasFrameModifiers = false;
+                    break;
+            }
+
+            return hasFrameModifiers;
+        }
+
         public static bool IsWeather(SymbolSetType symbolSet)
         {
             bool isWeather = false;

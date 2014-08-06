@@ -161,8 +161,18 @@ namespace MilitarySymbols
             // Also test for 2 other exceptional cases while we are at it
             if (!System.IO.File.Exists(mainIconNameFullPath))
             {
+                StandardIdentityAffiliationType mappedAffiliation = milSymbol.Id.Affiliation;
+
+                if (milSymbol.Id.StandardIdentity == StandardIdentityRealExerciseSimType.Exercise)
+                {
+                    // Exceptional case for these 2 (has a friend frame)
+                    if ((mappedAffiliation == StandardIdentityAffiliationType.Suspect_Joker) ||
+                        (mappedAffiliation == StandardIdentityAffiliationType.Hostile))
+                        mappedAffiliation = StandardIdentityAffiliationType.Friend;
+                }
+
                 string newFrameSuffix =
-                    TypeUtilities.AffiliationFrameToSuffixName[milSymbol.Id.Affiliation] + ImageSuffix;
+                    TypeUtilities.AffiliationFrameToSuffixName[mappedAffiliation] + ImageSuffix;
 
                 // more exceptional cases:
                 if (milSymbol.Id.SymbolSet == SymbolSetType.Control_Measures)
@@ -514,10 +524,22 @@ namespace MilitarySymbols
             sb.Append("Frames");
             sb.Append(System.IO.Path.DirectorySeparatorChar);
 
-            // TODO: exercise/sim frames - 
-            // StandardIdentityRealExerciseSimType (just add "Sim" "Exercise")
-
-            sb.Append("0_"); // TODO change to 1_, 2_ for Sim, Exercise
+            if (realExerciseSim == StandardIdentityRealExerciseSimType.Reality)
+                sb.Append("0_");
+            else if (realExerciseSim == StandardIdentityRealExerciseSimType.Exercise)
+            {
+                sb.Append(System.IO.Path.DirectorySeparatorChar);
+                sb.Append("Exercise");
+                sb.Append(System.IO.Path.DirectorySeparatorChar);
+                sb.Append("1_");
+            }
+            else if (realExerciseSim == StandardIdentityRealExerciseSimType.Simulation)
+            {
+                sb.Append(System.IO.Path.DirectorySeparatorChar);
+                sb.Append("Sim");
+                sb.Append(System.IO.Path.DirectorySeparatorChar);
+                sb.Append("2_");
+            }
 
             string affiliationString = TypeUtilities.EnumHelper.getEnumValAsString(affiliation, 1);
             sb.Append(affiliationString);

@@ -1407,7 +1407,7 @@ SymbolSet,Entity,EntityType,EntitySubType,StandardIdentity,Code,GeometryType,Ico
 40,Operation,Meeting,,,131000,Point,MAIN,Operation : Meeting
 40,Operation,Meeting,Polling Place/Election,,131001,Point,MAIN,Operation : Meeting : Polling Place/Election
 40,Operation,Raid on House,,,131100,Point,MAIN,Operation : Raid on House
-40,Operation,Emergency Operation,,,131200,Point,MAIN,Operation : Emergency Operation
+40,Operation,Emergency Operation,,,131200,Point,FULL_OCTAGON,Operation : Emergency Operation
 40,Operation,Emergency Operation,Emergency Collection Evacuation Point,,131201,Point,MAIN,Operation : Emergency Operation : Emergency Collection Evacuation Point
 40,Operation,Emergency Operation,Emergency Food Distribution,,131202,Point,FULL_FRAME,Operation : Emergency Operation : Emergency Food Distribution
 40,Operation,Emergency Operation,Emergency Incident Command Center,,131203,Point,MAIN,Operation : Emergency Operation : Emergency Incident Command Center

@@ -152,6 +152,12 @@ namespace MilitarySymbols
                 sb.Append(ModifierTwo);
             }
 
+            if (StandardIdentity != StandardIdentityRealExerciseSimType.Reality)
+            {
+                sb.Append("_ID-");
+                sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(StandardIdentity));
+            }
+
             if (Status != StatusType.Present)
             {
                 sb.Append("_S-");
