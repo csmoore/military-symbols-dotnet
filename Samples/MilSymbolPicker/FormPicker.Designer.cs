@@ -59,6 +59,7 @@
             this.gbTags = new System.Windows.Forms.GroupBox();
             this.tbTags = new System.Windows.Forms.TextBox();
             this.butReset = new System.Windows.Forms.Button();
+            this.butExtras = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.gbTags.SuspendLayout();
@@ -231,7 +232,7 @@
             this.groupBox1.Controls.Add(this.labSidcSecond10);
             this.groupBox1.Controls.Add(this.labSidcFirst10);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(482, 283);
+            this.groupBox1.Location = new System.Drawing.Point(481, 266);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(242, 94);
             this.groupBox1.TabIndex = 16;
@@ -380,11 +381,22 @@
             this.butReset.UseVisualStyleBackColor = true;
             this.butReset.Click += new System.EventHandler(this.butReset_Click);
             // 
+            // butExtras
+            // 
+            this.butExtras.Location = new System.Drawing.Point(562, 370);
+            this.butExtras.Name = "butExtras";
+            this.butExtras.Size = new System.Drawing.Size(75, 23);
+            this.butExtras.TabIndex = 29;
+            this.butExtras.Text = "Extras";
+            this.butExtras.UseVisualStyleBackColor = true;
+            this.butExtras.Click += new System.EventHandler(this.butExtras_Click);
+            // 
             // FormPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 504);
+            this.Controls.Add(this.butExtras);
             this.Controls.Add(this.butReset);
             this.Controls.Add(this.gbTags);
             this.Controls.Add(this.butNextCol3);
@@ -459,6 +471,7 @@
         private System.Windows.Forms.GroupBox gbTags;
         private System.Windows.Forms.TextBox tbTags;
         private System.Windows.Forms.Button butReset;
+        private System.Windows.Forms.Button butExtras;
     }
 }
 

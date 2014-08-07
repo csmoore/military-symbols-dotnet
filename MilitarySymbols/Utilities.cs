@@ -243,6 +243,48 @@ namespace MilitarySymbols
         }
 
         /// <summary>
+        /// Checks if an entity code exists in the table and therefore is valid
+        /// </summary>
+        public static bool IsEntityCodeValid(SymbolSetType symbolSet, string entityCode)
+        {
+            SymbolLookup milSymbolLookup = GetSymbolLookup();
+
+            if ((symbolSet == SymbolSetType.Unknown) ||
+                (symbolSet == SymbolSetType.NotSet) ||
+                (string.IsNullOrWhiteSpace(entityCode)) ||
+                (entityCode.Length != 6))
+                return false;
+
+            // if it can't find a shape for the symbol then (presumably) it doesn't exist
+            return (milSymbolLookup.GetEntityShapeFromCode(symbolSet, entityCode) 
+                != ShapeType.Unknown);
+        }
+
+        /// <summary>
+        /// Checks if an entity code exists in the table and therefore is valid
+        /// </summary>
+        public static bool IsModifierCodeValid(SymbolSetType symbolSet, int modifierNumber, /* 1 or 2*/
+            string modifierCode)
+        {
+            SymbolLookup milSymbolLookup = GetSymbolLookup();
+
+            if ((symbolSet == SymbolSetType.Unknown) ||
+                (symbolSet == SymbolSetType.NotSet) ||
+                (modifierNumber < 1) ||
+                (modifierNumber > 2) ||
+                (string.IsNullOrWhiteSpace(modifierCode)) ||
+                (modifierCode.Length != 2))
+                return false;
+
+            if (modifierCode == "00")
+                return true;
+
+            // if it can't find a shape for the symbol then (presumably) it doesn't exist
+            return (milSymbolLookup.GetModifierNameFromCode(symbolSet, modifierNumber, modifierCode)
+                != string.Empty);
+        }
+
+        /// <summary>
         /// Creates an consistent name from a Symbol ID Code
         /// (not in SymbolIdCode because it needs SymbolLookup)
         /// </summary>

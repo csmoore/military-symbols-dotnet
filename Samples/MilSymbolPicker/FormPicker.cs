@@ -373,7 +373,7 @@ namespace MilSymbolPicker
             button31.PerformClick(); // force the states to be re-evaluated
         }
 
-        void setSymbolState(string valueSelected)
+        void setSymbolState(string valueSelected = "")
         {
             // TODO: Figure out a way to set this consistent naming scheme better
             string symbolSetName = currentSymbol.Id.SymbolSet.ToString().Replace("_", " ");
@@ -793,6 +793,35 @@ namespace MilSymbolPicker
             resetSymbolState();
 
             SetPaneState();
+        }
+
+        private void butExtras_Click(object sender, EventArgs e)
+        {
+            FormExtras extras = new FormExtras();
+            DialogResult dr = extras.ShowDialog();
+
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                if (extras.cbManuallyEnterCode.Checked)
+                {
+                    string id2Try = extras.tbManuallyEnterCode.Text.Trim();
+                    SymbolIdCode tryCode = new SymbolIdCode(id2Try);
+
+                    if (tryCode.IsValid)
+                    {
+                        this.currentSymbol.Id = tryCode;
+
+                        this.currentPane = PaneSequenceType.StartOver;
+
+                        setSymbolState();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not create symbol from ID: " + id2Try);
+                    }
+
+                }
+            }
         }
     }
 }

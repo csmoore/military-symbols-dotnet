@@ -41,10 +41,24 @@ namespace MilitarySymbols
         { 
             get 
             { 
-                // TODO: Use Regex or some other method to see if format good, 
-                // or check properties are set, just check 1 property for now
-                return !((this.SymbolSet == SymbolSetType.NotSet) ||  
-                    (this.SymbolSet == SymbolSetType.Unknown)); 
+                // Checks the mains properties that could go wrong, but not yet an ehaustive check
+
+                bool symbolSetValid = !((this.SymbolSet == SymbolSetType.NotSet) ||  
+                    (this.SymbolSet == SymbolSetType.Unknown));
+                if (!symbolSetValid)
+                    return false;
+
+                bool entityCodeValid = Utilities.IsEntityCodeValid(SymbolSet, EntityCode);
+                if (!entityCodeValid)
+                    return false;
+
+                bool mod1Valid = Utilities.IsModifierCodeValid(SymbolSet, 1, ModifierOne);
+                bool mod2Valid = Utilities.IsModifierCodeValid(SymbolSet, 2, ModifierTwo);
+                if (!mod1Valid || !mod2Valid)
+                    return false;
+
+                // If we made it here, probably/likely valid
+                return true;
             }
         }
 

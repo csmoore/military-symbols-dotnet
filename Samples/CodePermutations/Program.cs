@@ -21,7 +21,7 @@ using MilitarySymbols;
 namespace CodePermutations
 {
     /// <summary>
-    /// This utility is mainly intended to be used to created batch scripts for testing 
+    /// This utility is mainly intended to be used to create batch scripts for testing 
     /// all combinations of a symbol
     /// </summary>
     class Program
