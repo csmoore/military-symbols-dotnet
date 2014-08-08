@@ -86,13 +86,25 @@ namespace MilitarySymbols
                 // if the value has changed
                 if (code != value)
                 {
-                    // just a check to make sure this is only digits
-                    // IMPORTANT/TODO: we aren't catching this exception if it fails
-                    int convertCheck = Convert.ToInt32(code);
+                    string code2Check = value;
 
-                    // TODO: add any other checks (e.g. Regex?) desired 
+                    if (string.IsNullOrWhiteSpace(code2Check) ||
+                         (code2Check.Length != 20))
+                    {
+                        System.Diagnostics.Trace.WriteLine("WARNING: Trying to set SymbolIdCode.Code from bad string length = " +
+                            code2Check.Length);
+                        return;
+                    }             
 
-                    code = value;
+                    ulong convertCheck;
+                    if (!UInt64.TryParse(code2Check, out convertCheck))
+                    {
+                        System.Diagnostics.Trace.WriteLine("WARNING: Trying to set SymbolIdCode.Code from bad format, string = " +
+                            code2Check);
+                        return;
+                    }
+
+                    code = code2Check;
 
                     // Populate the objects field from this code
                     populatePropertiesFromCode();
@@ -102,8 +114,7 @@ namespace MilitarySymbols
         protected string code = null;
 
         /// <summary>
-        /// The most significant portions of the Code: symbol set, entity & modifier (if set)
-        /// TODO: may be overkill/redundant, see HumanReadableCode below
+        /// The 8-digit, most significant portions of the Code: symbol set & entity 
         /// </summary>
         public string ShortenedCode
         {
@@ -115,12 +126,6 @@ namespace MilitarySymbols
                 // EntityCode (Digit 11-16)
                 sbCode.Append(EntityCode);
 
-                if (ModifierOne != "00")
-                    sbCode.Append(ModifierOne);
-
-                if (ModifierTwo != "00")
-                    sbCode.Append(ModifierOne);
-
                 return sbCode.ToString();
             }
             set
@@ -131,6 +136,14 @@ namespace MilitarySymbols
                 {
                     System.Diagnostics.Trace.WriteLine("WARNING: Trying to set SymbolIdCode.ShortenedCode from bad string length = " +
                         shortenedCodeIn.Length);
+                    return;
+                }
+
+                uint convertCheck;
+                if (!UInt32.TryParse(shortenedCodeIn, out convertCheck))
+                {
+                    System.Diagnostics.Trace.WriteLine("WARNING: Trying to set SymbolIdCode.Code from bad format, string = " +
+                        shortenedCodeIn);
                     return;
                 }
 
@@ -154,7 +167,7 @@ namespace MilitarySymbols
 
             if (showAffiliation)
             {
-                sb.Append("_");
+                sb.Append("_A-");
                 sb.Append(TypeUtilities.EnumHelper.getEnumValAsString(Affiliation));
             }
 

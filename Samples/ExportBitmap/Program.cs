@@ -98,7 +98,7 @@ namespace ExportBitmap
 
             if (!success || (exportBitmap == null))
             {
-                Console.WriteLine("Export failed for ID:" + id.ShortenedCode);
+                Console.WriteLine("Export failed for ID:" + id.HumanReadableCode());
                 return;
             }
 

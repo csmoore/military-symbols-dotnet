@@ -1,6 +1,6 @@
 # Military Symbols .NET 
 
-A basic MIL-STD-2525D Data/Drawing Library written in C#.
+A MIL-STD-2525D Data Model and Drawing Library written in C#.
 
 ![Image of Military Features Data](Screenshot.jpg)
 
@@ -38,9 +38,10 @@ A basic MIL-STD-2525D Data/Drawing Library written in C#.
 ### Running
 
 * Run one of the sample apps under [Samples](./Samples)
-    * [ConvertCode](./Samples/ConvertCode) - (Console App) Converts ID Code between standards -  MIL-STD-2525 Charlie(C) and Delta(D) (and visa-versa)
-    * [ExportBitmap](./Samples/ExportBitmap) - (Console App) Exports ID Code to bitmap
-    * [MilSymbolPicker](./Samples/MilSymbolPicker) - (Form App) Search and draw symbols using human readable names
+    * [MilSymbolPicker](./Samples/MilSymbolPicker) - (Form App) Search and draw symbols using human readable names or manually enter a code to view its image/attributes.
+    * [ConvertCode](./Samples/ConvertCode) - (Console App) Converts ID Code between standards -  MIL-STD-2525C - Charlie(C) and MIL-STD-2525D - Delta(D) (and visa-versa).
+    * [ExportBitmap](./Samples/ExportBitmap) - (Console App) Exports ID Code (2525C or 2525D) to bitmap. Also exports all known 2525C or 2525D symbols if "ALL" or "ALL2525C" option used.
+    * [CodePermutations](./Samples/CodePermutations) - (Console App) Generates all valid code/attribute combinations of a symbol. Generates random symbols.
 
 ## Notes
 

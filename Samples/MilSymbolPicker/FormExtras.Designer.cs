@@ -47,9 +47,9 @@
             this.cbManuallyEnterCode.AutoSize = true;
             this.cbManuallyEnterCode.Location = new System.Drawing.Point(13, 24);
             this.cbManuallyEnterCode.Name = "cbManuallyEnterCode";
-            this.cbManuallyEnterCode.Size = new System.Drawing.Size(115, 17);
+            this.cbManuallyEnterCode.Size = new System.Drawing.Size(187, 17);
             this.cbManuallyEnterCode.TabIndex = 1;
-            this.cbManuallyEnterCode.Text = "Manually Set Code";
+            this.cbManuallyEnterCode.Text = "Manually Set Code (8 or 20 Chars)";
             this.cbManuallyEnterCode.UseVisualStyleBackColor = true;
             this.cbManuallyEnterCode.CheckedChanged += new System.EventHandler(this.cbManuallyEnterCode_CheckedChanged);
             // 

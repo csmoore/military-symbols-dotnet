@@ -36,6 +36,9 @@ namespace MilSymbolPicker
         private void cbManuallyEnterCode_CheckedChanged(object sender, EventArgs e)
         {
             this.tbManuallyEnterCode.Visible = cbManuallyEnterCode.Checked;
+
+            if (cbManuallyEnterCode.Checked)
+                tbManuallyEnterCode.Focus();
         }
     }
 }

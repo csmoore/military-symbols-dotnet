@@ -817,7 +817,8 @@ namespace MilSymbolPicker
                     }
                     else
                     {
-                        MessageBox.Show("Could not create symbol from ID: " + id2Try);
+                        MessageBox.Show("Could not create symbol from ID:" + id2Try +
+                            ", Length:" + id2Try.Length, "Create Symbol Failed");
                     }
 
                 }
