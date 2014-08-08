@@ -15,8 +15,11 @@ A MIL-STD-2525D Data Model and Drawing Library written in C#.
 
 ## Requirements
 
-* VS2012 (or later)
-* Source SVG files (link to these files in the [instructions below](#instructions))
+*  To Build
+    * VS2012 (or later)
+    * Source SVG files (link to these files in the [instructions below](#instructions))
+* To Run
+    *  To run the [sample deployment](./Deployment), you will need the .NET Framework 4.5 installed (and something to unzip the deployment)
 
 ## Instructions
 
@@ -24,7 +27,7 @@ A MIL-STD-2525D Data Model and Drawing Library written in C#.
 
 * IMPORTANT: The drawing portions of this app depend on a set of SVG image files provided at https://github.com/Esri/joint-military-symbology-xml/ 
     * The drawing portion of this app will not be functional without these image files.
-    * These file may be [obtained from here](https://github.com/Esri/joint-military-symbology-xml/tree/master/svg)
+    * These files may be [obtained from here](https://github.com/Esri/joint-military-symbology-xml/tree/master/svg)
     * Unzip the files from the set above
 * To make these svg files available to the sample applications either 
     * Change the app.config setting for SVGImagesHome

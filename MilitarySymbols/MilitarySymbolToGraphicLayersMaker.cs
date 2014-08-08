@@ -528,14 +528,12 @@ namespace MilitarySymbols
                 sb.Append("0_");
             else if (realExerciseSim == StandardIdentityRealExerciseSimType.Exercise)
             {
-                sb.Append(System.IO.Path.DirectorySeparatorChar);
                 sb.Append("Exercise");
                 sb.Append(System.IO.Path.DirectorySeparatorChar);
                 sb.Append("1_");
             }
             else if (realExerciseSim == StandardIdentityRealExerciseSimType.Simulation)
             {
-                sb.Append(System.IO.Path.DirectorySeparatorChar);
                 sb.Append("Sim");
                 sb.Append(System.IO.Path.DirectorySeparatorChar);
                 sb.Append("2_");
