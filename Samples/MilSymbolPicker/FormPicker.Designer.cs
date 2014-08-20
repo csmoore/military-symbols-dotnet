@@ -205,6 +205,7 @@
             this.pbPreview.TabIndex = 13;
             this.pbPreview.TabStop = false;
             this.pbPreview.Click += new System.EventHandler(this.pbPreview_Click);
+            this.pbPreview.MouseHover += new System.EventHandler(this.pbPreview_MouseHover);
             // 
             // labSidcFirst10
             // 

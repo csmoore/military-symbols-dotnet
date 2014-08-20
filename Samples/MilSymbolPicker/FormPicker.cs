@@ -805,7 +805,22 @@ namespace MilSymbolPicker
                 if (extras.cbManuallyEnterCode.Checked)
                 {
                     string id2Try = extras.tbManuallyEnterCode.Text.Trim();
-                    SymbolIdCode tryCode = new SymbolIdCode(id2Try);
+
+                    SymbolIdCode tryCode = null;
+
+                    if ((id2Try.Length == 15) || (id2Try.Length == 10))
+                    {
+                        // if 2525C Code length, try to convert it to 2525D first
+                        bool convertSuccess = Utilities.ConvertCodeCharlieToDelta(id2Try, out tryCode);
+
+                        if (!convertSuccess)
+                            MessageBox.Show("Could not create 2525D symbol from 2525C ID: " + id2Try, "Convert 2525C Symbol Failed");
+                    }
+                    else
+                    {
+                        // 2525D
+                        tryCode = new SymbolIdCode(id2Try);
+                    }
 
                     if (tryCode.IsValid)
                     {
@@ -823,6 +838,20 @@ namespace MilSymbolPicker
 
                 }
             }
+        }
+
+        private ToolTip pbPreviewToolTip = new ToolTip();
+
+        private void pbPreview_MouseHover(object sender, EventArgs e)
+        {
+            Point p = pbPreview.Location;
+
+            pbPreviewToolTip.Show(                                
+                "Click Image to Save",
+                this,
+                p.X + 50,
+                p.Y + 50,
+                2000);
         }
     }
 }

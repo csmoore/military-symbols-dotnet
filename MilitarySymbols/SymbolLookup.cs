@@ -794,6 +794,8 @@ namespace MilitarySymbols
                 return false;
             }
 
+            bool found = false;
+
             foreach (DataRow row in results)
             {
                 symbolSetString = row["2525DeltaSymbolSet"] as string;
@@ -801,10 +803,24 @@ namespace MilitarySymbols
                 mod1String = row["2525DeltaMod1"] as string;
                 mod2String = row["2525DeltaMod2"] as string;
 
-                break; // should only be 1 result
+                if ((resultCount > 1) && (charlieCode[0] == 'W'))
+                {
+                    string fullCharlieCode = row["2525Charlie"] as string;
+
+                    if (fullCharlieCode == charlieCode)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    found = true;
+                    break; // should only be 1 result for the rest
+                }
             }
 
-            return true;
+            return found;
         }
 
         /// <summary>
@@ -837,8 +853,6 @@ namespace MilitarySymbols
                 {
                     MilitarySymbol milSymbol = new MilitarySymbol();
                     milSymbol.Legacy2525Code = legacyCode;
-
-                    // TODO: set MilitarySymbol.Shape from SymbolId
 
                     symbolList.Add(milSymbol);
                 }

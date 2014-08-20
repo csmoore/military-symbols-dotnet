@@ -30,6 +30,7 @@ namespace MilSymbolPicker
 
         private void butOK_Click(object sender, EventArgs e)
         {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK; // have to set this in case call from code, not button
             this.Close();
         }
 
@@ -39,6 +40,12 @@ namespace MilSymbolPicker
 
             if (cbManuallyEnterCode.Checked)
                 tbManuallyEnterCode.Focus();
+        }
+
+        private void tbManuallyEnterCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                butOK_Click(this, null);
         }
     }
 }

@@ -66,15 +66,33 @@ namespace MilitarySymbols
 
         public ShapeType Shape
         {
-            get;
-            set;
+            get 
+            {
+                shape = Utilities.GetShapeForId(this.Id);
+
+                return shape;
+            }
+            set 
+            {
+                shape = value;
+            }
         }
+        protected ShapeType shape = ShapeType.Unknown;
 
         public CentralIconType CentralIconFormat
         {
-            get;
-            set;
+            get 
+            {
+                centralIconFormat = Utilities.GetCentralIconForId(this.Id);
+
+                return centralIconFormat;
+            }
+            set 
+            {
+                centralIconFormat = value;
+            }
         }
+        protected CentralIconType centralIconFormat = CentralIconType.NotSet;
 
         public List<string> GraphicLayers
         {
@@ -100,6 +118,9 @@ namespace MilitarySymbols
                 string legacy2525Code = this.Legacy2525Code;
                 if (!string.IsNullOrEmpty(legacy2525Code))
                     tags.Add(legacy2525Code);
+
+                if (CentralIconFormat != CentralIconType.NotSet)
+                    tags.Add(this.CentralIconFormat.ToString());
 
                 // TODO: Add Other Desired Tags
 
