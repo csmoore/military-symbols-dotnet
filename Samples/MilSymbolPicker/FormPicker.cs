@@ -798,6 +798,10 @@ namespace MilSymbolPicker
         private void butExtras_Click(object sender, EventArgs e)
         {
             FormExtras extras = new FormExtras();
+
+            extras.cbShowSymbolCenterReference.Checked =
+                MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint;
+
             DialogResult dr = extras.ShowDialog();
 
             if (dr == System.Windows.Forms.DialogResult.OK)
@@ -827,17 +831,23 @@ namespace MilSymbolPicker
                         this.currentSymbol.Id = tryCode;
 
                         this.currentPane = PaneSequenceType.StartOver;
-
-                        setSymbolState();
                     }
                     else
                     {
                         MessageBox.Show("Could not create symbol from ID:" + id2Try +
                             ", Length:" + id2Try.Length, "Create Symbol Failed");
                     }
-
                 }
-            }
+
+                // Show Symbol Center Reference Overlay
+                MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint
+                    = extras.cbShowSymbolCenterReference.Checked;
+
+                // Set any changes from the Extras Form
+                setSymbolState();
+
+            } // if DialogResult.OK
+
         }
 
         private ToolTip pbPreviewToolTip = new ToolTip();

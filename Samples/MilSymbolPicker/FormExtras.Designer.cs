@@ -32,11 +32,12 @@
             this.cbManuallyEnterCode = new System.Windows.Forms.CheckBox();
             this.butOK = new System.Windows.Forms.Button();
             this.butCancel = new System.Windows.Forms.Button();
+            this.cbShowSymbolCenterReference = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tbManuallyEnterCode
             // 
-            this.tbManuallyEnterCode.Location = new System.Drawing.Point(13, 47);
+            this.tbManuallyEnterCode.Location = new System.Drawing.Point(13, 80);
             this.tbManuallyEnterCode.Name = "tbManuallyEnterCode";
             this.tbManuallyEnterCode.Size = new System.Drawing.Size(169, 20);
             this.tbManuallyEnterCode.TabIndex = 0;
@@ -46,7 +47,7 @@
             // cbManuallyEnterCode
             // 
             this.cbManuallyEnterCode.AutoSize = true;
-            this.cbManuallyEnterCode.Location = new System.Drawing.Point(13, 24);
+            this.cbManuallyEnterCode.Location = new System.Drawing.Point(13, 57);
             this.cbManuallyEnterCode.Name = "cbManuallyEnterCode";
             this.cbManuallyEnterCode.Size = new System.Drawing.Size(302, 17);
             this.cbManuallyEnterCode.TabIndex = 1;
@@ -75,11 +76,22 @@
             this.butCancel.Text = "Cancel";
             this.butCancel.UseVisualStyleBackColor = true;
             // 
+            // cbShowSymbolCenterReference
+            // 
+            this.cbShowSymbolCenterReference.AutoSize = true;
+            this.cbShowSymbolCenterReference.Location = new System.Drawing.Point(13, 23);
+            this.cbShowSymbolCenterReference.Name = "cbShowSymbolCenterReference";
+            this.cbShowSymbolCenterReference.Size = new System.Drawing.Size(216, 17);
+            this.cbShowSymbolCenterReference.TabIndex = 4;
+            this.cbShowSymbolCenterReference.Text = "Show Symbol Center Reference Overlay";
+            this.cbShowSymbolCenterReference.UseVisualStyleBackColor = true;
+            // 
             // FormExtras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(391, 255);
+            this.Controls.Add(this.cbShowSymbolCenterReference);
             this.Controls.Add(this.butCancel);
             this.Controls.Add(this.butOK);
             this.Controls.Add(this.cbManuallyEnterCode);
@@ -97,5 +109,6 @@
         private System.Windows.Forms.Button butCancel;
         public System.Windows.Forms.TextBox tbManuallyEnterCode;
         public System.Windows.Forms.CheckBox cbManuallyEnterCode;
+        public System.Windows.Forms.CheckBox cbShowSymbolCenterReference;
     }
 }
