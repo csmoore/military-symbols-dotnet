@@ -799,8 +799,11 @@ namespace MilSymbolPicker
         {
             FormExtras extras = new FormExtras();
 
+            // Set Panel State
             extras.cbShowSymbolCenterReference.Checked =
                 MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint;
+
+            extras.cbCivilianFrames.Checked = MilitarySymbolToGraphicLayersMaker.UseCivilianFrames;
 
             DialogResult dr = extras.ShowDialog();
 
@@ -839,9 +842,13 @@ namespace MilSymbolPicker
                     }
                 }
 
+                // Get Panel State and propagate to app 
+
                 // Show Symbol Center Reference Overlay
                 MilitarySymbolToGraphicLayersMaker.AddReferenceCenterPoint
                     = extras.cbShowSymbolCenterReference.Checked;
+
+                MilitarySymbolToGraphicLayersMaker.UseCivilianFrames = extras.cbCivilianFrames.Checked;
 
                 // Set any changes from the Extras Form
                 setSymbolState();

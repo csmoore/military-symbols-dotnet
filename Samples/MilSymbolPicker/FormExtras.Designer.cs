@@ -33,6 +33,7 @@
             this.butOK = new System.Windows.Forms.Button();
             this.butCancel = new System.Windows.Forms.Button();
             this.cbShowSymbolCenterReference = new System.Windows.Forms.CheckBox();
+            this.cbCivilianFrames = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tbManuallyEnterCode
@@ -86,11 +87,22 @@
             this.cbShowSymbolCenterReference.Text = "Show Symbol Center Reference Overlay";
             this.cbShowSymbolCenterReference.UseVisualStyleBackColor = true;
             // 
+            // cbCivilianFrames
+            // 
+            this.cbCivilianFrames.AutoSize = true;
+            this.cbCivilianFrames.Location = new System.Drawing.Point(13, 115);
+            this.cbCivilianFrames.Name = "cbCivilianFrames";
+            this.cbCivilianFrames.Size = new System.Drawing.Size(118, 17);
+            this.cbCivilianFrames.TabIndex = 5;
+            this.cbCivilianFrames.Text = "Use Civilian Frames";
+            this.cbCivilianFrames.UseVisualStyleBackColor = true;
+            // 
             // FormExtras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(391, 255);
+            this.Controls.Add(this.cbCivilianFrames);
             this.Controls.Add(this.cbShowSymbolCenterReference);
             this.Controls.Add(this.butCancel);
             this.Controls.Add(this.butOK);
@@ -110,5 +122,6 @@
         public System.Windows.Forms.TextBox tbManuallyEnterCode;
         public System.Windows.Forms.CheckBox cbManuallyEnterCode;
         public System.Windows.Forms.CheckBox cbShowSymbolCenterReference;
+        public System.Windows.Forms.CheckBox cbCivilianFrames;
     }
 }

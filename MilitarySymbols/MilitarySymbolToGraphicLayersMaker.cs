@@ -63,6 +63,12 @@ namespace MilitarySymbols
             set;
         }
 
+        public static bool UseCivilianFrames
+        {
+            get;
+            set;
+        }
+
         // IMPORTANT: If you don't have the expected SVG Files, in the expected folder format
         //            then this class will not do anything.
         // The assumed/expected Folder structure:
@@ -559,6 +565,12 @@ namespace MilitarySymbols
                     status_suffix = "_1";
 
             sb.Append(status_suffix);
+
+            if (UseCivilianFrames)
+            {
+                if (affiliation <= StandardIdentityAffiliationType.Neutral)
+                    sb.Append("c");
+            }
 
             sb.Append(ImageSuffix);
 

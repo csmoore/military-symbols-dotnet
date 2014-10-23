@@ -347,8 +347,8 @@ namespace MilitarySymbols
             { SymbolSetType.Meteorological_Space, @"METOC\Space" },
 
             { SymbolSetType.Sea_Surface, "SeaSurface" },
-            { SymbolSetType.Sea_Subsurface, "Subsurface" },
-            { SymbolSetType.Mine_Warfare, "Subsurface" },
+            { SymbolSetType.Sea_Subsurface, "SeaSubsurface" },
+            { SymbolSetType.Mine_Warfare, "SeaSubsurface" },
 
             { SymbolSetType.Activities, "Activities" }, 
 

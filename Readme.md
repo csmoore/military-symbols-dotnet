@@ -69,11 +69,12 @@ limitations under the License.
 
 This project uses:
 
+1. The MIL-STD-2525D Document available for download from http://www.assistdocs.com/search/document_details.cfm?ident_number=114934
+    1. Public Domain in the United States
 1. SVG and data files from https://github.com/Esri/joint-military-symbology-xml/ 
     1. Governed by the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
 1. The C# SVG Rendering Engine (current Github forked repo below)
     1.  The C# SVG Rendering Engine is governed by the Microsoft Public License: https://svg.codeplex.com/license
     1.  For more information see the project pages at:
         1.  http://svg.codeplex.com/
-        1.  https://github.com/vvvv/SVG 
+        1.  https://github.com/vvvv/SVG (The currently maintained version of this project)
