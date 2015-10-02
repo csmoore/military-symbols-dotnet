@@ -249,11 +249,13 @@ namespace MilitarySymbols
         {
             SymbolLookup milSymbolLookup = GetSymbolLookup();
 
+            if (entityCode == "000000") // allow this
+                return true;
+
             if ((symbolSet == SymbolSetType.Unknown) ||
                 (symbolSet == SymbolSetType.NotSet) ||
                 (string.IsNullOrWhiteSpace(entityCode)) ||
-                (entityCode.Length != 6) || 
-                (entityCode == "000000"))
+                (entityCode.Length != 6))
                 return false;
 
             // if it can't find a shape for the symbol then (presumably) it doesn't exist
