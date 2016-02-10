@@ -51,12 +51,22 @@ namespace MilitarySymbols
             return true;
         }
 
+        public static bool ExportSymbolFromAttributes(Dictionary<string, string> attributeSet, 
+            out System.Drawing.Bitmap exportBitmap,
+            System.Drawing.Size size)
+        {
+            SymbolIdCode sidc = new SymbolIdCode(attributeSet);
+
+            return ExportSymbol(sidc, out exportBitmap, size);
+        }
+
         public static bool ExportSymbol(SymbolIdCode code, out System.Drawing.Bitmap exportBitmap,
             System.Drawing.Size size)
         {
             if (!code.IsValid)
             {
                 exportBitmap = null;
+                System.Diagnostics.Trace.WriteLine("Export Failed! SIDC is not valid:" + code);
                 return false;
             }
 

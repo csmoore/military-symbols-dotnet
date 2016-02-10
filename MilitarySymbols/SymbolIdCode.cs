@@ -25,16 +25,97 @@ namespace MilitarySymbols
 
         public SymbolIdCode(string codeLength20orCodeLength8)
         {
-            if (string.IsNullOrWhiteSpace(codeLength20orCodeLength8))
-                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string");
+            setSymbolIdCode(codeLength20orCodeLength8);
+        }
 
-            if (codeLength20orCodeLength8.Length == 8)
-                this.ShortenedCode = codeLength20orCodeLength8;
-            else if (codeLength20orCodeLength8.Length == 20)
-                this.Code = codeLength20orCodeLength8;
-            else
-                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string length = " +
-                    codeLength20orCodeLength8.Length);
+        public SymbolIdCode(Dictionary<string, string> attributeSet)
+        {
+            // allow SIDC code to be one of the supplied attributes,
+            const string SIDC_ATTRIBUTE = "sidc";
+            if (attributeSet.ContainsKey(SIDC_ATTRIBUTE))
+            {
+                string codeLength20orCodeLength8 = attributeSet[SIDC_ATTRIBUTE];
+                setSymbolIdCode(codeLength20orCodeLength8);
+                // but if supplied stop here
+                return;
+            }
+
+            // otherwise if other attributes supplies, set them individually
+            const string REAL_SIM_EX_ATTRIBUTE = "context";
+            if (attributeSet.ContainsKey(REAL_SIM_EX_ATTRIBUTE))
+            {
+                string contextString = attributeSet[REAL_SIM_EX_ATTRIBUTE];
+                this.StandardIdentity = (StandardIdentityRealExerciseSimType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(StandardIdentityRealExerciseSimType),
+                    contextString);
+            }
+
+            const string AFFILIATION_ATTRIBUTE = "identity";
+            if (attributeSet.ContainsKey(AFFILIATION_ATTRIBUTE))
+            {
+                string affilString = attributeSet[AFFILIATION_ATTRIBUTE];
+                this.Affiliation = (StandardIdentityAffiliationType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(StandardIdentityAffiliationType),
+                    affilString);
+            }
+
+            const string SYMBOL_SET_ATTRIBUTE = "symbolset";
+            if (attributeSet.ContainsKey(SYMBOL_SET_ATTRIBUTE))
+            {
+                string symbolSetString = attributeSet[SYMBOL_SET_ATTRIBUTE];
+                this.SymbolSet = (SymbolSetType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(SymbolSetType), 
+                    symbolSetString);
+            }
+
+            const string SYMBOL_ENTITY_ATTRIBUTE = "symbolentity";
+            if (attributeSet.ContainsKey(SYMBOL_ENTITY_ATTRIBUTE))
+            {
+                string symbolEntityString = attributeSet[SYMBOL_ENTITY_ATTRIBUTE];
+                this.EntityCode = symbolEntityString;
+            }
+
+            const string MOD1_ATTRIBUTE = "modifier1";
+            if (attributeSet.ContainsKey(MOD1_ATTRIBUTE))
+            {
+                string mod1String = attributeSet[MOD1_ATTRIBUTE];
+                this.ModifierOne = mod1String;
+            }
+
+            const string MOD2_ATTRIBUTE = "modifier2";
+            if (attributeSet.ContainsKey(MOD2_ATTRIBUTE))
+            {
+                string mod2String = attributeSet[MOD2_ATTRIBUTE];
+                this.ModifierTwo = mod2String;
+            }
+
+            const string ECHELON_ATTRIBUTE = "echelon";
+            if (attributeSet.ContainsKey(ECHELON_ATTRIBUTE))
+            {
+                string echString = attributeSet[ECHELON_ATTRIBUTE];
+                this.EchelonMobility = (EchelonMobilityType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(EchelonMobilityType),
+                    echString);
+            }
+
+            const string HQ_TF_FD_ATTRIBUTE = "indicator";
+            if (attributeSet.ContainsKey(HQ_TF_FD_ATTRIBUTE))
+            {
+                string hqTfFdString = attributeSet[HQ_TF_FD_ATTRIBUTE];
+                this.HeadquartersTaskForceDummy = (HeadquartersTaskForceDummyType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(HeadquartersTaskForceDummyType),
+                    hqTfFdString);
+            }
+
+            const string STATUS_ATTRIBUTE = "operationalcondition";
+            if (attributeSet.ContainsKey(STATUS_ATTRIBUTE))
+            {
+                string statusString = attributeSet[STATUS_ATTRIBUTE];                
+                this.Status = (StatusType)
+                    TypeUtilities.EnumHelper.getEnumFromHashCodeString(typeof(StatusType),
+                    statusString);
+            }
+
         }
 
         public bool IsValid 
@@ -48,14 +129,22 @@ namespace MilitarySymbols
                 if (!symbolSetValid)
                     return false;
 
-                bool entityCodeValid = Utilities.IsEntityCodeValid(SymbolSet, EntityCode);
-                if (!entityCodeValid)
-                    return false;
+                const bool LOOKUP_IF_CODE_VALID = false;
 
-                bool mod1Valid = Utilities.IsModifierCodeValid(SymbolSet, 1, ModifierOne);
-                bool mod2Valid = Utilities.IsModifierCodeValid(SymbolSet, 2, ModifierTwo);
-                if (!mod1Valid || !mod2Valid)
-                    return false;
+                if (LOOKUP_IF_CODE_VALID)
+                {
+                    // This code will actually use the lookup tables to determine if these
+                    // are valid codes within the data, use if a more agressive validity 
+                    // check is needed
+                    bool entityCodeValid = Utilities.IsEntityCodeValid(SymbolSet, EntityCode);
+                    if (!entityCodeValid)
+                        return false;
+
+                    bool mod1Valid = Utilities.IsModifierCodeValid(SymbolSet, 1, ModifierOne);
+                    bool mod2Valid = Utilities.IsModifierCodeValid(SymbolSet, 2, ModifierTwo);
+                    if (!mod1Valid || !mod2Valid)
+                        return false;
+                }
 
                 // If we made it here, probably/likely valid
                 return true;
@@ -663,6 +752,19 @@ namespace MilitarySymbols
             this.ModifierTwo = code.Substring(18, 2);
         }
 
+        private void setSymbolIdCode(string codeLength20orCodeLength8)
+        {
+            if (string.IsNullOrWhiteSpace(codeLength20orCodeLength8))
+                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string");
+
+            if (codeLength20orCodeLength8.Length == 8)
+                this.ShortenedCode = codeLength20orCodeLength8;
+            else if (codeLength20orCodeLength8.Length == 20)
+                this.Code = codeLength20orCodeLength8;
+            else
+                System.Diagnostics.Trace.WriteLine("WARNING: Trying to create SymbolIdCode from bad string length = " +
+                    codeLength20orCodeLength8.Length);
+        }
         public override bool Equals(System.Object obj)
         {
             if ((System.Object)obj == null)

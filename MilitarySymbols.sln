@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitarySymbols", "MilitarySymbols\MilitarySymbols.csproj", "{C4F233CF-22C4-4813-B0A4-ED2058457B1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSymbolPicker", "Samples\MilSymbolPicker\MilSymbolPicker.csproj", "{73CAE853-D811-43E7-8680-9D0AC19F8A44}"
@@ -12,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertCode", "Samples\ConvertCode\ConvertCode.csproj", "{6BBD0032-E3D4-48E3-B1F6-2836783F12A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodePermutations", "Samples\CodePermutations\CodePermutations.csproj", "{817D8560-74BE-4658-971F-52B4C456B1AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMilitaryAttributesToBitmap", "Test\TestMilitaryAttributesToBitmap\TestMilitaryAttributesToBitmap.csproj", "{AE4FFCFA-6885-4E0E-8EB5-DA7F50E83AA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{817D8560-74BE-4658-971F-52B4C456B1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{817D8560-74BE-4658-971F-52B4C456B1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{817D8560-74BE-4658-971F-52B4C456B1AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4FFCFA-6885-4E0E-8EB5-DA7F50E83AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4FFCFA-6885-4E0E-8EB5-DA7F50E83AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4FFCFA-6885-4E0E-8EB5-DA7F50E83AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4FFCFA-6885-4E0E-8EB5-DA7F50E83AA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -64,9 +64,60 @@ namespace ExportBitmap
                 ProcessAll(arg);
             else if (arg.EndsWith("csv")) // csv file supplied
                 ProcessCsv(arg);
+            else if (arg.StartsWith("ATTRIBUTES"))
+                ProcessAttributes(args);
+            else if (arg.StartsWith("ATTRIBUTE_TEST"))
+                ProcessAttributeTest();
             else                          // export a single code
                 ProcessSidc(arg); 
 
+        }
+
+        static void ProcessAttributeTest()
+        {
+            Dictionary<string, string> attributeSet = new Dictionary<string, string>();
+
+            attributeSet["context"] = "10";
+            attributeSet["identity"] = "3";
+            attributeSet["symbolset"] = "10";
+            attributeSet["symbolentity"] = "110100";
+            attributeSet["modifier1"] = "01";
+            attributeSet["modifier2"] = "01";
+            attributeSet["echelon"] = "01";
+            attributeSet["indicator"] = "1";
+            attributeSet["operationalcondition"] = "1";
+
+            SymbolIdCode sidc = new SymbolIdCode(attributeSet);
+
+            ExportSymbolId(sidc);
+        }
+
+        static void ProcessAttributes(string[] args)
+        {
+            Dictionary<string, string> attributeSet = new Dictionary<string, string>();
+
+            if (args.Length > 1)
+                attributeSet["context"] = args[1];
+            if (args.Length > 2)
+                attributeSet["identity"] = args[2];
+            if (args.Length > 3)
+                attributeSet["symbolset"] = args[3];
+            if (args.Length > 4)
+                attributeSet["symbolentity"] = args[4];
+            if (args.Length > 5)
+                attributeSet["modifier1"] = args[5];
+            if (args.Length > 6)
+                attributeSet["modifier2"] = args[6];
+            if (args.Length > 7)
+                attributeSet["echelon"] = args[7];
+            if (args.Length > 8)
+                attributeSet["indicator"] = args[8];
+            if (args.Length > 9)
+                attributeSet["operationalcondition"] = args[9];
+
+            SymbolIdCode sidc = new SymbolIdCode(attributeSet);
+
+            ExportSymbolId(sidc);
         }
 
         static void Usage()
