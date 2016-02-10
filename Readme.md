@@ -45,10 +45,11 @@ A MIL-STD-2525D Data Model and Drawing Library written in C#.
     * [ConvertCode](./Samples/ConvertCode) - (Console App) Converts ID Code between standards -  MIL-STD-2525C - Charlie(C) and MIL-STD-2525D - Delta(D) (and visa-versa).
     * [ExportBitmap](./Samples/ExportBitmap) - (Console App) Exports ID Code (2525C or 2525D) to bitmap. Also exports all known 2525C or 2525D symbols if "ALL" or "ALL2525C" option used.
     * [CodePermutations](./Samples/CodePermutations) - (Console App) Generates all valid code/attribute combinations of a symbol. Generates random symbols.
+    * [TestTableExporter](./Test/TestTableExporter) - Exports CSV tables of symbol data
 
 ## Notes
 
-This started out as just a quick prototype so I could learn MIL-STD-2525D (Delta), test/validate the data provided in the standard, and prototype simple API/method calls. It's still pretty much in the prototype/beta stage but providing it as a stand-alone repo in case it is of help to any others (and anyone wants to help refine). There are likely many Military Symbol APIs out there, but I was mainly aiming for simplicity and a few focused apps.
+This started out as just a quick prototype so I could learn MIL-STD-2525D (Delta), test/validate the data provided in the standard, and prototype a simple public API with military symbol search and creation methods/workflows. It's still pretty much in the prototype/beta stage but providing it as a stand-alone repo in case it is of help to any others. There are likely many Military Symbol APIs out there, but I was mainly aiming for simplicity and a few focused, yet functional, apps.
 
 This repo/data has **not** been heavily validated/tested, so please keep this in mind when considering where it is appropriate to use. 
 
@@ -67,9 +68,9 @@ limitations under the License.
 
 ## Credits
 
-This project uses:
+This project uses (and appreciates the help from):
 
-1. The MIL-STD-2525D Document available for download from http://www.assistdocs.com/search/document_details.cfm?ident_number=114934
+1. The MIL-STD-2525D Document available for download from http://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=114934
     1. Public Domain in the United States
 1. SVG and data files from https://github.com/Esri/joint-military-symbology-xml/ 
     1. Governed by the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
