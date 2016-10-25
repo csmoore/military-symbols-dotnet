@@ -55,7 +55,17 @@ namespace MilitarySymbols
             out System.Drawing.Bitmap exportBitmap,
             System.Drawing.Size size)
         {
-            SymbolIdCode sidc = new SymbolIdCode(attributeSet);
+            SymbolIdCode sidc = null;
+
+            if (attributeSet.ContainsKey("legacysymbolidcode"))
+            {
+                string legacySymbolIdCode = attributeSet["legacysymbolidcode"];
+                bool success = ConvertCodeCharlieToDelta(legacySymbolIdCode, out sidc);
+            }
+            else
+            {
+                sidc = new SymbolIdCode(attributeSet);
+            }
 
             return ExportSymbol(sidc, out exportBitmap, size);
         }

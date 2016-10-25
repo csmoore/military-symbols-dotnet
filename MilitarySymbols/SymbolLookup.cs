@@ -753,7 +753,8 @@ namespace MilitarySymbols
             out string symbolSetString, out string entityString,
             out string mod1String, out string mod2String)
         {
-            Initialize();
+            if (!LegacyMappingInitialized)
+                Initialize();
 
             symbolSetString = string.Empty;
             entityString    = string.Empty;
@@ -883,6 +884,21 @@ namespace MilitarySymbols
             }
         }
 
+        public bool LegacyMappingInitialized
+        {
+            get
+            {
+                if (LegacyCodeMappingTable == null)
+                    return false;
+
+                if ((LegacyCodeMappingTable.Rows != null) && (LegacyCodeMappingTable.Columns != null) &&
+                    (LegacyCodeMappingTable.Rows.Count > 0) && (LegacyCodeMappingTable.Columns.Count > 0))
+                    return true;
+
+                return false;
+            }
+        }
+
         public DataTable EntityTable
         {
             get { return entityTable; }
@@ -906,7 +922,12 @@ namespace MilitarySymbols
             if (Initialized)
                 return true;
 
-            string basePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            // string basePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            var asm = System.Reflection.Assembly.GetExecutingAssembly();
+            string assemblyPath = System.IO.Path.GetDirectoryName(
+                              Uri.UnescapeDataString(
+                                      new Uri(asm.CodeBase).LocalPath));
+            string basePath = System.IO.Path.Combine(assemblyPath, "Data");
 
             string csvEntityTableFileName = "All_Entities.csv";
             string csvEntityTableFullPath = System.IO.Path.Combine(basePath, csvEntityTableFileName);
