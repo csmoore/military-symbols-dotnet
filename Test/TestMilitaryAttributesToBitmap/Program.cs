@@ -25,11 +25,38 @@ namespace TestMilitaryAttributesToBitmap
     class Program
     {
         static void Main(string[] args)
-        { 
-            ExportAttributesToBitmapTest();
+        {
+            ExportAttributesToBitmapTest2525D();
+
+            ExportAttributesToBitmapTest2525C("Bogus");
+            ExportAttributesToBitmapTest2525C("Gobus6789012345");
+            ExportAttributesToBitmapTest2525C("SFGAUCI---AAUSG"); 
+            ExportAttributesToBitmapTest2525C("SFGAUCRH--AAUSG");
+            ExportAttributesToBitmapTest2525C("GFMPNB------USG");
         }
 
-        static void ExportAttributesToBitmapTest()
+        static void ExportByAttributes(Dictionary<string, string> attributeSet, string exportName)
+        { 
+            const int width = 256, height = 256;
+            Size exportSize = new Size(width, height);
+
+            System.Drawing.Bitmap exportBitmap;
+
+            bool success = Utilities.ExportSymbolFromAttributes(attributeSet, out exportBitmap, exportSize);
+
+            if (!success || (exportBitmap == null))
+            {
+                Console.WriteLine("Export failed for: " + exportName);
+                return;
+            }
+
+            // Step 4: Use the Bitmap somewhere (saved to a file here for viewing)
+            string imageFileName = exportName + ".png";
+
+            exportBitmap.Save(imageFileName);
+        }
+
+        static void ExportAttributesToBitmapTest2525D()
         {
             // Step 1: Create a dictionary/map of well known attribute names to values
             Dictionary<string, string> attributeSet = new Dictionary<string, string>();
@@ -53,29 +80,23 @@ namespace TestMilitaryAttributesToBitmap
             // Utilities.SetImageFilesHome(svgHomeFolderSetting)
             // Utilities.CheckImageFilesHomeExists()
             if (!CheckSettings())
-            {
-                Console.WriteLine("No SVG Folder, can't continue.");
                 return;
-            }
 
-            // Step 3: Get the Layered Bitmap from the Library
-            const int width = 256, height = 256;
-            Size exportSize = new Size(width, height);
+            // Step 3: Get the Layered Bitmap from the Library & Export
+            ExportByAttributes(attributeSet, "Test2525D");
+        }
 
-            System.Drawing.Bitmap exportBitmap;
+        static void ExportAttributesToBitmapTest2525C(string sic)
+        {
+            Dictionary<string, string> attributeSet = new Dictionary<string, string>();
 
-            bool success = Utilities.ExportSymbolFromAttributes(attributeSet, out exportBitmap, exportSize);
+            attributeSet["legacysymbolidcode"] = sic;  
 
-            if (!success || (exportBitmap == null))
-            {
-                Console.WriteLine("Export failed!");
+            if (!CheckSettings())
                 return;
-            }
 
-            // Step 4: Use the Bitmap somewhere (saved to a file here for viewing)
-            string imageFileName = "TestExport.png";
-
-            exportBitmap.Save(imageFileName);
+            // Step 3: Get the Layered Bitmap from the Library & Export
+            ExportByAttributes(attributeSet, "Test2525C-" + sic);
         }
 
         static bool CheckSettings()
@@ -85,6 +106,7 @@ namespace TestMilitaryAttributesToBitmap
             // 1. Clone Repo: Esri\joint-military-symbology-xml 
             // 2. Set Key "SVGImagesHome" in app.config 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            bool success = true;
 
             // Set SVG Images Home if set in App Settings
             string appSettingsSvgHomeKey = "SVGImagesHome";
@@ -95,17 +117,22 @@ namespace TestMilitaryAttributesToBitmap
                 {
                     Console.WriteLine("App.config setting for SVGImagesHome does not exist, export failed!");
                     Console.WriteLine("Setting: " + svgHomeFolderSetting);
-                    return false;
+                    success = false;
+                }
+                else
+                {
+                    if (!Utilities.CheckImageFilesHomeExists())
+                    {
+                        Console.WriteLine("Image folder does not exist, export failed!");
+                        success = false;
+                    }
                 }
             }
 
-            if (!Utilities.CheckImageFilesHomeExists())
-            {
-                Console.WriteLine("Image folder does not exist, export failed!");
-                return false;
-            }
+            if (!success)
+                Console.WriteLine("No SVG Folder, can't continue.");
 
-            return true;
+            return success;
         }
     }
 }

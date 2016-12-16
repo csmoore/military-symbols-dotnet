@@ -61,6 +61,7 @@ namespace MilitarySymbols
             {
                 string legacySymbolIdCode = attributeSet["legacysymbolidcode"];
                 bool success = ConvertCodeCharlieToDelta(legacySymbolIdCode, out sidc);
+                sidc.LegacyCode = legacySymbolIdCode;
             }
             else
             {
@@ -180,6 +181,7 @@ namespace MilitarySymbols
                 }
             } // HasFrame
 
+            code2525Delta.LegacyCode = code2525CharlieUpper;
             return true;
         }
 

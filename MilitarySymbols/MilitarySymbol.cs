@@ -40,12 +40,16 @@ namespace MilitarySymbols
         {
             get
             {
-                string code2525Charlie;
-                bool convertSuccess = Utilities.ConvertCodeDeltaToCharlie(Id, out code2525Charlie);
-                if (convertSuccess)
-                    return code2525Charlie;
-                else
-                    return string.Empty;
+                if (string.IsNullOrEmpty(id.LegacyCode))
+                {
+                    string code2525Charlie;
+                    bool convertSuccess = Utilities.ConvertCodeDeltaToCharlie(Id, out code2525Charlie);
+                    if (convertSuccess)
+                        id.LegacyCode = code2525Charlie;
+                    else
+                        id.LegacyCode = string.Empty;
+                }
+                return id.LegacyCode;
             }
             set
             {

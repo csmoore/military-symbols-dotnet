@@ -155,7 +155,7 @@ namespace ExportBitmap
 
             string imageFileName = id.HumanReadableCode();
             if (!string.IsNullOrWhiteSpace(optionalLegacyCode))
-                imageFileName += "-" + optionalLegacyCode;
+                imageFileName += "-" + optionalLegacyCode.Replace('*','-');
 
             string filepath = getFullFileName(imageFileName);
 
@@ -224,7 +224,7 @@ namespace ExportBitmap
             }
 
             Console.Write("2525C: " + code2525Charlie + ", ");
-            ExportFullSymbolId(sidc.Code);
+            ExportSymbolId(sidc, code2525Charlie);
         }
 
         static string getFullFileName(string sidc)

@@ -597,6 +597,48 @@ namespace MilitarySymbols
             return sb.ToString();
         }
 
+        public static bool SetMilitarySymbolGraphicLayersFromLegacyCode(ref MilitarySymbol milSymbol)
+        {
+            if (string.IsNullOrEmpty(milSymbol.Id.LegacyCode) || milSymbol.Id.LegacyCode.Length < 10)
+                return false;
+
+            SymbolLookup codeLookup = Utilities.GetSymbolLookup();
+
+            string mainIcon, modifier1, modifier2, extraIcon, standard;
+            bool fullFrame;
+
+            bool success = codeLookup.GetDeltaIconsFromCharlie(milSymbol.Id.LegacyCode, out mainIcon, 
+                out modifier1, out modifier2, out extraIcon, out fullFrame, out standard);
+
+            if (!success || string.IsNullOrEmpty(mainIcon) || !Char.IsLetter(mainIcon[0]))
+                return false;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(ImageFilesHome);
+            sb.Append(@"Legacy");
+            sb.Append(System.IO.Path.DirectorySeparatorChar);
+
+            if (standard == "B2")
+                sb.Append("2525B_Change_2");
+            else
+                sb.Append("2525C");
+
+            sb.Append(System.IO.Path.DirectorySeparatorChar);
+            sb.Append(mainIcon);
+            if (fullFrame && (mainIcon[0] != 'G'))
+            {
+                string suffix = TypeUtilities.AffiliationFrameToSuffixName[milSymbol.Id.Affiliation];
+                sb.Append(suffix);
+            }
+            sb.Append(".svg");
+
+            string fullPathToLegacyMainIcon = sb.ToString();
+
+            milSymbol.GraphicLayers.Add(fullPathToLegacyMainIcon);
+
+            return System.IO.File.Exists(fullPathToLegacyMainIcon);
+        }
+
         public static bool SetMilitarySymbolGraphicLayers(ref MilitarySymbol milSymbol)
         {
             if (!System.IO.Directory.Exists(ImageFilesHome))
@@ -629,11 +671,20 @@ namespace MilitarySymbols
             }
             //////////////////////////////////////////////////////////////////////////
 
+            bool skipMainIcons = false;
+            if (!string.IsNullOrEmpty(milSymbol.Id.LegacyCode))
+            {
+                skipMainIcons = SetMilitarySymbolGraphicLayersFromLegacyCode(ref milSymbol);
+            }
+
             //////////////////////////////////////////////////////////////////////////
             // Main Icon Layer (all symbols should have this)
-            string mainIconNameFullPath = GetMainIconNameWithFullPath(ref milSymbol);
+            if (!skipMainIcons)
+            {
+                string mainIconNameFullPath = GetMainIconNameWithFullPath(ref milSymbol);
 
-            milSymbol.GraphicLayers.Add(mainIconNameFullPath);
+                milSymbol.GraphicLayers.Add(mainIconNameFullPath);
+            }
             //////////////////////////////////////////////////////////////////////////
 
             //////////////////////////////////////////////////////////////////////////
@@ -645,7 +696,7 @@ namespace MilitarySymbols
                 StringBuilder sb = new StringBuilder();
 
                 // Main Icon Modfier 1
-                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierOne)
+                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierOne) && !skipMainIcons
                     && (milSymbol.Id.ModifierOne != "00")) // TODO: find better way of checking that this isn't set/valid
                 {
                     sb.Clear();
@@ -659,7 +710,7 @@ namespace MilitarySymbols
                 }
 
                 // Main Icon Modfier 2
-                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierTwo)
+                if (!string.IsNullOrEmpty(milSymbol.Id.ModifierTwo) && !skipMainIcons
                     && (milSymbol.Id.ModifierTwo != "00")) // TODO: find better way of checking that this isn't set/valid
                 {
                     sb.Clear();

@@ -749,6 +749,64 @@ namespace MilitarySymbols
             return !string.IsNullOrEmpty(charlieCode);
         }
 
+        public bool GetDeltaIconsFromCharlie(string charlieCode,
+            out string mainIcon, out string modifier1,
+            out string modifier2, out string extraIcon,
+            out bool fullFrame, out string standard)
+        {
+            if (!LegacyMappingInitialized)
+                Initialize();
+
+            mainIcon = string.Empty;
+            modifier1 = string.Empty;
+            modifier2 = string.Empty;
+            extraIcon = string.Empty;
+            fullFrame = false;
+            standard  = string.Empty;
+
+            if ((LegacyIconMappingTable == null) || string.IsNullOrEmpty(charlieCode)
+                || (charlieCode.Length < 10))
+                return false;
+
+            StringBuilder sbLookupCharlieCode = new StringBuilder();
+            sbLookupCharlieCode.Append(charlieCode[0]);
+            sbLookupCharlieCode.Append('-');
+            sbLookupCharlieCode.Append(charlieCode[2]);
+            sbLookupCharlieCode.Append('-');
+            sbLookupCharlieCode.Append(charlieCode.Substring(4, 6));
+
+            string lookupCharlieCode = sbLookupCharlieCode.ToString();
+
+            var results = from row in LegacyIconMappingTable.AsEnumerable()
+                          where (row.Field<string>("LegacyKey") == lookupCharlieCode)
+                          select row;
+
+            int resultCount = results.Count();
+
+            if (resultCount < 1)
+            {
+                System.Diagnostics.Trace.WriteLine("Charlie SIDC Code not found: " + charlieCode);
+                return false;
+            }
+
+            foreach (DataRow row in results)
+            {
+                mainIcon = row["MainIcon"] as string;
+                modifier1 = row["Modifier1"] as string;
+                modifier2 = row["Modifier2"] as string;
+                extraIcon = row["ExtraIcon"] as string;
+                string fullFrameString = row["FullFrame"] as string;
+                fullFrame = !string.IsNullOrEmpty(fullFrameString);
+                standard = row["Standard"] as string;
+
+                // We only care about the 1st result
+                break;
+            }
+
+            return true;
+
+         }
+
         public bool GetDeltaCodeFromCharlie(string charlieCode, 
             out string symbolSetString, out string entityString,
             out string mod1String, out string mod2String)
@@ -915,7 +973,13 @@ namespace MilitarySymbols
         {
             get { return legacyCodeMappingTable; }
         }
-        private DataTable legacyCodeMappingTable = null; 
+        private DataTable legacyCodeMappingTable = null;
+
+        public DataTable LegacyIconMappingTable
+        {
+            get { return legacyIconMappingTable; }
+        }
+        private DataTable legacyIconMappingTable = null;
 
         public bool Initialize()
         {
@@ -946,6 +1010,12 @@ namespace MilitarySymbols
             CsvToTableMaker csvTableLegacyCodeMapping = new CsvToTableMaker();
             csvTableLegacyCodeMapping.LoadTable(csvLegacyCodeMappingTableFullPath);
             legacyCodeMappingTable = csvTableLegacyCodeMapping.Table;
+
+            string csvLegacyIconMappingTableFileName = "LegacyIconMappingTableCtoD.csv";
+            string csvLegacyIconMappingTableFullPath = System.IO.Path.Combine(basePath, csvLegacyIconMappingTableFileName);
+            CsvToTableMaker csvTableLegacyIconMapping = new CsvToTableMaker();
+            csvTableLegacyIconMapping.LoadTable(csvLegacyIconMappingTableFullPath);
+            legacyIconMappingTable = csvTableLegacyIconMapping.Table;
 
             // In case you need to check these:
             //   csvTableEntity.DebugOutput();

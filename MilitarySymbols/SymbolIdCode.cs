@@ -202,6 +202,11 @@ namespace MilitarySymbols
         }
         protected string code = null;
 
+        public string LegacyCode
+        {
+            get; set;
+        }
+
         /// <summary>
         /// The 8-digit, most significant portions of the Code: symbol set & entity 
         /// </summary>
