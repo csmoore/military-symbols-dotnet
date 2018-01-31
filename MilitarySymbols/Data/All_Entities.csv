@@ -1907,4 +1907,216 @@ SymbolSet,Entity,EntityType,EntitySubType,StandardIdentity,Code,GeometryType,Ico
 60,Effect,Network Outage,,,160700,Point,MAIN,Effect : Network Outage
 60,Effect,Service Outage,,,160800,Point,MAIN,Effect : Service Outage
 60,Effect,Device Outage,,,160900,Point,MAIN,Effect : Device Outage
+61,Botnet,Command and Control (C2),,,110100,Point,MAIN,Botnet : Command and Control (C2)
+61,Botnet,Herder,,,110200,Point,MAIN,Botnet : Herder
+61,Botnet,Callback Domain,,,110300,Point,MAIN,Botnet : Callback Domain
+61,Botnet,Zombie,,,110400,Point,MAIN,Botnet : Zombie
+61,Infection,Advanced Persistent Threat (APT),,,120100,Point,MAIN,Infection : APT
+61,Infection,Advanced Persistent Threat (APT),APT with C2,,120101,Point,MAIN,Infection : APT : APT with C2
+61,Infection,Advanced Persistent Threat (APT),APT with Self Propagation,,120102,Point,MAIN,Infection : APT : APT with Self Propagation
+61,Infection,Advanced Persistent Threat (APT),APT with C2 and Self Propagation,,120103,Point,MAIN,Infection : APT : APT with C2 and Self Propagation
+61,Infection,Advanced Persistent Threat (APT),APT Other,,120104,Point,MAIN,Infection : APT : Other
+61,Infection,Non-Advanced Persistent Threat (NAPT),,,120200,Point,MAIN,Infection : NAPT
+61,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2,,120201,Point,MAIN,Infection : NAPT : NAPT with C2
+61,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with Self Propagation,,120202,Point,MAIN,Infection : NAPT : NAPT with Self Propagation
+61,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2 and Self Propagation,,120203,Point,MAIN,Infection : NAPT : NAPT with C2 and Self Propagation
+61,Infection,Non-Advanced Persistent Threat (NAPT),NAPT Other,,120204,Point,MAIN,Infection : NAPT : Other
+61,Health and Status,Normal,,,130100,Point,MAIN,Health and Status : Normal
+61,Health and Status,Network Outage,,,130200,Point,MAIN,Health and Status : Network Outage
+61,Health and Status,Unknown,,,130300,Point,MAIN,Health and Status : Unknown
+61,Health and Status,Impaired,,,130400,Point,MAIN,Health and Status : Impaired
+61,Device Type,Core Router,,,140100,Point,MAIN,Device Type : Core Router
+61,Device Type,Router,,,140200,Point,MAIN,Device Type : Router
+61,Device Type,Cross Domain Solution,,,140300,Point,MAIN,Device Type : Cross Domain Solution
+61,Device Type,Mail Server,,,140400,Point,MAIN,Device Type : Mail Server
+61,Device Type,Web Server,,,140500,Point,MAIN,Device Type : Web Server
+61,Device Type,Domain Server,,,140600,Point,MAIN,Device Type : Domain Server
+61,Device Type,File Server,,,140700,Point,MAIN,Device Type : File Server
+61,Device Type,Peer-to-Peer Node,,,140800,Point,MAIN,Device Type : Peer-to-Peer Node
+61,Device Type,Firewall,,,140900,Point,MAIN,Device Type : Firewall
+61,Device Type,Switch,,,141000,Point,MAIN,Device Type : Switch
+61,Device Type,Host,,,141100,Point,MAIN,Device Type : Host
+61,Device Type,Virtual Private Network (VPN),,,141200,Point,MAIN,Device Type : Virtual Private Network (VPN)
+61,Device Domain,Department of Defense (DoD),,,150100,Point,MAIN,Device Domain : Department of Defense (DoD)
+61,Device Domain,Government,,,150200,Point,MAIN,Device Domain : Government
+61,Device Domain,Contractor,,,150300,Point,MAIN,Device Domain : Contractor
+61,Device Domain,Supervisory Control and Data Acquisition (SCADA),,,150400,Point,MAIN,Device Domain : Supervisory Control and Data Acquisition (SCADA)
+61,Device Domain,Non-Government,,,150500,Point,MAIN,Device Domain : Non-Government
+61,Effect,Infection,,,160100,Point,MAIN,Effect : Infection
+61,Effect,Degradation,,,160200,Point,MAIN,Effect : Degradation
+61,Effect,Data Spoofing,,,160300,Point,MAIN,Effect : Data Spoofing
+61,Effect,Data Manipulation,,,160400,Point,MAIN,Effect : Data Manipulation
+61,Effect,Exfiltration,,,160500,Point,MAIN,Effect : Exfiltration
+61,Effect,Power Outage,,,160600,Point,MAIN,Effect : Power Outage
+61,Effect,Network Outage,,,160700,Point,MAIN,Effect : Network Outage
+61,Effect,Service Outage,,,160800,Point,MAIN,Effect : Service Outage
+61,Effect,Device Outage,,,160900,Point,MAIN,Effect : Device Outage
+62,Botnet,Command and Control (C2),,,110100,Point,MAIN,Botnet : Command and Control (C2)
+62,Botnet,Herder,,,110200,Point,MAIN,Botnet : Herder
+62,Botnet,Callback Domain,,,110300,Point,MAIN,Botnet : Callback Domain
+62,Botnet,Zombie,,,110400,Point,MAIN,Botnet : Zombie
+62,Infection,Advanced Persistent Threat (APT),,,120100,Point,MAIN,Infection : APT
+62,Infection,Advanced Persistent Threat (APT),APT with C2,,120101,Point,MAIN,Infection : APT : APT with C2
+62,Infection,Advanced Persistent Threat (APT),APT with Self Propagation,,120102,Point,MAIN,Infection : APT : APT with Self Propagation
+62,Infection,Advanced Persistent Threat (APT),APT with C2 and Self Propagation,,120103,Point,MAIN,Infection : APT : APT with C2 and Self Propagation
+62,Infection,Advanced Persistent Threat (APT),APT Other,,120104,Point,MAIN,Infection : APT : Other
+62,Infection,Non-Advanced Persistent Threat (NAPT),,,120200,Point,MAIN,Infection : NAPT
+62,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2,,120201,Point,MAIN,Infection : NAPT : NAPT with C2
+62,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with Self Propagation,,120202,Point,MAIN,Infection : NAPT : NAPT with Self Propagation
+62,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2 and Self Propagation,,120203,Point,MAIN,Infection : NAPT : NAPT with C2 and Self Propagation
+62,Infection,Non-Advanced Persistent Threat (NAPT),NAPT Other,,120204,Point,MAIN,Infection : NAPT : Other
+62,Health and Status,Normal,,,130100,Point,MAIN,Health and Status : Normal
+62,Health and Status,Network Outage,,,130200,Point,MAIN,Health and Status : Network Outage
+62,Health and Status,Unknown,,,130300,Point,MAIN,Health and Status : Unknown
+62,Health and Status,Impaired,,,130400,Point,MAIN,Health and Status : Impaired
+62,Device Type,Core Router,,,140100,Point,MAIN,Device Type : Core Router
+62,Device Type,Router,,,140200,Point,MAIN,Device Type : Router
+62,Device Type,Cross Domain Solution,,,140300,Point,MAIN,Device Type : Cross Domain Solution
+62,Device Type,Mail Server,,,140400,Point,MAIN,Device Type : Mail Server
+62,Device Type,Web Server,,,140500,Point,MAIN,Device Type : Web Server
+62,Device Type,Domain Server,,,140600,Point,MAIN,Device Type : Domain Server
+62,Device Type,File Server,,,140700,Point,MAIN,Device Type : File Server
+62,Device Type,Peer-to-Peer Node,,,140800,Point,MAIN,Device Type : Peer-to-Peer Node
+62,Device Type,Firewall,,,140900,Point,MAIN,Device Type : Firewall
+62,Device Type,Switch,,,141000,Point,MAIN,Device Type : Switch
+62,Device Type,Host,,,141100,Point,MAIN,Device Type : Host
+62,Device Type,Virtual Private Network (VPN),,,141200,Point,MAIN,Device Type : Virtual Private Network (VPN)
+62,Device Domain,Department of Defense (DoD),,,150100,Point,MAIN,Device Domain : Department of Defense (DoD)
+62,Device Domain,Government,,,150200,Point,MAIN,Device Domain : Government
+62,Device Domain,Contractor,,,150300,Point,MAIN,Device Domain : Contractor
+62,Device Domain,Supervisory Control and Data Acquisition (SCADA),,,150400,Point,MAIN,Device Domain : Supervisory Control and Data Acquisition (SCADA)
+62,Device Domain,Non-Government,,,150500,Point,MAIN,Device Domain : Non-Government
+62,Effect,Infection,,,160100,Point,MAIN,Effect : Infection
+62,Effect,Degradation,,,160200,Point,MAIN,Effect : Degradation
+62,Effect,Data Spoofing,,,160300,Point,MAIN,Effect : Data Spoofing
+62,Effect,Data Manipulation,,,160400,Point,MAIN,Effect : Data Manipulation
+62,Effect,Exfiltration,,,160500,Point,MAIN,Effect : Exfiltration
+62,Effect,Power Outage,,,160600,Point,MAIN,Effect : Power Outage
+62,Effect,Network Outage,,,160700,Point,MAIN,Effect : Network Outage
+62,Effect,Service Outage,,,160800,Point,MAIN,Effect : Service Outage
+62,Effect,Device Outage,,,160900,Point,MAIN,Effect : Device Outage
+63,Botnet,Command and Control (C2),,,110100,Point,MAIN,Botnet : Command and Control (C2)
+63,Botnet,Herder,,,110200,Point,MAIN,Botnet : Herder
+63,Botnet,Callback Domain,,,110300,Point,MAIN,Botnet : Callback Domain
+63,Botnet,Zombie,,,110400,Point,MAIN,Botnet : Zombie
+63,Infection,Advanced Persistent Threat (APT),,,120100,Point,MAIN,Infection : APT
+63,Infection,Advanced Persistent Threat (APT),APT with C2,,120101,Point,MAIN,Infection : APT : APT with C2
+63,Infection,Advanced Persistent Threat (APT),APT with Self Propagation,,120102,Point,MAIN,Infection : APT : APT with Self Propagation
+63,Infection,Advanced Persistent Threat (APT),APT with C2 and Self Propagation,,120103,Point,MAIN,Infection : APT : APT with C2 and Self Propagation
+63,Infection,Advanced Persistent Threat (APT),APT Other,,120104,Point,MAIN,Infection : APT : Other
+63,Infection,Non-Advanced Persistent Threat (NAPT),,,120200,Point,MAIN,Infection : NAPT
+63,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2,,120201,Point,MAIN,Infection : NAPT : NAPT with C2
+63,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with Self Propagation,,120202,Point,MAIN,Infection : NAPT : NAPT with Self Propagation
+63,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2 and Self Propagation,,120203,Point,MAIN,Infection : NAPT : NAPT with C2 and Self Propagation
+63,Infection,Non-Advanced Persistent Threat (NAPT),NAPT Other,,120204,Point,MAIN,Infection : NAPT : Other
+63,Health and Status,Normal,,,130100,Point,MAIN,Health and Status : Normal
+63,Health and Status,Network Outage,,,130200,Point,MAIN,Health and Status : Network Outage
+63,Health and Status,Unknown,,,130300,Point,MAIN,Health and Status : Unknown
+63,Health and Status,Impaired,,,130400,Point,MAIN,Health and Status : Impaired
+63,Device Type,Core Router,,,140100,Point,MAIN,Device Type : Core Router
+63,Device Type,Router,,,140200,Point,MAIN,Device Type : Router
+63,Device Type,Cross Domain Solution,,,140300,Point,MAIN,Device Type : Cross Domain Solution
+63,Device Type,Mail Server,,,140400,Point,MAIN,Device Type : Mail Server
+63,Device Type,Web Server,,,140500,Point,MAIN,Device Type : Web Server
+63,Device Type,Domain Server,,,140600,Point,MAIN,Device Type : Domain Server
+63,Device Type,File Server,,,140700,Point,MAIN,Device Type : File Server
+63,Device Type,Peer-to-Peer Node,,,140800,Point,MAIN,Device Type : Peer-to-Peer Node
+63,Device Type,Firewall,,,140900,Point,MAIN,Device Type : Firewall
+63,Device Type,Switch,,,141000,Point,MAIN,Device Type : Switch
+63,Device Type,Host,,,141100,Point,MAIN,Device Type : Host
+63,Device Type,Virtual Private Network (VPN),,,141200,Point,MAIN,Device Type : Virtual Private Network (VPN)
+63,Device Domain,Department of Defense (DoD),,,150100,Point,MAIN,Device Domain : Department of Defense (DoD)
+63,Device Domain,Government,,,150200,Point,MAIN,Device Domain : Government
+63,Device Domain,Contractor,,,150300,Point,MAIN,Device Domain : Contractor
+63,Device Domain,Supervisory Control and Data Acquisition (SCADA),,,150400,Point,MAIN,Device Domain : Supervisory Control and Data Acquisition (SCADA)
+63,Device Domain,Non-Government,,,150500,Point,MAIN,Device Domain : Non-Government
+63,Effect,Infection,,,160100,Point,MAIN,Effect : Infection
+63,Effect,Degradation,,,160200,Point,MAIN,Effect : Degradation
+63,Effect,Data Spoofing,,,160300,Point,MAIN,Effect : Data Spoofing
+63,Effect,Data Manipulation,,,160400,Point,MAIN,Effect : Data Manipulation
+63,Effect,Exfiltration,,,160500,Point,MAIN,Effect : Exfiltration
+63,Effect,Power Outage,,,160600,Point,MAIN,Effect : Power Outage
+63,Effect,Network Outage,,,160700,Point,MAIN,Effect : Network Outage
+63,Effect,Service Outage,,,160800,Point,MAIN,Effect : Service Outage
+63,Effect,Device Outage,,,160900,Point,MAIN,Effect : Device Outage
+64,Botnet,Command and Control (C2),,,110100,Point,MAIN,Botnet : Command and Control (C2)
+64,Botnet,Herder,,,110200,Point,MAIN,Botnet : Herder
+64,Botnet,Callback Domain,,,110300,Point,MAIN,Botnet : Callback Domain
+64,Botnet,Zombie,,,110400,Point,MAIN,Botnet : Zombie
+64,Infection,Advanced Persistent Threat (APT),,,120100,Point,MAIN,Infection : APT
+64,Infection,Advanced Persistent Threat (APT),APT with C2,,120101,Point,MAIN,Infection : APT : APT with C2
+64,Infection,Advanced Persistent Threat (APT),APT with Self Propagation,,120102,Point,MAIN,Infection : APT : APT with Self Propagation
+64,Infection,Advanced Persistent Threat (APT),APT with C2 and Self Propagation,,120103,Point,MAIN,Infection : APT : APT with C2 and Self Propagation
+64,Infection,Advanced Persistent Threat (APT),APT Other,,120104,Point,MAIN,Infection : APT : Other
+64,Infection,Non-Advanced Persistent Threat (NAPT),,,120200,Point,MAIN,Infection : NAPT
+64,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2,,120201,Point,MAIN,Infection : NAPT : NAPT with C2
+64,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with Self Propagation,,120202,Point,MAIN,Infection : NAPT : NAPT with Self Propagation
+64,Infection,Non-Advanced Persistent Threat (NAPT),NAPT with C2 and Self Propagation,,120203,Point,MAIN,Infection : NAPT : NAPT with C2 and Self Propagation
+64,Infection,Non-Advanced Persistent Threat (NAPT),NAPT Other,,120204,Point,MAIN,Infection : NAPT : Other
+64,Health and Status,Normal,,,130100,Point,MAIN,Health and Status : Normal
+64,Health and Status,Network Outage,,,130200,Point,MAIN,Health and Status : Network Outage
+64,Health and Status,Unknown,,,130300,Point,MAIN,Health and Status : Unknown
+64,Health and Status,Impaired,,,130400,Point,MAIN,Health and Status : Impaired
+64,Device Type,Core Router,,,140100,Point,MAIN,Device Type : Core Router
+64,Device Type,Router,,,140200,Point,MAIN,Device Type : Router
+64,Device Type,Cross Domain Solution,,,140300,Point,MAIN,Device Type : Cross Domain Solution
+64,Device Type,Mail Server,,,140400,Point,MAIN,Device Type : Mail Server
+64,Device Type,Web Server,,,140500,Point,MAIN,Device Type : Web Server
+64,Device Type,Domain Server,,,140600,Point,MAIN,Device Type : Domain Server
+64,Device Type,File Server,,,140700,Point,MAIN,Device Type : File Server
+64,Device Type,Peer-to-Peer Node,,,140800,Point,MAIN,Device Type : Peer-to-Peer Node
+64,Device Type,Firewall,,,140900,Point,MAIN,Device Type : Firewall
+64,Device Type,Switch,,,141000,Point,MAIN,Device Type : Switch
+64,Device Type,Host,,,141100,Point,MAIN,Device Type : Host
+64,Device Type,Virtual Private Network (VPN),,,141200,Point,MAIN,Device Type : Virtual Private Network (VPN)
+64,Device Domain,Department of Defense (DoD),,,150100,Point,MAIN,Device Domain : Department of Defense (DoD)
+64,Device Domain,Government,,,150200,Point,MAIN,Device Domain : Government
+64,Device Domain,Contractor,,,150300,Point,MAIN,Device Domain : Contractor
+64,Device Domain,Supervisory Control and Data Acquisition (SCADA),,,150400,Point,MAIN,Device Domain : Supervisory Control and Data Acquisition (SCADA)
+64,Device Domain,Non-Government,,,150500,Point,MAIN,Device Domain : Non-Government
+64,Effect,Infection,,,160100,Point,MAIN,Effect : Infection
+64,Effect,Degradation,,,160200,Point,MAIN,Effect : Degradation
+64,Effect,Data Spoofing,,,160300,Point,MAIN,Effect : Data Spoofing
+64,Effect,Data Manipulation,,,160400,Point,MAIN,Effect : Data Manipulation
+64,Effect,Exfiltration,,,160500,Point,MAIN,Effect : Exfiltration
+64,Effect,Power Outage,,,160600,Point,MAIN,Effect : Power Outage
+64,Effect,Network Outage,,,160700,Point,MAIN,Effect : Network Outage
+64,Effect,Service Outage,,,160800,Point,MAIN,Effect : Service Outage
+64,Effect,Device Outage,,,160900,Point,MAIN,Effect : Device Outage
 98,Invalid Symbol,,,,100000,Point,FULL_OCTAGON,Invalid Symbol
+27,Military,Service Branch,Infantry,,110101,Point,FULL_OCTAGON,Military : Service Branch : Infantry
+27,Military,Service Branch,Medical,,110102,Point,FULL_OCTAGON,Military : Service Branch : Medical
+27,Military,Service Branch,Reconnaissance,,110103,Point,FULL_OCTAGON,Military : Service Branch : Reconnaissance
+27,Military,Service Branch,Signal,,110104,Point,FULL_OCTAGON,Military : Service Branch : Signal
+27,Military,Activity/Task,Explosive Ordnance Disposal,,110201,Point,MAIN,Military : Activity/Task : Explosive Ordnance Disposal
+27,Military,Activity/Task,Field Artillery Observer,,110202,Point,MAIN,Military : Activity/Task : Field Artillery Observer
+27,Military,Activity/Task,Joint Fire Support,,110203,Point,MAIN,Military : Activity/Task : Joint Fire Support
+27,Military,Activity/Task,Liaison,,110204,Point,MAIN,Military : Activity/Task : Liaison
+27,Military,Activity/Task,Messenger,,110205,Point,MAIN,Military : Activity/Task : Messenger
+27,Military,Activity/Task,Military Police,,110206,Point,MAIN,Military : Activity/Task : Military Police
+27,Military,Activity/Task,Observer,,110207,Point,MAIN,Military : Activity/Task : Observer
+27,Military,Activity/Task,Security,,110208,Point,MAIN,Military : Activity/Task : Security
+27,Military,Activity/Task,Sniper,,110209,Point,MAIN,Military : Activity/Task : Sniper
+27,Military,Activity/Task,Special Operations Forces (SOF),,110210,Point,MAIN,Military : Activity/Task : Special Operations Forces (SOF)
+27,Military,Lethal Weapons,Rifle,,110301,Point,MAIN,Military : Lethal Weapons : Rifle
+27,Military,Lethal Weapons,Single-Shot Rifle,,110302,Point,MAIN,Military : Lethal Weapons : Single-Shot Rifle
+27,Military,Lethal Weapons,Semiautomatic Rifle,,110303,Point,MAIN,Military : Lethal Weapons : Semiautomatic Rifle
+27,Military,Lethal Weapons,Automatic Rifle,,110304,Point,MAIN,Military : Lethal Weapons : Automatic Rifle
+27,Military,Lethal Weapons,Machine Gun,,110305,Point,MAIN,Military : Lethal Weapons : Machine Gun
+27,Military,Lethal Weapons,Machine Gun-Light,,110306,Point,MAIN,Military : Lethal Weapons : Machine Gun-Light
+27,Military,Lethal Weapons,Machine Gun-Medium,,110307,Point,MAIN,Military : Lethal Weapons : Machine Gun-Medium
+27,Military,Lethal Weapons,Machine Gun-Heavy,,110308,Point,MAIN,Military : Lethal Weapons : Machine Gun-Heavy
+27,Military,Lethal Weapons,Grenade Launcher,,110309,Point,MAIN,Military : Lethal Weapons : Grenade Launcher
+27,Military,Lethal Weapons,Grenade Launcher-Light,,110310,Point,MAIN,Military : Lethal Weapons : Grenade Launcher-Light
+27,Military,Lethal Weapons,Grenade Launcher-Medium,,110311,Point,MAIN,Military : Lethal Weapons : Grenade Launcher-Medium
+27,Military,Lethal Weapons,Grenade Launcher-Heavy,,110312,Point,MAIN,Military : Lethal Weapons : Grenade Launcher-Heavy
+27,Military,Lethal Weapons,Flamethrower,,110313,Point,MAIN,Military : Lethal Weapons : Flamethrower
+27,Military,Lethal Weapons,Mortar,,110314,Point,MAIN,Military : Lethal Weapons : Mortar
+27,Military,Lethal Weapons,Rocket Launcher-Single,,110315,Point,MAIN,Military : Lethal Weapons : Rocket Launcher-Single
+27,Military,Lethal Weapons,Rocket Launcher-Antitank,,110316,Point,MAIN,Military : Lethal Weapons : Rocket Launcher-Antitank
+27,Military,Non-Lethal Weapons,Non-Lethal Weapon,,110401,Point,MAIN,Military : Non-Lethal Weapons : Non-Lethal Weapon
+27,Military,Non-Lethal Weapons,Non-Lethal Grenade Launcher,,110402,Point,MAIN,Military : Non-Lethal Weapons : Non-Lethal Grenade Launcher
+27,Military,Non-Lethal Weapons,Taser,,110403,Point,MAIN,Military : Non-Lethal Weapons : Taser
+27,Civilian,,,,120000,Point,NA,Civilian
+27,Civilian,Activity,,,120100,Point,NA,Civilian : Activity
+27,Civilian,Activity,Police,,120101,Point,MAIN,Civilian : Activity : Police

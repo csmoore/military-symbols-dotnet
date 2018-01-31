@@ -109,6 +109,11 @@ namespace MilitarySymbols
 
             StringBuilder sb = new StringBuilder();
 
+// WORKAROUND: only icons for Cyberspace_Space symbolset number
+if ((symbolSet > SymbolSetType.Cyberspace_Space) &&
+    (symbolSet <= SymbolSetType.Cyberspace_Subsurface))
+    symbolSet = SymbolSetType.Cyberspace_Space;
+
             string symbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(symbolSet, 2);
 
             sb.Append(symbolSetString);
@@ -550,6 +555,14 @@ namespace MilitarySymbols
 
             // map the actual symbolSet to the supported/available frame
             SymbolSetType mappedSymbolSet = TypeUtilities.SymbolSetToFrameMapping[symbolSet];
+
+// (Horrendous) WORKAROUND - only this Dismounted_Individual frame works / has icons provided correctly:
+if ((symbolSet == SymbolSetType.Dismounted_Individual) &&
+    (realExerciseSim == StandardIdentityRealExerciseSimType.Reality) &&
+    ((affiliation == StandardIdentityAffiliationType.Friend) ||
+     (affiliation == StandardIdentityAffiliationType.Assumed_Friend)) && 
+     (status == StatusType.Present))
+    mappedSymbolSet = SymbolSetType.Dismounted_Individual;
 
             string mappedSymbolSetString = TypeUtilities.EnumHelper.getEnumValAsString(mappedSymbolSet, 2);
             sb.Append(mappedSymbolSetString);

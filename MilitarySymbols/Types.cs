@@ -69,6 +69,7 @@ namespace MilitarySymbols
         Land_Equipment = 15,
         Land_Installation = 20,
         Control_Measures = 25,
+        Dismounted_Individual = 27,
         Sea_Surface = 30,
         Sea_Subsurface = 35,
         Mine_Warfare = 36,
@@ -81,7 +82,11 @@ namespace MilitarySymbols
         Signals_Intelligence_Land = 52,
         Signals_Intelligence_Surface = 53,
         Signals_Intelligence_Subsurface = 54,
-        Cyberspace = 60,
+        Cyberspace_Space = 60,
+        Cyberspace_Air = 61,
+        Cyberspace_Land = 62,
+        Cyberspace_Surface = 63,
+        Cyberspace_Subsurface = 64,
         Special_Cases = 98,       
         NotSet = 99
     }
@@ -117,7 +122,8 @@ namespace MilitarySymbols
         Equipment_Mobility_On_Land = 3,
         Equipment_Mobility_On_Snow = 4,
         Equipment_Mobility_On_Water = 5,
-        Naval_Towed_Array = 6
+        Naval_Towed_Array = 6,
+        Leadership_Indicator = 7
     }
 
     public enum EchelonMobilityType     // Amplifier 1, 2 (Digit 9 & 10)
@@ -161,6 +167,10 @@ namespace MilitarySymbols
         // Naval_Towed_Array = 60,
         Short_Towed_Array = 61,
         Long_Towed_Array = 62,
+
+        // Leadership_Indicator = 70
+        Leader_Individual = 71,
+        // Deputy_Individual = 72 // Error in standard Table 4-8 vs. Table A-8
     }
     ///////////////////////////////////////////////////////////
 
@@ -302,7 +312,13 @@ namespace MilitarySymbols
 
             { SymbolSetType.Control_Measures, SymbolSetType.NotSet },
 
-            { SymbolSetType.Cyberspace, SymbolSetType.Sea_Surface },
+            { SymbolSetType.Dismounted_Individual, SymbolSetType.Land_Equipment },
+
+            { SymbolSetType.Cyberspace_Space, SymbolSetType.Space },
+            { SymbolSetType.Cyberspace_Air, SymbolSetType.Air },
+            { SymbolSetType.Cyberspace_Land, SymbolSetType.Land_Equipment },
+            { SymbolSetType.Cyberspace_Surface, SymbolSetType.Sea_Surface },
+            { SymbolSetType.Cyberspace_Subsurface, SymbolSetType.Sea_Subsurface },
 
             { SymbolSetType.Atmospheric, SymbolSetType.NotSet },
             { SymbolSetType.Oceanographic, SymbolSetType.NotSet },
@@ -340,7 +356,13 @@ namespace MilitarySymbols
 
             { SymbolSetType.Control_Measures, "ControlMeasures" },
 
-            { SymbolSetType.Cyberspace, "Cyberspace" },
+            { SymbolSetType.Dismounted_Individual, "Dismounted" },
+
+            { SymbolSetType.Cyberspace_Space, "Cyberspace" },
+            { SymbolSetType.Cyberspace_Air, "Cyberspace" },
+            { SymbolSetType.Cyberspace_Land, "Cyberspace" },
+            { SymbolSetType.Cyberspace_Surface, "Cyberspace" },
+            { SymbolSetType.Cyberspace_Subsurface, "Cyberspace" },
 
             { SymbolSetType.Atmospheric, @"METOC\Atmospheric" },
             { SymbolSetType.Oceanographic, @"METOC\Oceanographic" },

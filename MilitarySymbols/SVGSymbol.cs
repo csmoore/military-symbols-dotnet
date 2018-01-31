@@ -61,8 +61,8 @@ namespace MilitarySymbols
                     // TODO: figure out why SVG is now crashing on some (ex. 25321100)
                     System.Diagnostics.Trace.WriteLine("Exception drawing SVG layer: " + graphicLayer);
                     System.Diagnostics.Trace.WriteLine("Message: " + ex.Message);
-                    bitmap = null;
-                    break;
+                    // bitmap = null;
+                    // break;
                 }
             }
 
